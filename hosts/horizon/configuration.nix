@@ -3,10 +3,13 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
+    [
       inputs.home-manager.nixosModules.default
       inputs.sops-nix.nixosModules.sops
+
+      ./hardware-configuration.nix
+      
+      ../../users
     ];
 
   sops.defaultSopsFile = ../../secrets/secrets.yaml;
@@ -22,12 +25,8 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  networking.hostName = "leyla-laptop"; # Define your hostname.
+  networking.hostName = "horizon"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -88,13 +87,10 @@
   };
 
   # enabled virtualisation for docker
-  virtualisation.docker.enable = true;
+  # virtualisation.docker.enable = true;
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
-
-  # Disables creating or editing users though methods not defined in this file
-  users.mutableUsers = false;
 
   nixpkgs.config.permittedInsecurePackages = [
     "electron-25.9.0"
@@ -125,107 +121,6 @@
     })
   ];
 
-  sops.secrets."passwords/leyla".neededForUsers = true;
-  sops.secrets."passwords/ester".neededForUsers = true;
-  sops.secrets."passwords/eve".neededForUsers = true;
-
-  # Define user accounts
-  users.users = {
-    leyla = {
-      isNormalUser = true;
-      uid = 1000;
-      description = "Leyla";
-      extraGroups = [ "networkmanager" "wheel" "docker" ];
-
-      hashedPasswordFile = config.sops.secrets."passwords/leyla".path;
-      
-      packages = with pkgs; [
-        iputils
-        dnsutils
-        git
-        firefox
-        signal-desktop
-        obsidian
-        bitwarden
-#        vscode
-        vscodium
-        nextcloud-client
-        inkscape
-        steam
-        discord
-        rhythmbox
-        makemkv
-        protonvpn-gui
-        transmission-gtk
-        freecad
-        mupen64plus
-        dbeaver
-        easytag
-        cura
-        kicad-small
-#        jdk
-#        android-tools
-#        android-studio
-        androidStudioPackages.canary
-        jetbrains.idea-community
-        ungoogled-chromium
-	      nodejs
-        exiftool
-        libreoffice
-        # N64 Emulator
-        mupen64plus
-        # GameCube Emulator and Wii Emulator
-        dolphin-emu
-        # Switch Emulator
-        yuzu-mainline
-        # Atari 2600 Emulator
-        stella
-        # mame Emulator
-        mame
-        # Game Boy Advanced Emulator
-        vbam
-        # NES Emulator
-        fceux
-        # SNES Emulator
-        zsnes
-        # DS Emulator
-        desmume
-      ];
-    };
-
-    eve = {
-      isNormalUser = true;
-      uid = 1001;
-      description = "Eve";
-      extraGroups = [ "networkmanager" ];
-
-      hashedPasswordFile = config.sops.secrets."passwords/eve".path;
-
-      packages = with pkgs; [
-        firefox
-        bitwarden
-        discord
-        makemkv
-        signal-desktop
-      ];
-    };
-
-    ester = {
-      isNormalUser = true;
-      uid = 1002;
-      description = "Ester";
-      extraGroups = [ "networkmanager" ];
-
-      hashedPasswordFile = config.sops.secrets."passwords/ester".path;
-
-      packages = with pkgs; [
-        firefox
-        bitwarden
-        discord
-      ];
-    };
-  };
-
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -233,13 +128,13 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    wget
+    # wget
     # resilio-sync
-    yt-dlp
-    spotdl
-    ffmpeg
-    chromaprint
-    docker
+    # yt-dlp
+    # spotdl
+    # ffmpeg
+    # chromaprint
+    # docker
     aileron
 #    sox
 #    songrec
