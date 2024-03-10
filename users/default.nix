@@ -1,6 +1,6 @@
-{...}:
+{ ... }:
 {
-  imports = [ ./leyla ./ester ./eve ];
+  imports = [ ./leyla ./ester ./eve ./remote ];
 
   users.mutableUsers = false;
 }

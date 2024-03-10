@@ -1,6 +1,5 @@
 # leyla laptop
 { config, pkgs, inputs, ... }:
-
 {
   imports =
     [
@@ -16,6 +15,10 @@
   sops.defaultSopsFormat = "yaml";
 
   sops.age.keyFile = "/home/leyla/.config/sops/age/keys.txt";
+
+  users.leyla.isNormalUser = true;
+  users.ester.isNormalUser = true;
+  users.eve.isNormalUser = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
