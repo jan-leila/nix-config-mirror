@@ -18,7 +18,6 @@
       pkgs = nixpkgs.legacyPackages.${system};
     in
     {
-    
       nixosConfigurations = {
         horizon = nixpkgs.lib.nixosSystem {
           specialArgs = {inherit inputs;};
