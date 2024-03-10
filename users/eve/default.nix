@@ -1,25 +1,47 @@
 { lib, config, pkgs, ... }:
+let
+  cfg = config.users.eve;
+in
 {
-  sops.secrets."passwords/eve" = {
-    neededForUsers = true;
-    # sopsFile = ../secrets.yaml;
+  options.users.eve = {
+    isNormalUser = lib.mkEnableOption "eve";
   };
 
-  # Define user accounts
-  users.users.eve = {
-    isNormalUser = true;
-    uid = 1002;
-    description = "Eve";
-    extraGroups = [ "networkmanager" ];
+  config = {
+    sops.secrets = lib.mkIf cfg.isNormalUser {
+      "passwords/eve" = {
+        neededForUsers = true;
+        # sopsFile = ../secrets.yaml;
+      };
+    };
 
-    hashedPasswordFile = config.sops.secrets."passwords/eve".path;
+    users.groups.eve = {};
 
-    packages = with pkgs; [
-      firefox
-      bitwarden
-      discord
-      makemkv
-      signal-desktop
+    users.users.eve = lib.mkMerge [
+      {
+        uid = 1002;
+        description = "Eve";
+        group = "eve";
+      }
+
+      (
+        if cfg.isNormalUser then {
+          isNormalUser = true;
+          extraGroups = [ "networkmanager" ];
+
+          hashedPasswordFile = config.sops.secrets."passwords/eve".path;
+
+          packages = with pkgs; [
+            firefox
+            bitwarden
+            discord
+            makemkv
+            signal-desktop
+          ];
+        } else {
+          isSystemUser = true;
+        }
+      )
     ];
   };
 }
