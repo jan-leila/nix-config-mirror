@@ -23,8 +23,10 @@
 
   # Configure keymap in X11
   services.xserver = {
-    layout = "us,it,de";
-    xkbVariant = "";
+    xkb = {
+      layout = "us,it,de";
+      variant = "";
+    };
   };
 
   # Enable sound with pipewire.

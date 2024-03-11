@@ -43,5 +43,7 @@ in
         }
       )
     ];
+
+    home-manager.users.leyla = lib.mkIf cfg.isNormalUser (import ./home.nix);
   };
 }

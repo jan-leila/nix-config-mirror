@@ -74,8 +74,10 @@ in
       # steam
       # emulators
       # nintendo
+      # TODO: replace this with self hosted flake
       (lib.mkIf cfg.hasGPU yuzu-mainline) # Switch Emulator
-      citra-canary # 3DS emulator
+      # TODO: replace this with self hosted flake
+      # citra-canary # 3DS emulator
       (lib.mkIf cfg.hasGPU cemu) # Wii-U emulator
       dolphin-emu # GameCube and Wii Emulator
       desmume # DS Emulator
