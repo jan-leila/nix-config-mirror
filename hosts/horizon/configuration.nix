@@ -34,35 +34,6 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  nixpkgs.config.permittedInsecurePackages = [
-    "electron-25.9.0"
-  ];
-
-  nixpkgs.overlays = [
-    (self: super: {
-      # idea is too out of date for android gradle things
-      jetbrains = {
-        jdk = super.jdk17;
-        idea-community = super.jetbrains.idea-community.overrideAttrs (oldAttrs: rec {
-          version = "2023.3.3";
-          name = "idea-community-${version}";
-          src = super.fetchurl {
-            sha256 = "sha256-3BI97Tx+3onnzT1NXkb62pa4dj9kjNDNvFt9biYgP9I=";
-            url = "https://download.jetbrains.com/idea/ideaIC-${version}.tar.gz";
-          };
-        });
-      };
-      # ui is broken on 1.84
-      vscodium = super.vscodium.overrideAttrs (oldAttrs: rec {
-        version = "1.85.2.24019";
-        src = super.fetchurl {
-          sha256 = "sha256-OBGFXOSN+Oq9uj/5O6tF0Kp7rxTY1AzNbhLK8G+EqVk=";
-          url = "https://github.com/VSCodium/vscodium/releases/download/${version}/VSCodium-linux-x64-${version}.tar.gz";
-        };
-      });
-    })
-  ];
-
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 

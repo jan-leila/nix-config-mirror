@@ -8,7 +8,11 @@ in
   ];
 
   options.users.leyla = {
-    isNormalUser = lib.mkEnableOption "leyla";
+    isNormalUser = lib.mkEnableOption "create usable leyla user";
+    hasPiperMouse = lib.mkEnableOption "install programs for managing piper supported mouses";
+    hasOpenRGBHardware = lib.mkEnableOption "install programs for managing openRGB supported hardware";
+    hasViaKeyboard = lib.mkEnableOption "install programs for managing via supported keyboards";
+    hasGPU = lib.mkEnableOption "installs gpu intensive programs";
   };
 
   config = {
