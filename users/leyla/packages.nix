@@ -8,6 +8,12 @@ in
     ../../overlays/vscodium.nix
   ];
 
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+  };
+
   users.users.leyla.packages = lib.mkIf cfg.isNormalUser (
     with pkgs; [
       #foss platforms
@@ -44,19 +50,23 @@ in
       nextcloud-client
       
       # gaming
-      steam
+      # steam
       # emulators
+      # nintendo
       yuzu-mainline # Switch Emulator
+      citra-canary # 3DS emulator
+      cemu # Wii-U emulator
       dolphin-emu # GameCube and Wii Emulator
       desmume # DS Emulator
       mupen64plus # N64 Emulator
       zsnes # SNES Emulator
       vbam # Game Boy Advanced Emulator
       fceux # NES Emulator
+      # play station
+      rpcs3 # PS3 Emulator
+      #misc
       stella # Atari 2600 Emulator
       mame # mame Emulator
-      
-      
     ]
   );
 }
