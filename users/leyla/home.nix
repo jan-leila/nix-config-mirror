@@ -77,6 +77,7 @@
       enable = true;
       userName  = "Leyla Becker";
       userEmail = "git@jan-leila.com";
+      extraConfig.init.defaultBranch = "main";
     };
   };
 }
