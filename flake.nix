@@ -14,10 +14,12 @@
 
   outputs = { self, nixpkgs, ... }@inputs:
     let
-      system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
+      forEachSystem = nixpkgs.lib.genAttrs [ "x86_64-linux" ];
+      forEachPkgs = lambda: forEachSystem (system: lambda nixpkgs.legacyPackages.${system});
     in
     {
+      packages = forEachPkgs (pkgs: import ./pkgs { inherit pkgs; });
+
       nixosConfigurations = {
         horizon = nixpkgs.lib.nixosSystem {
           specialArgs = {inherit inputs;};
