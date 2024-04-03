@@ -71,11 +71,10 @@ in
       (lib.mkIf cfg.hasViaKeyboard via)
 
       # gaming
-      # steam
       # emulators
       # nintendo
       # TODO: replace this with self hosted flake
-      (lib.mkIf cfg.hasGPU yuzu-mainline) # Switch Emulator
+      # (lib.mkIf cfg.hasGPU yuzu-mainline) # Switch Emulator
       # TODO: replace this with self hosted flake
       # citra-canary # 3DS emulator
       (lib.mkIf cfg.hasGPU cemu) # Wii-U emulator
@@ -86,9 +85,9 @@ in
       vbam # Game Boy Advanced Emulator
       fceux # NES Emulator
       # play station
-      pcsxr # PS1 Emulator
-      pcsx2 # PS2 Emulator
       rpcs3 # PS3 Emulator
+      pcsx2 # PS2 Emulator
+      pcsxr # PS1 Emulator
       # TODO: more play station emulators here when they come out
       #misc
       stella # Atari 2600 Emulator
