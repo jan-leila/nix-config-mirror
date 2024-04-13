@@ -54,16 +54,12 @@ in
       steam
       (lib.mkIf cfg.hasGPU davinci-resolve)
       
-      # development enviroments
+      # development tools
       vscodium
       androidStudioPackages.canary
       jetbrains.idea-community
       dbeaver
 
-      # development tools
-      # TODO: move these to flakes
-      nodejs
-      
       # system tools
       protonvpn-gui
       nextcloud-client
