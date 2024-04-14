@@ -59,6 +59,7 @@ in
       androidStudioPackages.canary
       jetbrains.idea-community
       dbeaver
+      bruno
 
       # system tools
       protonvpn-gui
