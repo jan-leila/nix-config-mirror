@@ -70,5 +70,7 @@
     # system debuging tools
     iputils
     dnsutils
+
+    cachefilesd
   ];
 }
