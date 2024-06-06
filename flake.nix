@@ -10,9 +10,11 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
-  outputs = { self, nixpkgs, ... }@inputs:
+  outputs = { self, nixpkgs, nixos-hardware, ... }@inputs:
     let
       forEachSystem = nixpkgs.lib.genAttrs [ "x86_64-linux" ];
       forEachPkgs = lambda: forEachSystem (system: lambda nixpkgs.legacyPackages.${system});
@@ -26,6 +28,7 @@
           modules = [ 
             ./hosts/horizon/configuration.nix
             inputs.home-manager.nixosModules.default
+            nixos-hardware.nixosModules.framework-11th-gen-intel
           ];
         };
       };
