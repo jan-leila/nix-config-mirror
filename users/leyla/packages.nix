@@ -58,7 +58,7 @@ in
       vscodium
       androidStudioPackages.canary
       jetbrains.idea-community
-      dbeaver
+      dbeaver-bin
       bruno
 
       # system tools
