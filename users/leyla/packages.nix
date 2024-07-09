@@ -20,6 +20,8 @@ in
 
   programs.noisetorch.enable = true;
 
+  programs.adb.enable = true;
+
   nixpkgs.config.permittedInsecurePackages = [
     "electron-25.9.0"
   ];

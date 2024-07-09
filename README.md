@@ -1,6 +1,4 @@
 
-
-
 Build Command:
 `sudo nixos-rebuild switch --flake .#hostname`
 
