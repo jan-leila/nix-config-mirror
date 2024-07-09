@@ -50,6 +50,11 @@ in
       # rpi-imager
       # fritzing
 
+      # comand line tools
+      yt-dlp
+      ffmpeg
+      imagemagick
+
       # proprietary platforms
       discord
       obsidian
