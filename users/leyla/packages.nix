@@ -43,7 +43,7 @@ in
       makemkv
       transmission-gtk
       onionshare
-      # easytag
+      easytag
       # rhythmbox
       (lib.mkIf cfg.hasGPU obs-studio)
       # wireshark
