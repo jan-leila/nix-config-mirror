@@ -31,6 +31,13 @@
             nixos-hardware.nixosModules.framework-11th-gen-intel
           ];
         };
+        twilight = nixpkgs.lib.nixosSystem {
+          specialArgs = {inherit inputs;};
+          modules = [ 
+            ./hosts/twilight/configuration.nix
+            inputs.home-manager.nixosModules.default
+          ];
+        };
       };
     };
 }
