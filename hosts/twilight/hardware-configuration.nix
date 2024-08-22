@@ -23,6 +23,27 @@
       fsType = "vfat";
       options = [ "fmask=0022" "dmask=0022" ];
     };
+    
+  fileSystems."/mnt/leyla_home" =
+    {
+      device = "server.arpa:/home/leyla";
+      fsType = "nfs";
+      options = [ "x-systemd.automount" "user" "nofail" "soft" "x-systemd.idle-timeout=600" "fsc" ];
+    };
+
+  fileSystems."/mnt/share_home" =
+    {
+      device = "server.arpa:/home/share";
+      fsType = "nfs";
+      options = [ "x-systemd.automount" "user" "nofail" "soft" "x-systemd.idle-timeout=600" "fsc" ];
+    };
+
+  fileSystems."/mnt/docker_home" =
+    {
+      device = "server.arpa:/home/docker";
+      fsType = "nfs";
+      options = [ "x-systemd.automount" "noauto" "x-systemd.idle-timeout=600" ];
+    };
 
   swapDevices = [ ];
 

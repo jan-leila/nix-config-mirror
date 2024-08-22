@@ -23,6 +23,7 @@
       packages = forEachPkgs (pkgs: import ./pkgs { inherit pkgs; });
 
       nixosConfigurations = {
+      	# Leyla Laptop
         horizon = nixpkgs.lib.nixosSystem {
           specialArgs = {inherit inputs;};
           modules = [ 
@@ -31,6 +32,7 @@
             nixos-hardware.nixosModules.framework-11th-gen-intel
           ];
         };
+        # Leyla Desktop
         twilight = nixpkgs.lib.nixosSystem {
           specialArgs = {inherit inputs;};
           modules = [ 
