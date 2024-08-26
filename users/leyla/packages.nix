@@ -38,10 +38,10 @@ in
       gimp
       krita
       freecad
-      cura
+      # cura
       kicad-small
       makemkv
-      transmission-gtk
+      transmission_4-gtk
       onionshare
       easytag
       # rhythmbox
