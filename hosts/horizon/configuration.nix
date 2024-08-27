@@ -29,7 +29,14 @@
   networking.hostName = "horizon"; # Define your hostname.
 
   # enabled virtualisation for docker
-  # virtualisation.docker.enable = true;
+  virtualisation.docker = {
+    enable = true;
+    rootless = {
+      enable = true;
+      setSocketVariable = true;
+    };
+  };
+
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
