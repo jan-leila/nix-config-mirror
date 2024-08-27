@@ -35,7 +35,7 @@ in
       (
         if cfg.isNormalUser then {
           isNormalUser = true;
-          extraGroups = [ "networkmanager" "wheel" "adbusers" ];
+          extraGroups = [ "networkmanager" "wheel" "adbusers" "docker" ];
 
           hashedPasswordFile = config.sops.secrets."passwords/leyla".path;
         } else {
