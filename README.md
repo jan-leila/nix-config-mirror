@@ -6,6 +6,6 @@ Build Command:
 | :---------: | :------------------------: | :--------------: | :-------: |
 |  `twilight` |      Desktop Computer      |      Leyla       |  Desktop  |
 |  `horizon`  |  13 inch Framework Laptop  |      Leyla       |  Laptop   |
-|  `defiant`  |         Steam Desk         |      Leyla       |  Handheld |
+|  `defiant`  |         NAS Server         |      Leyla       |  Service  |
 |  `emergent` |      Desktop Computer      |       Eve        |  Laptop   |
 | `threshold` |           Laptop           |       Eve        |  Desktop  |
