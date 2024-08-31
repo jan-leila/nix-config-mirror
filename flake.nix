@@ -25,7 +25,7 @@
       nixosConfigurations = {
       	# Leyla Laptop
         horizon = nixpkgs.lib.nixosSystem {
-          specialArgs = {inherit inputs;};
+          specialArgs = { inherit inputs; };
           modules = [ 
             ./hosts/horizon/configuration.nix
             inputs.home-manager.nixosModules.default
@@ -34,11 +34,18 @@
         };
         # Leyla Desktop
         twilight = nixpkgs.lib.nixosSystem {
-          specialArgs = {inherit inputs;};
+          specialArgs = { inherit inputs; };
           modules = [ 
             ./hosts/twilight/configuration.nix
             inputs.home-manager.nixosModules.default
           ];
+        };
+        # NAS Service
+        defiant = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inpits; }
+          modules = [
+            ./hosts/defiant/configuration.nix
+          ]
         };
       };
     };
