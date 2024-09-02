@@ -50,5 +50,7 @@
     aileron
 
     cachefilesd
+
+    gnomeExtensions.dash-to-dock
   ];
 }
