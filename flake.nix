@@ -42,10 +42,10 @@
         };
         # NAS Service
         defiant = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inpits; }
+          specialArgs = { inherit inputs; };
           modules = [
             ./hosts/defiant/configuration.nix
-          ]
+          ];
         };
       };
     };
