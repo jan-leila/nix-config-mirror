@@ -9,7 +9,7 @@ in
 
   options.users.leyla = {
     isNormalUser = lib.mkEnableOption "create usable leyla user";
-    isThinInstallation = lib.mkEnableOption "are most programs going to be installed or not";
+    isThinUser = lib.mkEnableOption "create usable user but witohut user applications";
     hasPiperMouse = lib.mkEnableOption "install programs for managing piper supported mouses";
     hasOpenRGBHardware = lib.mkEnableOption "install programs for managing openRGB supported hardware";
     hasViaKeyboard = lib.mkEnableOption "install programs for managing via supported keyboards";
@@ -34,12 +34,12 @@ in
       }
 
       (
-        if cfg.isNormalUser then {
+        if (cfg.isNormalUser || cfg.isThinUser) then {
           isNormalUser = true;
           extraGroups = lib.mkMerge [
             ["networkmanager" "wheel" "docker"]
             (
-              lib.mkIf (!cfg.isThinInstallation) [ "adbusers" ]
+              lib.mkIf (!cfg.isThinUser) [ "adbusers" ]
             )
           ];
 
@@ -50,6 +50,6 @@ in
       )
     ];
 
-    home-manager.users.leyla = lib.mkIf cfg.isNormalUser (import ./home.nix);
+    home-manager.users.leyla = lib.mkIf (cfg.isNormalUser || cfg.isThinUser) (import ./home.nix);
   };
 }
