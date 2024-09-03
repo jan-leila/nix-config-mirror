@@ -8,7 +8,7 @@ in
   ];
 
   options.users.leyla = {
-    isNormalUser = lib.mkEnableOption "create usable leyla user";
+    isFullUser = lib.mkEnableOption "create usable leyla user";
     isThinUser = lib.mkEnableOption "create usable user but witohut user applications";
     hasPiperMouse = lib.mkEnableOption "install programs for managing piper supported mouses";
     hasOpenRGBHardware = lib.mkEnableOption "install programs for managing openRGB supported hardware";
@@ -17,7 +17,7 @@ in
   };
 
   config = {
-    sops.secrets = lib.mkIf cfg.isNormalUser {
+    sops.secrets = lib.mkIf cfg.isFullUser {
       "passwords/leyla" = {
         neededForUsers = true;
         # sopsFile = ../secrets.yaml;
@@ -34,7 +34,7 @@ in
       }
 
       (
-        if (cfg.isNormalUser || cfg.isThinUser) then {
+        if (cfg.isFullUser || cfg.isThinUser) then {
           isNormalUser = true;
           extraGroups = lib.mkMerge [
             ["networkmanager" "wheel" "docker"]
@@ -50,6 +50,6 @@ in
       )
     ];
 
-    home-manager.users.leyla = lib.mkIf (cfg.isNormalUser || cfg.isThinUser) (import ./home.nix);
+    home-manager.users.leyla = lib.mkIf (cfg.isFullUser || cfg.isThinUser) (import ./home.nix);
   };
 }

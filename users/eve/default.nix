@@ -4,11 +4,11 @@ let
 in
 {
   options.users.eve = {
-    isNormalUser = lib.mkEnableOption "eve";
+    isFullUser = lib.mkEnableOption "eve";
   };
 
   config = {
-    sops.secrets = lib.mkIf cfg.isNormalUser {
+    sops.secrets = lib.mkIf cfg.isFullUser {
       "passwords/eve" = {
         neededForUsers = true;
         # sopsFile = ../secrets.yaml;
@@ -25,7 +25,7 @@ in
       }
 
       (
-        if cfg.isNormalUser then {
+        if cfg.isFullUser then {
           isNormalUser = true;
           extraGroups = [ "networkmanager" ];
 

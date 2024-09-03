@@ -8,21 +8,21 @@ in
     ../../overlays/vscodium.nix
   ];
 
-  programs.bash.shellAliases = {
+  programs.bash.shellAliases = lib.mkIf cfg.isFullUser ({
     code = "codium";
-  };
+  });
 
-  programs.steam = {
+  programs.steam = lib.mkIf cfg.isFullUser ({
     enable = true;
     remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
     dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-  };
+  });
 
-  programs.noisetorch.enable = true;
+  programs.noisetorch.enable = cfg.isFullUser;
 
-  programs.adb.enable = true;
+  programs.adb.enable = cfg.isFullUser;
 
-  users.users.leyla.packages = lib.mkIf (cfg.isNormalUser || cfg.isThinUser) (
+  users.users.leyla.packages = lib.mkIf (cfg.isFullUser || cfg.isThinUser) (
     lib.mkMerge [
       (
         with pkgs; [

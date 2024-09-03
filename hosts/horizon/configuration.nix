@@ -16,9 +16,9 @@
 
   sops.age.keyFile = "/home/leyla/.config/sops/age/keys.txt";
 
-  users.leyla.isNormalUser = true;
-  users.ester.isNormalUser = true;
-  users.eve.isNormalUser = true;
+  users.leyla.isFullUser = true;
+  users.ester.isFullUser = true;
+  users.eve.isFullUser = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
