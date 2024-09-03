@@ -21,6 +21,8 @@ keys for decrypting password secrets for each users located at ~/.config/sops/ag
 
 updating passwords: `sops secrets/secrets.yaml`
 
+TODO: keys.txt should prob be readable by owning user only?
+
 > how the current config was set up https://www.youtube.com/watch?v=G5f6GC7SnhU
 
-> look into this? https://technotim.live/posts/rotate-sops-encryption-keys/
+> look into this? `https://technotim.live/posts/rotate-sops-encryption-keys/`

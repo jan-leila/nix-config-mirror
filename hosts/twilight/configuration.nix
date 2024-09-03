@@ -16,7 +16,13 @@
 
   sops.age.keyFile = "/home/leyla/.config/sops/age/keys.txt";
 
-  users.leyla.isNormalUser = true;
+  users.leyla = {
+    isNormalUser = true;
+    hasPiperMouse = true;
+    hasOpenRGBHardware = true;
+    hasViaKeyboard = true;
+    hasGPU = true;
+  };
   users.ester.isNormalUser = true;
   users.eve.isNormalUser = true;
 
