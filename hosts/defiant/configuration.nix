@@ -20,8 +20,6 @@
     isNormalUser = true;
     isThinInstallation = true;
   };
-  users.ester.isNormalUser = false;
-  users.eve.isNormalUser = false;
 
   boot.loader.grub = {
     enable = true;

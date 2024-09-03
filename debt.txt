@@ -1,0 +1,7 @@
+1. Open GL?
+2. allowUnfree should be dynamically enabled by the users whenever they need them
+3. graphics driver things should prob be in the hardware-configuration.nix
+4. what does `boot.kernelModules = [ "sg" ]` do?
+5. sops.age.keyFile should not just be hard coded to leyla?
+6. openssh configuration for server
+7. isThinInstallation -> isThinUser
