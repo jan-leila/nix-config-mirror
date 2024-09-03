@@ -26,3 +26,21 @@ TODO: keys.txt should prob be readable by owning user only?
 > how the current config was set up https://www.youtube.com/watch?v=G5f6GC7SnhU
 
 > look into this? `https://technotim.live/posts/rotate-sops-encryption-keys/`
+
+# Tasks:
+
+## Tech Debt
+- allowUnfree should be dynamically enabled by the users whenever they need them
+- GNOME default monitors per hardware configuration?
+- graphics driver things should prob be in the hardware-configuration.nix
+- what does `boot.kernelModules = [ "sg" ]` do?
+- sops.age.keyFile should not just be hard coded to leyla?
+- isThinInstallation -> isThinUser
+## New Features
+- openssh configuration for server
+- VS code extensions should be installed declaratively
+- Flake templates
+- Install all the things on the NAS
+- firefox declarative???
+- figure out steam vr things?
+- Open GL?
