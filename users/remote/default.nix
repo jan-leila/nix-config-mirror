@@ -19,6 +19,9 @@ in
       (
         if cfg.isNormalUser then {
           # extraGroups = [ "wheel" ];
+
+          hashedPasswordFile = config.sops.secrets."passwords/remote".path;
+
           isNormalUser = true;
           openssh.authorizedKeys.keys = [];
         } else {
