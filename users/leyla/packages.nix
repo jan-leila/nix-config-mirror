@@ -22,10 +22,6 @@ in
 
   programs.adb.enable = true;
 
-  nixpkgs.config.permittedInsecurePackages = [
-    "electron-25.9.0"
-  ];
-
   users.users.leyla.packages = lib.mkIf cfg.isNormalUser (
     lib.mkMerge [
       (
