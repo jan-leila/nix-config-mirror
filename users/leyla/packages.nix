@@ -22,7 +22,7 @@ in
 
   programs.adb.enable = true;
 
-  users.users.leyla.packages = lib.mkIf cfg.isNormalUser (
+  users.users.leyla.packages = lib.mkIf (cfg.isNormalUser || cfg.isThinUser) (
     lib.mkMerge [
       (
         with pkgs; [
@@ -33,7 +33,7 @@ in
         ]
       )
       (
-        lib.mkIf (!cfg.isThinInstallation) (
+        lib.mkIf (!cfg.isThinUser) (
           with pkgs; [
             #foss platforms
             signal-desktop

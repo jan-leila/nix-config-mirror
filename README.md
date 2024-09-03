@@ -35,12 +35,13 @@ TODO: keys.txt should prob be readable by owning user only?
 - graphics driver things should prob be in the hardware-configuration.nix
 - what does `boot.kernelModules = [ "sg" ]` do?
 - sops.age.keyFile should not just be hard coded to leyla?
-- isThinInstallation -> isThinUser
+- use dashes for options not camel case
 ## New Features
 - openssh configuration for server
 - VS code extensions should be installed declaratively
-- Flake templates
+- Flake templates - https://nix.dev/manual/nix/2.22/command-ref/new-cli/nix3-flake-init
 - Install all the things on the NAS
 - firefox declarative???
 - figure out steam vr things?
 - Open GL?
+- util functions
