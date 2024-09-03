@@ -27,6 +27,8 @@ TODO: keys.txt should prob be readable by owning user only?
 
 > look into this? `https://technotim.live/posts/rotate-sops-encryption-keys/`
 
+> something about ssh keys for remotes
+
 # Tasks:
 
 ## Tech Debt
