@@ -17,9 +17,9 @@
   sops.age.keyFile = "/home/leyla/.config/sops/age/keys.txt";
 
   users.leyla.isNormalUser = true;
+  users.leyla.isThinInstallation = true;
   users.ester.isNormalUser = false;
   users.eve.isNormalUser = false;
-
 
   boot.loader.grub = {
     enable = true;

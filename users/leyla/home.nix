@@ -120,33 +120,4 @@
       };
     };
   };
-
-  # dconf.settings = {
-  #   "org/gnome/settings-daemon/plugins/media-keys" = {
-  #     custom-keybindings = [
-  #       "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
-  #     ];
-  #   };
-  # };
-
-  # "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
-  #   binding = "<Super>t";
-  #   command = "kgx";
-  #   name = "Open Terminal";
-  # };
-
-
-  # services.xserver.desktopManager.gnome3 = {
-  #   extraGSettingsOverridePackages = with pkgs; [ gnome3.gnome-settings-daemon ];
-  #   extraGSettingsOverrides = ''
-  #     [org.gnome.settings-daemon.plugins.media-keys]
-  #     custom-keybindings=['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']
-
-
-  #     [org.gnome.settings-daemon.plugins.media-keys.custom-keybindings.custom0]
-  #     binding='<Super>t'
-  #     command='kgx'
-  #     name='Open terminal'
-  #   '';
-  # }
 }
