@@ -10,3 +10,4 @@
 10. figure out steam vr things?
 11. GNOME default monitors per hardware configuration?
 12. Install all the things on the NAS
+13. Flake templates
