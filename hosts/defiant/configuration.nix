@@ -37,6 +37,12 @@
   services.xserver.desktopManager.gnome.enable = true;
   services.xserver.desktopManager.xterm.enable = false;
 
+  # disable computer sleeping
+  systemd.targets.sleep.enable = false;
+  systemd.targets.suspend.enable = false;
+  systemd.targets.hibernate.enable = false;
+  systemd.targets.hybrid-sleep.enable = false;
+
   # temp enable password auth over ssh for setup
   services.openssh = {
     enable = true;
