@@ -9,6 +9,7 @@ in
 
   options.users.leyla = {
     isNormalUser = lib.mkEnableOption "create usable leyla user";
+    isThinInstallation = lib.mkEnableOption "are most programs going to be installed or not";
     hasPiperMouse = lib.mkEnableOption "install programs for managing piper supported mouses";
     hasOpenRGBHardware = lib.mkEnableOption "install programs for managing openRGB supported hardware";
     hasViaKeyboard = lib.mkEnableOption "install programs for managing via supported keyboards";
@@ -35,7 +36,12 @@ in
       (
         if cfg.isNormalUser then {
           isNormalUser = true;
-          extraGroups = [ "networkmanager" "wheel" "adbusers" "docker" ];
+          extraGroups = lib.mkMerge [
+            ["networkmanager" "wheel" "docker"]
+            (
+              lib.mkIf (!cfg.isThinInstallation) [ "adbusers" ]
+            )
+          ];
 
           hashedPasswordFile = config.sops.secrets."passwords/leyla".path;
         } else {

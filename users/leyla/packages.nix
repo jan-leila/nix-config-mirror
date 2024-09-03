@@ -27,79 +27,65 @@ in
   ];
 
   users.users.leyla.packages = lib.mkIf cfg.isNormalUser (
-    with pkgs; [
-      #foss platforms
-      signal-desktop
-      bitwarden
-      firefox
-      ungoogled-chromium
-      libreoffice
-      inkscape
-      gimp
-      krita
-      freecad
-      # cura
-      kicad-small
-      makemkv
-      transmission_4-gtk
-      onionshare
-      easytag
-      # rhythmbox
-      (lib.mkIf cfg.hasGPU obs-studio)
-      # wireshark
-      # rpi-imager
-      # fritzing
+    lib.mkMerge [
+      (
+        with pkgs; [
+          # comand line tools
+          yt-dlp
+          ffmpeg
+          imagemagick
+        ]
+      )
+      (
+        lib.mkIf (!cfg.isThinInstallation) (
+          with pkgs; [
+            #foss platforms
+            signal-desktop
+            bitwarden
+            firefox
+            ungoogled-chromium
+            libreoffice
+            inkscape
+            gimp
+            krita
+            freecad
+            # cura
+            kicad-small
+            makemkv
+            transmission_4-gtk
+            onionshare
+            easytag
+            # rhythmbox
+            (lib.mkIf cfg.hasGPU obs-studio)
+            # wireshark
+            # rpi-imager
+            # fritzing
 
-      # comand line tools
-      yt-dlp
-      ffmpeg
-      imagemagick
+            # proprietary platforms
+            discord
+            obsidian
+            steam
+            (lib.mkIf cfg.hasGPU davinci-resolve)
+            
+            # development tools
+            vscodium
+            androidStudioPackages.canary
+            jetbrains.idea-community
+            dbeaver-bin
+            bruno
 
-      # proprietary platforms
-      discord
-      obsidian
-      steam
-      (lib.mkIf cfg.hasGPU davinci-resolve)
-      
-      # development tools
-      vscodium
-      androidStudioPackages.canary
-      jetbrains.idea-community
-      dbeaver-bin
-      bruno
+            # system tools
+            protonvpn-gui
+            nextcloud-client
+            noisetorch
 
-      # system tools
-      protonvpn-gui
-      nextcloud-client
-      noisetorch
-
-      # hardware managment tools
-      (lib.mkIf cfg.hasPiperMouse piper)
-      (lib.mkIf cfg.hasOpenRGBHardware openrgb)
-      (lib.mkIf cfg.hasViaKeyboard via)
-
-      # # gaming
-      # # emulators
-      # # nintendo
-      # # TODO: replace this with self hosted flake
-      # # (lib.mkIf cfg.hasGPU yuzu-mainline) # Switch Emulator
-      # # TODO: replace this with self hosted flake
-      # # citra-canary # 3DS emulator
-      # (lib.mkIf cfg.hasGPU cemu) # Wii-U emulator
-      # dolphin-emu # GameCube and Wii Emulator
-      # desmume # DS Emulator
-      # mupen64plus # N64 Emulator
-      # zsnes # SNES Emulator
-      # vbam # Game Boy Advanced Emulator
-      # fceux # NES Emulator
-      # # play station
-      # rpcs3 # PS3 Emulator
-      # pcsx2 # PS2 Emulator
-      # pcsxr # PS1 Emulator
-      # # TODO: more play station emulators here when they come out
-      # #misc
-      # stella # Atari 2600 Emulator
-      # mame # mame Emulator
+            # hardware managment tools
+            (lib.mkIf cfg.hasPiperMouse piper)
+            (lib.mkIf cfg.hasOpenRGBHardware openrgb)
+            (lib.mkIf cfg.hasViaKeyboard via)
+          ]
+        )
+      )
     ]
   );
 }
