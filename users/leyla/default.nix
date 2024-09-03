@@ -17,7 +17,7 @@ in
   };
 
   config = {
-    sops.secrets = lib.mkIf cfg.isFullUser {
+    sops.secrets = lib.mkIf (cfg.isFullUser || cfg.isThinUser) {
       "passwords/leyla" = {
         neededForUsers = true;
         # sopsFile = ../secrets.yaml;
