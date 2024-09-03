@@ -5,3 +5,8 @@
 5. sops.age.keyFile should not just be hard coded to leyla?
 6. openssh configuration for server
 7. isThinInstallation -> isThinUser
+8. VS code extensions should be installed declaratively
+9. firefox declarative???
+10. figure out steam vr things?
+11. GNOME default monitors per hardware configuration?
+12. Install all the things on the NAS
