@@ -39,6 +39,7 @@ TODO: keys.txt should prob be readable by owning user only?
 - sops.age.keyFile should not just be hard coded to leyla?
 - use dashes for options not camel case
 ## New Features
+- RAID CARD
 - VS code extensions should be installed declaratively
 - Flake templates - https://nix.dev/manual/nix/2.22/command-ref/new-cli/nix3-flake-init
 - Install all the things on the NAS
@@ -46,3 +47,5 @@ TODO: keys.txt should prob be readable by owning user only?
 - figure out steam vr things?
 - Open GL?
 - util functions
+- openssh known hosts https://search.nixos.org/options?channel=unstable&from=0&size=15&sort=alpha_asc&type=packages&query=services.openssh
+- limit boot configurations to 2 on defiant
