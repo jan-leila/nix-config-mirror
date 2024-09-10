@@ -39,6 +39,7 @@ TODO: keys.txt should prob be readable by owning user only?
 - sops.age.keyFile should not just be hard coded to leyla?
 - use dashes for options not camel case
 ## New Features
+- STOP FROM SLEEPING
 - VS code extensions should be installed declaratively
 - Flake templates - https://nix.dev/manual/nix/2.22/command-ref/new-cli/nix3-flake-init
 - Install all the things on the NAS
