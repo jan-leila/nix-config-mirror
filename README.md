@@ -29,6 +29,9 @@ TODO: keys.txt should prob be readable by owning user only?
 
 > something about ssh keys for remotes
 
+# Updating
+`nix flake update`
+
 # Tasks:
 
 ## Tech Debt
