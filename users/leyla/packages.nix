@@ -72,6 +72,7 @@ in
 
             # system tools
             protonvpn-gui
+            openvpn
             nextcloud-client
             noisetorch
 
