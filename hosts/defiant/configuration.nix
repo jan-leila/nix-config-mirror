@@ -11,19 +11,39 @@
       ../../enviroments/server
     ];
 
-  sops.defaultSopsFile = ../../secrets/secrets.yaml;
-  sops.defaultSopsFormat = "yaml";
+  sops = {
+    defaultSopsFile = ../../secrets/secrets.yaml;
+    defaultSopsFormat = "yaml";
 
-  sops.age.keyFile = "/home/leyla/.config/sops/age/keys.txt";
+    age ={
+      keyFile = "/home/leyla/.config/sops/age/keys.txt";
+      # sshKeyPaths = ["${config.home.homeDirectory}/.ssh/nix-ed25519"];
+      # generateKey = true;
+    };
+  };
+
+  # home.sessionVariables = {
+  #   SOPS_AGE_KEY_FILE = "${config.home.homeDirectory}/.config/sops-nix/key.txt";
+  # };
 
   users.leyla.isThinUser = true;
 
   boot.loader.grub = {
     enable = true;
-    device = "/dev/sda";
-    useOSProber = true;
+    zfsSupport = true;
+    efiSupport = true;
+    efiInstallAsRemovable = true;
+    # devices = [ "/dev/disk/by-path/pci-0000:23:00.3-usb-0:1:1.0-scsi-0:0:0:0-part2" ];
+    # mirroredBoots = [
+    #   { devices = [ "/dev/disk/by-id/ata-ST18000NE000-3G6101_ZVTCXVEB-part1" ]; path = "/boot1"; efiSysMountPoint = "/boot"; }
+    #   { devices = [ "/dev/disk/by-id/ata-ST18000NE000-3G6101_ZVTCXWSC-part1" ]; path = "/boot2"; efiSysMountPoint = "/boot2"; }
+    #   { devices = [ "/dev/disk/by-id/ata-ST18000NE000-3G6101_ZVTD10EH-part1" ]; path = "/boot3"; efiSysMountPoint = "/boot3"; }
+    # ];
   };
 
+  boot.supportedFilesystems = [ "zfs" ];
+
+  networking.hostId = "c8985fc5"; # TODO: populate this when I get home
   networking.hostName = "defiant"; # Define your hostname.
 
   nixpkgs.config.allowUnfree = true;

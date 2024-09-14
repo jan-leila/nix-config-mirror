@@ -8,6 +8,12 @@
     # encrypt files that contain secreats that I would like to not encrypt
     sops-nix.url = "github:Mic92/sops-nix";
 
+    # declairtive disk configuration
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # managment per user
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -18,7 +24,7 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
-  outputs = { self, nixpkgs, nixos-hardware, ... }@inputs:
+  outputs = { self, nixpkgs, disko, nixos-hardware, ... }@inputs:
     let
       forEachSystem = nixpkgs.lib.genAttrs [
         "aarch64-darwin"
@@ -53,6 +59,8 @@
         defiant = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs; };
           modules = [
+            disko.nixosModules.disko
+            ./hosts/defiant/disko-config.nix
             ./hosts/defiant/configuration.nix
           ];
         };
