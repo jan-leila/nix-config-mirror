@@ -17,17 +17,23 @@
 `./rebuild.sh`
 
 # New machine setup
+
 keys for decrypting password secrets for each users located at ~/.config/sops/age/keys.txt
+> TODO: `keys.txt`` should prob be readable by owning user only?
 
 updating passwords: `sops secrets/secrets.yaml`
 
-TODO: keys.txt should prob be readable by owning user only?
+`nix run github:nix-community/nixos-anywhere/69ad3f4a50cfb711048f54013404762c9a8e201e -- --flake '.#defiant' nixos@192.168.1.130 --extra-files ~/.config/sops/age/`
 
 > how the current config was set up https://www.youtube.com/watch?v=G5f6GC7SnhU
 
-> look into this? `https://technotim.live/posts/rotate-sops-encryption-keys/`
-
 > something about ssh keys for remotes
+
+# Notes:
+- Look into this for fixing nixos-anywhere `https://github.com/lucidph3nx/nixos-config/tree/main`
+- Look into this for rotating sops keys `https://technotim.live/posts/rotate-sops-encryption-keys/`
+- Look into this for openssh known configurations https://search.nixos.org/options?channel=unstable&from=0&size=15&sort=alpha_asc&type=packages&query=services.openssh
+- Look into this for flake templates https://nix.dev/manual/nix/2.22/command-ref/new-cli/nix3-flake-init
 
 # Updating
 `nix flake update`
@@ -35,7 +41,7 @@ TODO: keys.txt should prob be readable by owning user only?
 # Tasks:
 
 ## Tech Debt
-- allowUnfree should be dynamically enabled by the users whenever they need them
+- allowUnfree should be dynamically enabled by the users whenever they need them (this isnt enabled at all right now for some reason???)
 - GNOME default monitors per hardware configuration?
 - graphics driver things should prob be in the hardware-configuration.nix
 - what does `boot.kernelModules = [ "sg" ]` do?
@@ -45,11 +51,12 @@ TODO: keys.txt should prob be readable by owning user only?
 - DISKO for server
 - STOP FROM SLEEPING
 - VS code extensions should be installed declaratively
-- Flake templates - https://nix.dev/manual/nix/2.22/command-ref/new-cli/nix3-flake-init
+- Flake templates
 - Install all the things on the NAS
 - firefox declarative???
 - figure out steam vr things?
 - Open GL?
 - util functions
-- openssh known hosts https://search.nixos.org/options?channel=unstable&from=0&size=15&sort=alpha_asc&type=packages&query=services.openssh
+- openssh known hosts
 - limit boot configurations to 2 on defiant
+- rotate sops encryption keys
