@@ -40,13 +40,12 @@ updating passwords: `sops secrets/secrets.yaml`
 
 ## Tech Debt
 - allowUnfree should be dynamically enabled by the users whenever they need them (this isnt enabled at all right now for some reason???)
-- GNOME default monitors per hardware configuration?
-- graphics driver things should prob be in the hardware-configuration.nix
 - use dashes for options not camel case
 - Move configs for pipe mouse, open rgb, and via keyboard to hardware config and install users side from those configs
 ## New Features
 - DISKO for server
-- STOP FROM SLEEPING
+- GNOME default monitors per hardware configuration?
+- stop nas from sleeping
 - VS code extensions should be installed declaratively
 - Flake templates
 - Install all the things on the NAS
