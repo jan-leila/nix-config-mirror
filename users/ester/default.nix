@@ -27,7 +27,7 @@ in
       (
         if cfg.isFullUser then {
           isNormalUser = true;
-          extraGroups = [ "networkmanager" ];
+          extraGroups = [ "networkmanager" "users" ];
 
           hashedPasswordFile = config.sops.secrets."passwords/ester".path;
 
