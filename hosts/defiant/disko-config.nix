@@ -20,14 +20,6 @@ let
             mountpoint = "/boot";
           };
         };
-        # root = {
-        #   size = "100%";
-        #   content = {
-        #     type = "filesystem";
-        #     format = "ext4";
-        #     mountpoint = "/";
-        #   };
-        # };
       };
     };
   };
@@ -50,7 +42,7 @@ let
 in {
   disko.devices = {
     disk = {
-      boot = bootDisk "/dev/sda"; # "/dev/disk/by-path/pci-0000:23:00.3-usb-0:1:1.0-scsi-0:0:0:0";
+      boot = bootDisk "/dev/disk/by-path/pci-0000:23:00.3-usb-0:1:1.0-scsi-0:0:0:0";
 
       hd_13_tb_a = zfsDisk "/dev/disk/by-id/ata-ST18000NE000-3G6101_ZVTCXVEB";
       hd_13_tb_b = zfsDisk "/dev/disk/by-id/ata-ST18000NE000-3G6101_ZVTCXWSC";
