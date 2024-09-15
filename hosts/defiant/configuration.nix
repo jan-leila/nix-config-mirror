@@ -11,17 +11,6 @@
       ../../enviroments/server
     ];
 
-  sops = {
-    defaultSopsFile = ../../secrets/secrets.yaml;
-    defaultSopsFormat = "yaml";
-
-    age ={
-      keyFile = "/home/leyla/.config/sops/age/keys.txt";
-      # sshKeyPaths = ["${config.home.homeDirectory}/.ssh/nix-ed25519"];
-      # generateKey = true;
-    };
-  };
-
   # home.sessionVariables = {
   #   SOPS_AGE_KEY_FILE = "${config.home.homeDirectory}/.config/sops-nix/key.txt";
   # };

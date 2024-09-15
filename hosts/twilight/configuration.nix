@@ -11,11 +11,6 @@
       ../../enviroments/client
     ];
 
-  sops.defaultSopsFile = ../../secrets/secrets.yaml;
-  sops.defaultSopsFormat = "yaml";
-
-  sops.age.keyFile = "/home/leyla/.config/sops/age/keys.txt";
-
   users.leyla = {
     isFullUser = true;
     hasPiperMouse = true;
