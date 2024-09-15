@@ -17,13 +17,11 @@
 `./rebuild.sh`
 
 # New machine setup
-
-keys for decrypting password secrets for each users located at ~/.config/sops/age/keys.txt
-> TODO: `keys.txt`` should prob be readable by owning user only?
+keys for decrypting password secrets for each users located at `/var/lib/sops-nix/key.txt`
 
 updating passwords: `sops secrets/secrets.yaml`
 
-`nix run github:nix-community/nixos-anywhere/69ad3f4a50cfb711048f54013404762c9a8e201e -- --flake '.#defiant' nixos@192.168.1.130 --extra-files ~/.config/sops/age/`
+`nix run github:nix-community/nixos-anywhere/69ad3f4a50cfb711048f54013404762c9a8e201e -- --flake '.#hostname' nixos@192.168.1.130 --extra-files ~/.config/sops/age/`
 
 > how the current config was set up https://www.youtube.com/watch?v=G5f6GC7SnhU
 
@@ -44,9 +42,8 @@ updating passwords: `sops secrets/secrets.yaml`
 - allowUnfree should be dynamically enabled by the users whenever they need them (this isnt enabled at all right now for some reason???)
 - GNOME default monitors per hardware configuration?
 - graphics driver things should prob be in the hardware-configuration.nix
-- what does `boot.kernelModules = [ "sg" ]` do?
-- sops.age.keyFile should not just be hard coded to leyla?
 - use dashes for options not camel case
+- Move configs for pipe mouse, open rgb, and via keyboard to hardware config and install users side from those configs
 ## New Features
 - DISKO for server
 - STOP FROM SLEEPING

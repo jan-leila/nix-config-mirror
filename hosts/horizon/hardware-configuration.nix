@@ -10,8 +10,14 @@
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
+  boot.kernelModules = [ "kvm-intel" "sg" ];
   boot.extraModulePackages = [ ];
+
+  # Bootloader.
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
+  hardware.graphics.enable = true;
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/866d422b-f816-4ad9-9846-791839cb9337";
@@ -57,6 +63,7 @@
   networking.useDHCP = lib.mkDefault true;
   # networking.interfaces.enp0s20f0u1.useDHCP = lib.mkDefault true;
   # networking.interfaces.wlp170s0.useDHCP = lib.mkDefault true;
+  networking.hostName = "horizon"; # Define your hostname.
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
