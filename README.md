@@ -21,7 +21,7 @@ keys for decrypting password secrets for each users located at `/var/lib/sops-ni
 
 updating passwords: `sops secrets/secrets.yaml`
 
-`nix run github:nix-community/nixos-anywhere/69ad3f4a50cfb711048f54013404762c9a8e201e -- --flake '.#hostname' nixos@192.168.1.130 --extra-files ~/.config/sops/age/`
+`./install.sh --target 192.168.1.130 --flake hostname`
 
 > how the current config was set up https://www.youtube.com/watch?v=G5f6GC7SnhU
 

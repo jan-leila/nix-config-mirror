@@ -31,12 +31,16 @@
   sops = {
     defaultSopsFile = ../../secrets/secrets.yaml;
     defaultSopsFormat = "yaml";
+    gnupg.sshKeyPaths = [];
 
     age ={
       keyFile = "/var/lib/sops-nix/key.txt";
-      # sshKeyPaths = ["${config.home.homeDirectory}/.ssh/nix-ed25519"];
+      sshKeyPaths = [];
       # generateKey = true;
     };
+  };
+  environment.sessionVariables = {
+    AGE_KEY_FILE_LOCATION = "/var/lib/sops-nix/";
   };
 
   # List packages installed in system profile.
