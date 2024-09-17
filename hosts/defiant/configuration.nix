@@ -34,6 +34,9 @@
 
   boot.zfs.extraPools = [ "zpool" ];
 
+  services.zfs.autoScrub.enable = true;
+  services.zfs.autoSnapshot.enable = true;
+
   # this might need to match the hostId of the installation medium? `head -c 8 /etc/machine-id` NOPE
   networking.hostId = "c51763d6";
   networking.hostName = "defiant"; # Define your hostname.
