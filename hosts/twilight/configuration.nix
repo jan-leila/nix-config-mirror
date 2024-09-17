@@ -11,15 +11,17 @@
       ../../enviroments/client
     ];
 
-  users.leyla = {
-    isFullUser = true;
-    hasPiperMouse = true;
-    hasOpenRGBHardware = true;
-    hasViaKeyboard = true;
-    hasGPU = true;
+  users = {
+    leyla = {
+      isFullUser = true;
+      hasPiperMouse = true;
+      hasOpenRGBHardware = true;
+      hasViaKeyboard = true;
+      hasGPU = true;
+    };
+    ester.isFullUser = true;
+    eve.isFullUser = true;
   };
-  users.ester.isFullUser = true;
-  users.eve.isFullUser = true;
   
   # enabled virtualisation for docker
   # virtualisation.docker.enable = true;

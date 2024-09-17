@@ -8,62 +8,73 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" "sg" ];
-  boot.extraModulePackages = [ ];
+  boot = {
+    initrd = {
+      availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
+      kernelModules = [ ];
+    };
+    kernelModules = [ "kvm-intel" "sg" ];
+    extraModulePackages = [ ];
+    
+    # Bootloader.
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
+  };
 
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
 
   hardware.graphics.enable = true;
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/866d422b-f816-4ad9-9846-791839cb9337";
-      fsType = "ext4";
-    };
+  fileSystems = {
+    "/" =
+      { device = "/dev/disk/by-uuid/866d422b-f816-4ad9-9846-791839cb9337";
+        fsType = "ext4";
+      };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/E138-65B5";
-      fsType = "vfat";
-    };
+    "/boot" =
+      { device = "/dev/disk/by-uuid/E138-65B5";
+        fsType = "vfat";
+      };
+
+    "/mnt/leyla_home" =
+      {
+        device = "server.arpa:/home/leyla";
+        fsType = "nfs";
+        options = [ "x-systemd.automount" "user" "nofail" "soft" "x-systemd.idle-timeout=600" "fsc" ];
+      };
+
+    "/mnt/share_home" =
+      {
+        device = "server.arpa:/home/share";
+        fsType = "nfs";
+        options = [ "x-systemd.automount" "user" "nofail" "soft" "x-systemd.idle-timeout=600" "fsc" ];
+      };
+
+    "/mnt/docker_home" =
+      {
+        device = "server.arpa:/home/docker";
+        fsType = "nfs";
+        options = [ "x-systemd.automount" "noauto" "x-systemd.idle-timeout=600" ];
+      };
+  };
 
   services.cachefilesd.enable = true;
-
-  fileSystems."/mnt/leyla_home" =
-    {
-      device = "server.arpa:/home/leyla";
-      fsType = "nfs";
-      options = [ "x-systemd.automount" "user" "nofail" "soft" "x-systemd.idle-timeout=600" "fsc" ];
-    };
-
-  fileSystems."/mnt/share_home" =
-    {
-      device = "server.arpa:/home/share";
-      fsType = "nfs";
-      options = [ "x-systemd.automount" "user" "nofail" "soft" "x-systemd.idle-timeout=600" "fsc" ];
-    };
-
-  fileSystems."/mnt/docker_home" =
-    {
-      device = "server.arpa:/home/docker";
-      fsType = "nfs";
-      options = [ "x-systemd.automount" "noauto" "x-systemd.idle-timeout=600" ];
-    };
 
   swapDevices =
     [ { device = "/dev/disk/by-uuid/be98e952-a072-4c3a-8c12-69500b5a2fff"; }
     ];
 
-  # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
-  # (the default) this is the recommended approach. When using systemd-networkd it's
-  # still possible to use this option, but it's recommended to use it in conjunction
-  # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
-  networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.enp0s20f0u1.useDHCP = lib.mkDefault true;
-  # networking.interfaces.wlp170s0.useDHCP = lib.mkDefault true;
-  networking.hostName = "horizon"; # Define your hostname.
+  networking = {
+    # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
+    # (the default) this is the recommended approach. When using systemd-networkd it's
+    # still possible to use this option, but it's recommended to use it in conjunction
+    # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
+    useDHCP = lib.mkDefault true;
+    # networking.interfaces.enp0s20f0u1.useDHCP = lib.mkDefault true;
+    # networking.interfaces.wlp170s0.useDHCP = lib.mkDefault true;
+    hostName = "horizon"; # Define your hostname.
+  };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";

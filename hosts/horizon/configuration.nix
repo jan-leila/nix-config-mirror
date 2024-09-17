@@ -11,9 +11,11 @@
       ../../enviroments/client
     ];
 
-  users.leyla.isFullUser = true;
-  users.ester.isFullUser = true;
-  users.eve.isFullUser = true;
+  users = {
+    leyla.isFullUser = true;
+    ester.isFullUser = true;
+    eve.isFullUser = true;
+  };
 
   # enabled virtualisation for docker
   virtualisation.docker = {
