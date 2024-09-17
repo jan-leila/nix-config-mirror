@@ -32,7 +32,10 @@
 
   boot.supportedFilesystems = [ "zfs" ];
 
-  networking.hostId = "c8985fc5"; # TODO: populate this when I get home
+  boot.zfs.extraPools = [ "zpool" ];
+
+  # this might need to match the hostId of the installation medium? `head -c 8 /etc/machine-id` NOPE
+  networking.hostId = "c51763d6";
   networking.hostName = "defiant"; # Define your hostname.
 
   nixpkgs.config.allowUnfree = true;
@@ -45,6 +48,9 @@
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
   services.xserver.desktopManager.xterm.enable = false;
+
+  # Get rid of xTerm
+  services.xserver.excludePackages = [ pkgs.xterm ];
 
   # disable computer sleeping
   systemd.targets.sleep.enable = false;

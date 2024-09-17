@@ -33,7 +33,32 @@ let
           size = "100%";
           content = {
             type = "zfs";
-            pool = "zpool";
+            pool = "zroot";
+          };
+        };
+      };
+    };
+  };
+  cacheDisk = devicePath: swapSize: {
+    type = "disk";
+    device = devicePath;
+    content = {
+      type = "gpt";
+      partitions = {
+        encryptedSwap = {
+          size = swapSize;
+          content = {
+            type = "swap";
+            randomEncryption = true;
+            discardPolicy = "both";
+            resumeDevice = true;
+          };
+        };
+        zfs = {
+          size = "100%";
+          content = {
+            type = "zfs";
+            pool = "zroot";
           };
         };
       };
@@ -48,10 +73,10 @@ in {
       hd_13_tb_b = zfsDisk "/dev/disk/by-id/ata-ST18000NE000-3G6101_ZVTCXWSC";
       hd_13_tb_c = zfsDisk "/dev/disk/by-id/ata-ST18000NE000-3G6101_ZVTD10EH";
 
-      # ssd_2_tb_a = zfsDisk "/dev/disk/by-id/XXX";
+      # ssd_2_tb_a = cacheDisk "64G" "/dev/disk/by-id/XXX";
     };
     zpool = {
-      zpool = {
+      zroot = {
         type = "zpool";
         mode = {
           topology = {
@@ -73,7 +98,7 @@ in {
         options = {
           ashift = "12";
         };
-
+        
         rootFsOptions = {
           encryption = "on";
           keyformat = "hex";
@@ -83,19 +108,18 @@ in {
           acltype = "posixacl";
           "com.sun:auto-snapshot" = "false";
         };
+
+        mountpoint = "/";
+        postCreateHook = "zfs list -t snapshot -H -o name | grep -E '^zroot@blank$' || zfs snapshot zroot@blank";
         
         datasets = {
-          "root" = {
-            type = "zfs_fs";
-            mountpoint = "/";
-          };
           "nix" = {
             type = "zfs_fs";
             mountpoint = "/nix";
           };
           "home" = {
             type = "zfs_fs";
-            mountpoint = "/home";
+            mountpoint = "/mnt/home";
             options = {
               "com.sun:auto-snapshot" = "true";
             };
