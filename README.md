@@ -56,3 +56,4 @@ updating passwords: `sops secrets/secrets.yaml`
 - openssh known hosts
 - limit boot configurations to 2 on defiant
 - rotate sops encryption keys periodically (and somehow sync between devices?)
+- zfs email after scrubbing
