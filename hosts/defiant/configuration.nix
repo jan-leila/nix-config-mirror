@@ -11,10 +11,6 @@
       ../../enviroments/server
     ];
 
-  # home.sessionVariables = {
-  #   SOPS_AGE_KEY_FILE = "${config.home.homeDirectory}/.config/sops-nix/key.txt";
-  # };
-
   users.leyla.isThinUser = true;
 
   boot.loader.grub = {
@@ -22,13 +18,10 @@
     zfsSupport = true;
     efiSupport = true;
     efiInstallAsRemovable = true;
-    # devices = [ "/dev/disk/by-path/pci-0000:23:00.3-usb-0:1:1.0-scsi-0:0:0:0-part2" ];
-    # mirroredBoots = [
-    #   { devices = [ "/dev/disk/by-id/ata-ST18000NE000-3G6101_ZVTCXVEB-part1" ]; path = "/boot1"; efiSysMountPoint = "/boot"; }
-    #   { devices = [ "/dev/disk/by-id/ata-ST18000NE000-3G6101_ZVTCXWSC-part1" ]; path = "/boot2"; efiSysMountPoint = "/boot2"; }
-    #   { devices = [ "/dev/disk/by-id/ata-ST18000NE000-3G6101_ZVTD10EH-part1" ]; path = "/boot3"; efiSysMountPoint = "/boot3"; }
-    # ];
   };
+
+  virtualisation.docker.enable = true;
+  users.extraGroups.docker.members = [ "leyla" ];
 
   boot.supportedFilesystems = [ "zfs" ];
 
@@ -71,6 +64,41 @@
       X11Forwarding = false;
     };
   };
+
+  fileSystems."/srv/nfs4/docker" = {
+    device = "/home/docker";
+    options = [ "bind" ];
+  };
+
+  fileSystems."/srv/nfs4/users" = {
+    device = "/home/users";
+    options = [ "bind" ];
+  };
+
+  fileSystems."/srv/nfs4/leyla" = {
+    device = "/home/leyla";
+    options = [ "bind" ];
+  };
+
+  fileSystems."/srv/nfs4/eve" = {
+    device = "/home/eve";
+    options = [ "bind" ];
+  };
+
+  services.nfs.server.enable = true;
+  services.nfs.server.exports = ''
+    /srv/nfs4/docker 192.168.1.0/24(rw,sync,crossmnt,no_subtree_check)
+
+    /srv/nfs4/leyla 192.168.1.0/22(rw,sync,no_subtree_check,nohide)
+    /srv/nfs4/eve   192.168.1.0/22(rw,sync,no_subtree_check,crossmnt)
+    /srv/nfs4/share 192.168.1.0/22(rw,sync,no_subtree_check,crossmnt)
+    
+    # /export         192.168.1.10(rw,fsid=0,no_subtree_check) 192.168.1.15(rw,fsid=0,no_subtree_check)
+    # /export/kotomi  192.168.1.10(rw,nohide,insecure,no_subtree_check) 192.168.1.15(rw,nohide,insecure,no_subtree_check)
+    # /export/mafuyu  192.168.1.10(rw,nohide,insecure,no_subtree_check) 192.168.1.15(rw,nohide,insecure,no_subtree_check)
+    # /export/sen     192.168.1.10(rw,nohide,insecure,no_subtree_check) 192.168.1.15(rw,nohide,insecure,no_subtree_check)
+    # /export/tomoyo  192.168.1.10(rw,nohide,insecure,no_subtree_check) 192.168.1.15(rw,nohide,insecure,no_subtree_check)
+  '';
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
