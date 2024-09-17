@@ -32,7 +32,7 @@
 
   boot.supportedFilesystems = [ "zfs" ];
 
-  boot.zfs.extraPools = [ "zpool" ];
+  boot.zfs.extraPools = [ "zroot" ];
 
   services.zfs.autoScrub.enable = true;
   services.zfs.autoSnapshot.enable = true;
