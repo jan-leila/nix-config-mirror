@@ -55,4 +55,4 @@ updating passwords: `sops secrets/secrets.yaml`
 - util functions
 - openssh known hosts
 - limit boot configurations to 2 on defiant
-- rotate sops encryption keys
+- rotate sops encryption keys periodically (and somehow sync between devices?)
