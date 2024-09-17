@@ -39,8 +39,8 @@ updating passwords: `sops secrets/secrets.yaml`
 # Tasks:
 
 ## Tech Debt
-- allowUnfree should be dynamically enabled by the users whenever they need them (this isnt enabled at all right now for some reason???)
-- use dashes for options not camel case
+- allowUnfree should be enabled user side not host side (this isnt enabled at all right now for some reason???)
+- use dashes for options not camel case?
 - Move configs for pipe mouse, open rgb, and via keyboard to hardware config and install users side from those configs
 ## New Features
 - DISKO for server
