@@ -57,3 +57,4 @@ updating passwords: `sops secrets/secrets.yaml`
 - limit boot configurations to 2 on defiant
 - rotate sops encryption keys periodically (and somehow sync between devices?)
 - zfs email after scrubbing
+- tail scale on clients and PiKVM
