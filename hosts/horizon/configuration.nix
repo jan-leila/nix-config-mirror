@@ -23,6 +23,7 @@
       setSocketVariable = true;
     };
   };
+  users.extraGroups.docker.members = [ "leyla" ];
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;

@@ -37,7 +37,7 @@ in
         if (cfg.isFullUser || cfg.isThinUser) then {
           isNormalUser = true;
           extraGroups = lib.mkMerge [
-            ["networkmanager" "wheel" "docker" "users"]
+            ["networkmanager" "wheel" "users"]
             (
               lib.mkIf (!cfg.isThinUser) [ "adbusers" ]
             )

@@ -5,6 +5,7 @@
   ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.trusted-users = [ "leyla" ];
 
   # Enable networking
   networking.networkmanager.enable = true;
