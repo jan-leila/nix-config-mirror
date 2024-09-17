@@ -35,7 +35,7 @@ mode=${mode:-switch}
 
 if [[ "$target" == "$(hostname)" ]]
 then
-	sudo nixos-rebuild $mode --flake .#$flake
+	nixos-rebuild $mode --use-remote-sudo --flake .#$flake
 else
 	nixos-rebuild $mode --use-remote-sudo --target-host $USER@$target --flake .#$flake
 fi
