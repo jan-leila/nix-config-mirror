@@ -14,11 +14,16 @@ while [ $# -gt 0 ]; do
       if [[ "$1" != *=* ]]; then shift; fi
       mode="${1#*=}"
       ;;
+    --user*|-u*)
+      if [[ "$1" != *=* ]]; then shift; fi
+      user="${1#*=}"
+      ;;
     --help|-h)
       echo "--help -h: print this message"
-      echo "--target -t: set the target system to install on"
-      echo "--flake -f: set the flake to install on the target system"
-      echo "--user -u: set the user to install flake as on the target system"
+      echo "--target -t: set the target system to rebuild on"
+      echo "--flake -f: set the flake to rebuild on the target system"
+      echo "--mode -m: set the mode to rebuild flake as on the target system"
+      echo "--user -u: set the user to rebuild flake as on the target system"
       exit 0
       ;;
     *)
@@ -32,10 +37,11 @@ done
 target=${target:-$(hostname)}
 flake=${flake:-$target}
 mode=${mode:-switch}
+user=${user:-$USER}
 
 if [[ "$target" == "$(hostname)" ]]
 then
 	nixos-rebuild $mode --use-remote-sudo --flake .#$flake
 else
-	nixos-rebuild $mode --use-remote-sudo --target-host $USER@$target --flake .#$flake
+	nixos-rebuild $mode --use-remote-sudo --target-host $user@$target --flake .#$flake
 fi
