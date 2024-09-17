@@ -32,6 +32,7 @@ updating passwords: `sops secrets/secrets.yaml`
 - Look into this for rotating sops keys `https://technotim.live/posts/rotate-sops-encryption-keys/`
 - Look into this for openssh known configurations https://search.nixos.org/options?channel=unstable&from=0&size=15&sort=alpha_asc&type=packages&query=services.openssh
 - Look into this for flake templates https://nix.dev/manual/nix/2.22/command-ref/new-cli/nix3-flake-init
+- Look into this for headscale https://carlosvaz.com/posts/setting-up-headscale-on-nixos/
 
 # Updating
 `nix flake update`
@@ -43,12 +44,12 @@ updating passwords: `sops secrets/secrets.yaml`
 - use dashes for options not camel case?
 - Move configs for pipe mouse, open rgb, and via keyboard to hardware config and install users side from those configs
 ## New Features
-- DISKO for server
 - GNOME default monitors per hardware configuration?
 - stop nas from sleeping
 - VS code extensions should be installed declaratively
 - Flake templates
-- Install all the things on the NAS
+- Docker parity with existing NAS on defiant
+- NFS on defiant
 - firefox declarative???
 - figure out steam vr things?
 - Open GL?
@@ -57,4 +58,6 @@ updating passwords: `sops secrets/secrets.yaml`
 - limit boot configurations to 2 on defiant
 - rotate sops encryption keys periodically (and somehow sync between devices?)
 - zfs email after scrubbing
-- tail scale on clients and PiKVM
+- headscale server
+- mastodon server
+- tail scale clients
