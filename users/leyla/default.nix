@@ -56,6 +56,15 @@ in
       )
     ];
 
+    # TODO: this should reference the home directory from the user config
+    services.openssh.hostKeys = [
+      {
+        path = "/home/leyla/.ssh/leyla_" + config.networking.hostName + "_ed25519";
+        rounds = 100;
+        type = "ed25519";
+      }
+    ];
+
     home-manager.users.leyla = lib.mkIf (cfg.isFullUser || cfg.isThinUser) (import ./home.nix);
   };
 }
