@@ -45,6 +45,7 @@ updating passwords: `sops secrets/secrets.yaml`
 - have nfs binds and exports defined by same code
 - move services from defiant into own flake
 - made base domain in nas services configurable
+- vscode extensions should be in own flake (make sure to add the nixpkgs.overlays in it too)
 ## New Features
 - GNOME default monitors per hardware configuration?
 - stop nas from sleeping
