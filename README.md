@@ -41,8 +41,8 @@ updating passwords: `sops secrets/secrets.yaml`
 
 ## Tech Debt
 - allowUnfree should be enabled user side not host side (this isnt enabled at all right now for some reason???)
-- use dashes for options not camel case?
 - Move configs for pipe mouse, open rgb, and via keyboard to hardware config and install users side from those configs
+- have nfs binds and exports defined by same code
 ## New Features
 - GNOME default monitors per hardware configuration?
 - stop nas from sleeping
