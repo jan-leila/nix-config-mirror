@@ -40,7 +40,7 @@ updating passwords: `sops secrets/secrets.yaml`
 # Tasks:
 
 ## Tech Debt
-- allowUnfree should be enabled user side not host side (this isnt enabled at all right now for some reason???)
+- allowUnfree should be enabled user side not host side (this isn't enabled at all right now for some reason???)
 - Move configs for pipe mouse, open rgb, and via keyboard to hardware config and install users side from those configs
 - have nfs binds and exports defined by same code
 - move services from defiant into own flake
@@ -48,7 +48,6 @@ updating passwords: `sops secrets/secrets.yaml`
 ## New Features
 - GNOME default monitors per hardware configuration?
 - stop nas from sleeping
-- VS code extensions should be installed declaratively
 - Flake templates
 - Docker parity with existing NAS on defiant
 - NFS on defiant
