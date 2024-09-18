@@ -25,7 +25,9 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  services = {
+  services = let
+    headscaleDomain = "headscale.jan-leila.com";
+  in {
     zfs = {
       autoScrub.enable = true;
       autoSnapshot.enable = true;
@@ -37,12 +39,12 @@
       enable = true;
 
       # Enable the GNOME Desktop Environment.
-      services.xserver.displayManager = {
+      displayManager = {
         gdm.enable = true;
       };
-      services.xserver.desktopManager = {
+      desktopManager = {
         gnome.enable = true;
-        desktopManager.xterm.enable = false;
+        xterm.enable = false;
       };
 
       # Get rid of xTerm
@@ -76,6 +78,37 @@
         # /export/tomoyo  192.168.1.10(rw,nohide,insecure,no_subtree_check) 192.168.1.15(rw,nohide,insecure,no_subtree_check)
       '';
     };
+
+    headscale = {
+      enable = true;
+      address = "0.0.0.0";
+      port = 8080;
+      settings = {
+        server_url = "https://${headscaleDomain}";
+        dns_config.base_domain = "jan-leila.com";
+        logtail.enabled = false;
+      };
+    };
+
+    nginx = {
+      enable = false; # TODO: enable this when you want to test all the configs
+      virtualHosts = {
+        ${headscaleDomain} = {
+          forceSSL = true;
+          enableACME = true;
+          locations."/" = {
+            proxyPass =
+              "http://localhost:${toString config.services.headscale.port}";
+            proxyWebsockets = true;
+          };
+        };
+      };
+    };
+  };
+    
+  security.acme = {
+    acceptTerms = true;
+    defaults.email = "jan-leila@protonmail.com";
   };
 
   # disable computer sleeping
@@ -107,6 +140,8 @@
       options = [ "bind" ];
     };
   };
+
+  environment.systemPackages = [ config.services.headscale.package ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
