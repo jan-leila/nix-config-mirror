@@ -75,14 +75,13 @@ in
             (vscode-with-extensions.override {
               vscode = vscodium;
               vscodeExtensions = with open-vsx; [
-                jeanp413.open-remote-ssh
-              ] ++ (with vscode-marketplace; [
                 # vs code feel extensions
                 ms-vscode.atom-keybindings
                 akamud.vscode-theme-onedark
                 streetsidesoftware.code-spell-checker
                 streetsidesoftware.code-spell-checker-german
                 streetsidesoftware.code-spell-checker-italian
+                jeanp413.open-remote-ssh
 
                 # nix extensions
                 pinage404.nix-extension-pack
@@ -99,10 +98,12 @@ in
                 firsttris.vscode-jest-runner
                 stylelint.vscode-stylelint
                 tauri-apps.tauri-vscode
-                karyfoundation.nearley
 
                 # misc extensions        
                 bungcip.better-toml
+              ] ++ (with vscode-marketplace; [
+                # js extensions
+                karyfoundation.nearley
               ]);
             })
             androidStudioPackages.canary
