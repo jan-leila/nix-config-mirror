@@ -22,6 +22,12 @@
 
     # repo of hardware configs for prebuilt systems
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
+    # vscode extensions 
+    nix-vscode-extensions = {
+      url = "github:nix-community/nix-vscode-extensions";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, disko, nixos-hardware, ... }@inputs:

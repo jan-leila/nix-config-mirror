@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ... }:
+{ lib, config, pkgs, inputs, ... }:
 let
   cfg = config.users.leyla;
 in
@@ -7,6 +7,12 @@ in
     ../../overlays/intellij.nix
     ../../overlays/vscodium.nix
   ];
+
+  nixpkgs = {
+    overlays = [
+      inputs.nix-vscode-extensions.overlays.default
+    ];
+  };
 
   programs = {
     bash.shellAliases = lib.mkIf cfg.isFullUser {
@@ -66,7 +72,39 @@ in
             (lib.mkIf cfg.hasGPU davinci-resolve)
             
             # development tools
-            vscodium
+            (vscode-with-extensions.override {
+              vscode = vscodium;
+              vscodeExtensions = with open-vsx; [
+                jeanp413.open-remote-ssh
+              ] ++ (with vscode-marketplace; [
+                # vs code feel extensions
+                ms-vscode.atom-keybindings
+                akamud.vscode-theme-onedark
+                streetsidesoftware.code-spell-checker
+                streetsidesoftware.code-spell-checker-german
+                streetsidesoftware.code-spell-checker-italian
+
+                # nix extensions
+                pinage404.nix-extension-pack
+                jnoortheen.nix-ide
+
+                # html extensions
+                formulahendry.auto-rename-tag
+                ms-vscode.live-server
+                
+                # js extensions
+                dsznajder.es7-react-js-snippets
+                dbaeumer.vscode-eslint
+                standard.vscode-standard
+                firsttris.vscode-jest-runner
+                stylelint.vscode-stylelint
+                tauri-apps.tauri-vscode
+                karyfoundation.nearley
+
+                # misc extensions        
+                bungcip.better-toml
+              ]);
+            })
             androidStudioPackages.canary
             jetbrains.idea-community
             dbeaver-bin
