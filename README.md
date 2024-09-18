@@ -43,6 +43,8 @@ updating passwords: `sops secrets/secrets.yaml`
 - allowUnfree should be enabled user side not host side (this isnt enabled at all right now for some reason???)
 - Move configs for pipe mouse, open rgb, and via keyboard to hardware config and install users side from those configs
 - have nfs binds and exports defined by same code
+- move services from defiant into own flake
+- made base domain in nas services configurable
 ## New Features
 - GNOME default monitors per hardware configuration?
 - stop nas from sleeping
