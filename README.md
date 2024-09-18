@@ -63,3 +63,4 @@ updating passwords: `sops secrets/secrets.yaml`
 - headscale server
 - mastodon server
 - tail scale clients
+- wake on LAN
