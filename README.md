@@ -28,7 +28,6 @@ updating passwords: `sops secrets/secrets.yaml`
 > something about ssh keys for remotes
 
 # Notes:
-- Look into this for fixing nixos-anywhere `https://github.com/lucidph3nx/nixos-config/tree/main`
 - Look into this for rotating sops keys `https://technotim.live/posts/rotate-sops-encryption-keys/`
 - Look into this for openssh known configurations https://search.nixos.org/options?channel=unstable&from=0&size=15&sort=alpha_asc&type=packages&query=services.openssh
 - Look into this for flake templates https://nix.dev/manual/nix/2.22/command-ref/new-cli/nix3-flake-init
