@@ -48,7 +48,7 @@ updating passwords: `sops secrets/secrets.yaml`
 - vscode extensions should be in own flake (make sure to add the nixpkgs.overlays in it too)
 ## New Features
 - GNOME default monitors per hardware configuration?
-- offline access for nfs mounts (overlay with rsync might be a good option here?)
+- offline access for nfs mounts (overlay with rsync might be a good option here? https://www.spinics.net/lists/linux-unionfs/msg07105.html note about nfs4 and overlay fs)
 - Flake templates
 - Docker parity with existing NAS on defiant
 - NFS on defiant
