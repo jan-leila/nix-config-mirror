@@ -41,7 +41,7 @@
       {
         device = "defiant:/home/leyla";
         fsType = "nfs";
-        options = [ "x-systemd.automount" "user" "nofail" "soft" "x-systemd.idle-timeout=600" "fsc" ];
+        options = [ "fsc" "x-systemd.automount" "soft" "x-systemd.idle-timeout=600" ];
       };
 
     "/mnt/eve_home" =
