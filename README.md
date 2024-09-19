@@ -9,23 +9,15 @@
 |  `emergent` |      Desktop Computer      |       Eve        |  Laptop   |
 | `threshold` |           Laptop           |       Eve        |  Desktop  |
 
-
-### Rebuild current machine to match target host:
-`sudo nixos-rebuild switch --flake .#hostname`
-
-### Rebuild current machine maintaining current target
+### Rebuilding machines
 `./rebuild.sh`
 
 # New machine setup
-keys for decrypting password secrets for each users located at `/var/lib/sops-nix/key.txt`
+keys for decrypting password secrets for each users located at `/var/lib/sops-nix/key.txt` and will be copied over to new machines installed with ./`install.sh`
 
 updating passwords: `sops secrets/secrets.yaml`
 
 `./install.sh --target 192.168.1.130 --flake hostname`
-
-> how the current config was set up https://www.youtube.com/watch?v=G5f6GC7SnhU
-
-> something about ssh keys for remotes
 
 # Notes:
 - Look into this for rotating sops keys `https://technotim.live/posts/rotate-sops-encryption-keys/`
