@@ -25,7 +25,11 @@ updating passwords: `sops secrets/secrets.yaml`
 - Look into this for flake templates https://nix.dev/manual/nix/2.22/command-ref/new-cli/nix3-flake-init
 - Look into this for headscale https://carlosvaz.com/posts/setting-up-headscale-on-nixos/
 
-# Updating
+# Tooling
+## Lint
+`nix run git+https://github.com/kamadorueda/alejandra -- .`
+
+## Updating
 `nix flake update`
 
 # Tasks:
