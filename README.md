@@ -9,28 +9,29 @@
 |  `emergent` |      Desktop Computer      |       Eve        |  Laptop   |
 | `threshold` |           Laptop           |       Eve        |  Desktop  |
 
-### Rebuilding machines
+# Tooling
+## Lint
+`./lint.sh`
+
+## Rebuilding
 `./rebuild.sh`
 
-# New machine setup
-keys for decrypting password secrets for each users located at `/var/lib/sops-nix/key.txt` and will be copied over to new machines installed with ./`install.sh`
+## Updating
+`nix flake update`
 
-updating passwords: `sops secrets/secrets.yaml`
-
+## New host setup
 `./install.sh --target 192.168.1.130 --flake hostname`
 
 # Notes:
+
+## Research topics
 - Look into this for rotating sops keys `https://technotim.live/posts/rotate-sops-encryption-keys/`
 - Look into this for openssh known configurations https://search.nixos.org/options?channel=unstable&from=0&size=15&sort=alpha_asc&type=packages&query=services.openssh
 - Look into this for flake templates https://nix.dev/manual/nix/2.22/command-ref/new-cli/nix3-flake-init
 - Look into this for headscale https://carlosvaz.com/posts/setting-up-headscale-on-nixos/
 
-# Tooling
-## Lint
-`nix run git+https://github.com/kamadorueda/alejandra -- .`
-
-## Updating
-`nix flake update`
+## Configuration
+updating passwords: `sops secrets/secrets.yaml`
 
 # Tasks:
 
