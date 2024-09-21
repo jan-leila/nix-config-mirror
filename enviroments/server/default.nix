@@ -10,7 +10,9 @@
 
   options = {
     domains = {
-      base_domain = lib.mkOption { type = lib.types.str; };
+      base_domain = lib.mkOption {
+        type = lib.types.str;
+      };
       headscale = {
         subdomain = lib.mkOption {
           type = lib.types.str;
@@ -101,7 +103,7 @@
 
       postgresql = {
         enable = true;
-        ensureDatabases = [ "forgejo" ];
+        ensureDatabases = ["forgejo"];
         identMap = ''
           # ArbitraryMapName systemUser DBUser
           superuser_map      root      postgres
