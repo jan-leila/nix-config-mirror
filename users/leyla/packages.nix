@@ -118,9 +118,9 @@ in
             noisetorch
 
             # hardware managment tools
-            (lib.mkIf cfg.hasPiperMouse piper)
-            (lib.mkIf cfg.hasOpenRGBHardware openrgb)
-            (lib.mkIf cfg.hasViaKeyboard via)
+            (lib.mkIf config.hardware.piperMouse.enable piper)
+            (lib.mkIf config.hardware.openRGB.enable openrgb)
+            (lib.mkIf config.hardware.viaKeyboard.enable via)
           ]
         )
       )

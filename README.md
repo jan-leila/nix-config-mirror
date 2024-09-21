@@ -32,11 +32,11 @@ updating passwords: `sops secrets/secrets.yaml`
 
 ## Tech Debt
 - allowUnfree should be enabled user side not host side (this isn't enabled at all right now for some reason???)
-- Move configs for pipe mouse, open rgb, and via keyboard to hardware config and install users side from those configs
 - have nfs binds and exports defined by same code
 - move services from defiant into own flake
 - made base domain in nas services configurable
 - vscode extensions should be in own flake (make sure to add the nixpkgs.overlays in it too)
+- server service system users should also be on local systems for file permission reasons
 ## New Features
 - GNOME default monitors per hardware configuration?
 - offline access for nfs mounts (overlay with rsync might be a good option here? https://www.spinics.net/lists/linux-unionfs/msg07105.html note about nfs4 and overlay fs)

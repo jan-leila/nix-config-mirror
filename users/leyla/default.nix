@@ -10,9 +10,6 @@ in
   options.users.leyla = {
     isFullUser = lib.mkEnableOption "create usable leyla user";
     isThinUser = lib.mkEnableOption "create usable user but witohut user applications";
-    hasPiperMouse = lib.mkEnableOption "install programs for managing piper supported mouses";
-    hasOpenRGBHardware = lib.mkEnableOption "install programs for managing openRGB supported hardware";
-    hasViaKeyboard = lib.mkEnableOption "install programs for managing via supported keyboards";
     hasGPU = lib.mkEnableOption "installs gpu intensive programs";
   };
 

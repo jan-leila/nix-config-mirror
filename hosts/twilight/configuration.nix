@@ -14,9 +14,6 @@
   users = {
     leyla = {
       isFullUser = true;
-      hasPiperMouse = true;
-      hasOpenRGBHardware = true;
-      hasViaKeyboard = true;
       hasGPU = true;
     };
     ester.isFullUser = true;
