@@ -61,9 +61,14 @@
         };
 
         forgejo = {
-          uid = 2002;
+          gid = 2002;
           members = ["forgejo" "leyla"];
         };
+
+        # pihole = {
+        #   gid = 2003;
+        #   members = ["pihole" "leyla"];
+        # };
       };
 
       users = {
@@ -78,17 +83,76 @@
           group = "forgejo";
           isSystemUser = true;
         };
+
+        # pihole = {
+        #   uid = 2003;
+        #   group = "forgejo";
+        #   isSystemUser = true;
+        # };
       };
     };
 
-    systemd.tmpfiles.rules = [
-      "d /home/jellyfin 755 jellyfin jellyfin -"
-      "d /home/jellyfin/media 775 jellyfin jellyfin_media -"
-      "d /home/jellyfin/config 750 jellyfin jellyfin -"
-      "d /home/jellyfin/cache 755 jellyfin jellyfin_media -"
-      "d /home/forgejo 750 forgejo forgejo -"
-      "d /home/forgejo/data 750 forgejo forgejo -"
-    ];
+    # virtualisation.oci-containers.containers.pihole = {
+    #   image = "pihole/pihole:latest";
+    #   environment = {
+    #     TZ = "America/Chicago"; # TODO: set this to the systems timezone
+    #     WEBPASSWORD_FILE = "..."; # TODO: set this from secrets file/config that is set to secrets file (I think this also needs to be mounted in volumns?)
+    #   };
+    #   volumes = [
+    #     "/home/docker/pihole:/etc/pihole:rw" # TODO; set this based on configs
+    #   ];
+    #   ports = [
+    #     "53:53/tcp"
+    #     "53:53/udp"
+    #     "3000:80/tcp" # TODO: bind container ip address?
+    #   ];
+    #   log-driver = "journald";
+    #   extraOptions = [
+    #     "--ip=172.18.1.5" # TODO: set this to some ip address from configs
+    #     "--network-alias=pihole" # TODO: set this from configs
+    #     "--network=nas_default"
+    #   ];
+    # };
+
+    systemd = {
+      tmpfiles.rules = [
+        "d /home/jellyfin 755 jellyfin jellyfin -"
+        "d /home/jellyfin/media 775 jellyfin jellyfin_media -"
+        "d /home/jellyfin/config 750 jellyfin jellyfin -"
+        "d /home/jellyfin/cache 755 jellyfin jellyfin_media -"
+        "d /home/forgejo 750 forgejo forgejo -"
+        "d /home/forgejo/data 750 forgejo forgejo -"
+        # "d /home/forgejo 750 pihole pihole -"
+      ];
+
+      # services = {
+      #   pihole = {
+      #     serviceConfig = {
+      #       Restart = lib.mkOverride 500 "always";
+      #     };
+      #     after = [
+      #       "podman-network-nas_default.service"
+      #     ];
+      #     requires = [
+      #       "podman-network-nas_default.service"
+      #     ];
+      #     partOf = [
+      #       "podman-compose-nas-root.target"
+      #     ];
+      #     wantedBy = [
+      #       "podman-compose-nas-root.target"
+      #     ];
+      #   };
+      # };
+
+      # disable computer sleeping
+      targets = {
+        sleep.enable = false;
+        suspend.enable = false;
+        hibernate.enable = false;
+        hybrid-sleep.enable = false;
+      };
+    };
 
     services = {
       nfs.server = {
@@ -178,14 +242,6 @@
     security.acme = {
       acceptTerms = true;
       defaults.email = "jan-leila@protonmail.com";
-    };
-
-    # disable computer sleeping
-    systemd.targets = {
-      sleep.enable = false;
-      suspend.enable = false;
-      hibernate.enable = false;
-      hybrid-sleep.enable = false;
     };
 
     networking.firewall.allowedTCPPorts = [2049 8081];
