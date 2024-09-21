@@ -96,6 +96,22 @@
         '';
       };
 
+      postgresql = {
+        enable = true;
+        ensureDatabases = [ "forgejo" ];
+        identMap = ''
+          # ArbitraryMapName systemUser DBUser
+          superuser_map      root      postgres
+          superuser_map      postgres  postgres
+          superuser_map      forgejo   forgejo
+        '';
+        # configuration here lets users access the db that matches their name and lets user postgres access everything
+        authentication = pkgs.lib.mkOverride 10 ''
+          # type database DBuser   auth-method  optional_ident_map
+          local sameuser  all     peer        map=superuser_map
+        '';
+      };
+
       headscale = {
         enable = true;
         address = "0.0.0.0";
