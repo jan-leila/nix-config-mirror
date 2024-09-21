@@ -101,7 +101,7 @@
         address = "0.0.0.0";
         port = 8080;
         settings = {
-          server_url = "${config.domains.headscale.subdomain}.${config.domains.base_domain}";
+          server_url = "http://${config.domains.headscale.subdomain}.${config.domains.base_domain}";
           dns_config.base_domain = config.domains.base_domain;
           logtail.enabled = false;
         };
