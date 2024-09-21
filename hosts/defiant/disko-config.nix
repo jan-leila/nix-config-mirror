@@ -1,11 +1,10 @@
-{ lib, ... }:
-let
+{lib, ...}: let
   bootDisk = devicePath: {
     type = "disk";
     device = devicePath;
     content = {
       type = "gpt";
-  
+
       partitions = {
         boot = {
           size = "1M";
@@ -86,11 +85,13 @@ in {
                 # should this only mirror for this inital config with 3 drives we will used raidz2 for future configs???
                 mode = "mirror";
                 members = [
-                  "hd_13_tb_a" "hd_13_tb_b" "hd_13_tb_c"
+                  "hd_13_tb_a"
+                  "hd_13_tb_b"
+                  "hd_13_tb_c"
                 ];
               }
             ];
-            cache = [ ];
+            cache = [];
             # cache = [ "ssd_2_tb_a" ];
           };
         };
@@ -98,7 +99,7 @@ in {
         options = {
           ashift = "12";
         };
-        
+
         rootFsOptions = {
           encryption = "on";
           keyformat = "hex";
@@ -111,7 +112,7 @@ in {
 
         mountpoint = "/";
         postCreateHook = "zfs list -t snapshot -H -o name | grep -E '^zroot@blank$' || zfs snapshot zroot@blank";
-        
+
         datasets = {
           "nix" = {
             type = "zfs_fs";
@@ -133,4 +134,3 @@ in {
     };
   };
 }
-

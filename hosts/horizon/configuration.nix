@@ -1,15 +1,18 @@
 # leyla laptop
-{ config, pkgs, inputs, ... }:
 {
-  imports =
-    [
-      inputs.home-manager.nixosModules.default
-      inputs.sops-nix.nixosModules.sops
+  config,
+  pkgs,
+  inputs,
+  ...
+}: {
+  imports = [
+    inputs.home-manager.nixosModules.default
+    inputs.sops-nix.nixosModules.sops
 
-      ./hardware-configuration.nix
-      
-      ../../enviroments/client
-    ];
+    ./hardware-configuration.nix
+
+    ../../enviroments/client
+  ];
 
   users = {
     leyla.isFullUser = true;
@@ -25,7 +28,7 @@
       setSocketVariable = true;
     };
   };
-  users.extraGroups.docker.members = [ "leyla" ];
+  users.extraGroups.docker.members = ["leyla"];
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;

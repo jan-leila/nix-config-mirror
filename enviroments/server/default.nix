@@ -1,21 +1,40 @@
-{ config, pkgs, ... }:
 {
+  config,
+  pkgs,
+  ...
+}: {
   imports = [
     ../common
   ];
 
-  users.groups.jellyfin_media = {
-    members = ["jellyfin" "leyla" "ester" "eve"];
-  };
+  users = {
+    groups = {
+      jellyfin_media = {
+        members = ["jellyfin" "leyla" "ester" "eve"];
+      };
 
-  users.groups.jellyfin = {
-    members = ["jellyfin" "leyla"];
-  };
+      jellyfin = {
+        members = ["jellyfin" "leyla"];
+      };
 
-  users.users.jellyfin = {
-    uid = 2000;
-    group = "jellyfin";
-    isSystemUser = true;
+      # forgejo = {
+      #   members = ["forgejo" "leyla"];
+      # };
+    };
+
+    users = {
+      jellyfin = {
+        uid = 2000;
+        group = "jellyfin";
+        isSystemUser = true;
+      };
+
+      # forgejo = {
+      #   uid = 2001;
+      #   group = "forgejo";
+      #   isSystemUser = true;
+      # };
+    };
   };
 
   systemd.tmpfiles.rules = [
@@ -23,11 +42,14 @@
     "d /home/jellyfin/media 775 jellyfin jellyfin_media -"
     "d /home/jellyfin/config 750 jellyfin jellyfin -"
     "d /home/jellyfin/cache 755 jellyfin jellyfin_media -"
+    # "d /home/forgejo 750 forgejo forgejo -"
+    # "d /home/forgejo/data 750 forgejo forgejo -"
   ];
 
   services = let
     jellyfinDomain = "jellyfin.jan-leila.com";
     headscaleDomain = "headscale.jan-leila.com";
+    # forgejoDomain = "forgejo.jan-leila.com";
   in {
     nfs.server = {
       enable = true;
@@ -59,6 +81,20 @@
       openFirewall = false;
     };
 
+    # TODO: figure out what needs to be here
+    # forgejo = {
+    #   enable = true;
+    #   database.type = "postgres";
+    #   lfs.enable = true;
+    #   settings = {
+    #     server = {
+    #       DOMAIN = forgejoDomain;
+    #       HTTP_PORT = 8081;
+    #     };
+    #     service.DISABLE_REGISTRATION = true;
+    #   };
+    # };
+
     nginx = {
       enable = false; # TODO: enable this when you want to test all the configs
       virtualHosts = {
@@ -66,20 +102,20 @@
           forceSSL = true;
           enableACME = true;
           locations."/" = {
-            proxyPass =
-              "http://localhost:${toString config.services.headscale.port}";
+            proxyPass = "http://localhost:${toString config.services.headscale.port}";
             proxyWebsockets = true;
           };
         };
         ${jellyfinDomain} = {
           forceSSL = true;
           enableACME = true;
-          locations."/" = {
-            proxyPass =
-              "http://localhost:8096";
-            proxyWebsockets = true;
-          };
+          locations."/".proxyPass = "http://localhost:8096";
         };
+        # ${forgejoDomain} = {
+        #   forceSSL = true;
+        #   enableACME = true;
+        #   locations."/".proxyPass = "http://localhost:${toString config.services.forgejo.settings.server.HTTP_PORT}";
+        # };
       };
     };
   };
@@ -97,7 +133,7 @@
     hybrid-sleep.enable = false;
   };
 
-  networking.firewall.allowedTCPPorts = [ 2049 ];
+  networking.firewall.allowedTCPPorts = [2049];
 
   environment.systemPackages = [
     config.services.headscale.package

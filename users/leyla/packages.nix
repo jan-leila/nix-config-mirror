@@ -1,8 +1,12 @@
-{ lib, config, pkgs, inputs, ... }:
-let
-  cfg = config.users.leyla;
-in
 {
+  lib,
+  config,
+  pkgs,
+  inputs,
+  ...
+}: let
+  cfg = config.users.leyla;
+in {
   imports = [
     ../../overlays/intellij.nix
     ../../overlays/vscodium.nix
@@ -70,41 +74,43 @@ in
             obsidian
             steam
             (lib.mkIf cfg.hasGPU davinci-resolve)
-            
+
             # development tools
             (vscode-with-extensions.override {
               vscode = vscodium;
-              vscodeExtensions = with open-vsx; [
-                # vs code feel extensions
-                ms-vscode.atom-keybindings
-                akamud.vscode-theme-onedark
-                streetsidesoftware.code-spell-checker
-                streetsidesoftware.code-spell-checker-german
-                streetsidesoftware.code-spell-checker-italian
-                jeanp413.open-remote-ssh
+              vscodeExtensions = with open-vsx;
+                [
+                  # vs code feel extensions
+                  ms-vscode.atom-keybindings
+                  akamud.vscode-theme-onedark
+                  streetsidesoftware.code-spell-checker
+                  streetsidesoftware.code-spell-checker-german
+                  streetsidesoftware.code-spell-checker-italian
+                  jeanp413.open-remote-ssh
 
-                # nix extensions
-                pinage404.nix-extension-pack
-                jnoortheen.nix-ide
+                  # nix extensions
+                  pinage404.nix-extension-pack
+                  jnoortheen.nix-ide
 
-                # html extensions
-                formulahendry.auto-rename-tag
-                ms-vscode.live-server
-                
-                # js extensions
-                dsznajder.es7-react-js-snippets
-                dbaeumer.vscode-eslint
-                standard.vscode-standard
-                firsttris.vscode-jest-runner
-                stylelint.vscode-stylelint
-                tauri-apps.tauri-vscode
+                  # html extensions
+                  formulahendry.auto-rename-tag
+                  ms-vscode.live-server
 
-                # misc extensions        
-                bungcip.better-toml
-              ] ++ (with vscode-marketplace; [
-                # js extensions
-                karyfoundation.nearley
-              ]);
+                  # js extensions
+                  dsznajder.es7-react-js-snippets
+                  dbaeumer.vscode-eslint
+                  standard.vscode-standard
+                  firsttris.vscode-jest-runner
+                  stylelint.vscode-stylelint
+                  tauri-apps.tauri-vscode
+
+                  # misc extensions
+                  bungcip.better-toml
+                ]
+                ++ (with vscode-marketplace; [
+                  # js extensions
+                  karyfoundation.nearley
+                ]);
             })
             androidStudioPackages.canary
             jetbrains.idea-community

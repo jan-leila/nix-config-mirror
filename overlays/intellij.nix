@@ -1,5 +1,4 @@
-_:
-{
+_: {
   # nixpkgs.overlays = [
   #   (self: super: {
   #     # idea is too out of date for android gradle things

@@ -1,11 +1,9 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   imports = [
     ../common
   ];
 
   services = {
-
     # Enable CUPS to print documents.
     printing.enable = true;
 
@@ -21,7 +19,7 @@
       };
 
       # Get rid of xTerm
-      excludePackages = [ pkgs.xterm ];
+      excludePackages = [pkgs.xterm];
 
       # Configure keymap in X11
       xkb = {
@@ -43,7 +41,6 @@
       #media-session.enable = true;
     };
   };
-
 
   # Enable sound with pipewire.
   hardware.pulseaudio.enable = false;

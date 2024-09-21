@@ -1,11 +1,10 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   imports = [
-      ../../users
+    ../../users
   ];
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  nix.settings.trusted-users = [ "leyla" ];
+  nix.settings.experimental-features = ["nix-command" "flakes"];
+  nix.settings.trusted-users = ["leyla"];
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -32,10 +31,10 @@
   services = {
     openssh = {
       enable = true;
-      ports = [ 22 ];
+      ports = [22];
       settings = {
         PasswordAuthentication = false;
-        AllowUsers = [ "leyla" ]; # Allows all users by default. Can be [ "user1" "user2" ]
+        AllowUsers = ["leyla"]; # Allows all users by default. Can be [ "user1" "user2" ]
         UseDns = true;
         X11Forwarding = false;
       };
@@ -47,7 +46,7 @@
     defaultSopsFormat = "yaml";
     gnupg.sshKeyPaths = [];
 
-    age ={
+    age = {
       keyFile = "/var/lib/sops-nix/key.txt";
       sshKeyPaths = [];
       # generateKey = true;

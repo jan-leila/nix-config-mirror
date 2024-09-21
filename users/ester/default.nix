@@ -1,8 +1,11 @@
-{ lib, config, pkgs, ... }:
-let
-  cfg = config.users.ester;
-in
 {
+  lib,
+  config,
+  pkgs,
+  ...
+}: let
+  cfg = config.users.ester;
+in {
   options.users.ester = {
     isFullUser = lib.mkEnableOption "ester";
   };
@@ -25,9 +28,10 @@ in
       }
 
       (
-        if cfg.isFullUser then {
+        if cfg.isFullUser
+        then {
           isNormalUser = true;
-          extraGroups = [ "networkmanager" "users" ];
+          extraGroups = ["networkmanager" "users"];
 
           hashedPasswordFile = config.sops.secrets."passwords/ester".path;
 
@@ -36,7 +40,8 @@ in
             bitwarden
             discord
           ];
-        } else {
+        }
+        else {
           isSystemUser = true;
         }
       )

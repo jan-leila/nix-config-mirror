@@ -1,15 +1,18 @@
 # server nas
-{ config, pkgs, inputs, ... }:
 {
-  imports =
-    [
-      inputs.home-manager.nixosModules.default
-      inputs.sops-nix.nixosModules.sops
+  config,
+  pkgs,
+  inputs,
+  ...
+}: {
+  imports = [
+    inputs.home-manager.nixosModules.default
+    inputs.sops-nix.nixosModules.sops
 
-      ./hardware-configuration.nix
-      
-      ../../enviroments/server
-    ];
+    ./hardware-configuration.nix
+
+    ../../enviroments/server
+  ];
 
   users.leyla.isThinUser = true;
 
@@ -27,7 +30,7 @@
       autoScrub.enable = true;
       autoSnapshot.enable = true;
     };
-    
+
     # temp enable desktop enviroment for setup
     # Enable the X11 windowing system.
     xserver = {
@@ -43,7 +46,7 @@
       };
 
       # Get rid of xTerm
-      excludePackages = [ pkgs.xterm ];
+      excludePackages = [pkgs.xterm];
     };
   };
 

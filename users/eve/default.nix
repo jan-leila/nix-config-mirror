@@ -1,8 +1,11 @@
-{ lib, config, pkgs, ... }:
-let
-  cfg = config.users.eve;
-in
 {
+  lib,
+  config,
+  pkgs,
+  ...
+}: let
+  cfg = config.users.eve;
+in {
   options.users.eve = {
     isFullUser = lib.mkEnableOption "eve";
   };
@@ -25,9 +28,10 @@ in
       }
 
       (
-        if cfg.isFullUser then {
+        if cfg.isFullUser
+        then {
           isNormalUser = true;
-          extraGroups = [ "networkmanager" "users" ];
+          extraGroups = ["networkmanager" "users"];
 
           hashedPasswordFile = config.sops.secrets."passwords/eve".path;
 
@@ -38,7 +42,8 @@ in
             makemkv
             signal-desktop
           ];
-        } else {
+        }
+        else {
           isSystemUser = true;
         }
       )

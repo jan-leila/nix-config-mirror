@@ -1,5 +1,4 @@
-_:
-{
+_: {
   # nixpkgs.overlays = [
   #   (self: super: {
   #     # ui is broken on 1.84

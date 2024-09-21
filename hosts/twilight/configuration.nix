@@ -1,15 +1,18 @@
 # leyla laptop
-{ config, pkgs, inputs, ... }:
 {
-  imports =
-    [
-      inputs.home-manager.nixosModules.default
-      inputs.sops-nix.nixosModules.sops
+  config,
+  pkgs,
+  inputs,
+  ...
+}: {
+  imports = [
+    inputs.home-manager.nixosModules.default
+    inputs.sops-nix.nixosModules.sops
 
-      ./hardware-configuration.nix
-      
-      ../../enviroments/client
-    ];
+    ./hardware-configuration.nix
+
+    ../../enviroments/client
+  ];
 
   users = {
     leyla = {
@@ -19,7 +22,7 @@
     ester.isFullUser = true;
     eve.isFullUser = true;
   };
-  
+
   # enabled virtualisation for docker
   # virtualisation.docker.enable = true;
 

@@ -1,9 +1,12 @@
-{ lib, config, pkgs, ... }:
-let
-  cfg = config.users.leyla;
-in
 {
-  imports =[
+  lib,
+  config,
+  pkgs,
+  ...
+}: let
+  cfg = config.users.leyla;
+in {
+  imports = [
     ./packages.nix
   ];
 
@@ -31,12 +34,13 @@ in
       }
 
       (
-        if (cfg.isFullUser || cfg.isThinUser) then {
+        if (cfg.isFullUser || cfg.isThinUser)
+        then {
           isNormalUser = true;
           extraGroups = lib.mkMerge [
             ["networkmanager" "wheel" "users"]
             (
-              lib.mkIf (!cfg.isThinUser) [ "adbusers" ]
+              lib.mkIf (!cfg.isThinUser) ["adbusers"]
             )
           ];
 
@@ -48,7 +52,8 @@ in
               "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKBiZkg1c2aaNHiieBX4cEziqvJVj9pcDfzUrKU/mO0I leyla@twilight"
             ];
           };
-        } else {
+        }
+        else {
           isSystemUser = true;
         }
       )

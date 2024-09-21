@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home = {
@@ -73,11 +75,11 @@
   };
 
   programs = {
-  # Let Home Manager install and manage itself.
+    # Let Home Manager install and manage itself.
     home-manager.enable = true;
     git = {
       enable = true;
-      userName  = "Leyla Becker";
+      userName = "Leyla Becker";
       userEmail = "git@jan-leila.com";
       extraConfig.init.defaultBranch = "main";
     };
@@ -89,18 +91,18 @@
       "org/gnome/desktop/interface".color-scheme = "prefer-dark";
 
       "org/gnome/shell" = {
-          disable-user-extensions = false; # enables user extensions
-          enabled-extensions = [
-            # Put UUIDs of extensions that you want to enable here.
-            # If the extension you want to enable is packaged in nixpkgs,
-            # you can easily get its UUID by accessing its extensionUuid
-            # field (look at the following example).
-            pkgs.gnomeExtensions.dash-to-dock.extensionUuid
-            
-            # Alternatively, you can manually pass UUID as a string.  
-            # "dash-to-dock@micxgx.gmail.com"
-          ];
-        };
+        disable-user-extensions = false; # enables user extensions
+        enabled-extensions = [
+          # Put UUIDs of extensions that you want to enable here.
+          # If the extension you want to enable is packaged in nixpkgs,
+          # you can easily get its UUID by accessing its extensionUuid
+          # field (look at the following example).
+          pkgs.gnomeExtensions.dash-to-dock.extensionUuid
+
+          # Alternatively, you can manually pass UUID as a string.
+          # "dash-to-dock@micxgx.gmail.com"
+        ];
+      };
 
       "org/gnome/shell/extensions/dash-to-dock" = {
         "dock-position" = "LEFT";
