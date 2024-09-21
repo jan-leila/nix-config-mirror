@@ -48,17 +48,20 @@
   config = {
     users = {
       groups = {
-        jellyfin_media = {
-          members = ["jellyfin" "leyla" "ester" "eve"];
-        };
-
         jellyfin = {
+          gid = 2000;
           members = ["jellyfin" "leyla"];
         };
 
-        # forgejo = {
-        #   members = ["forgejo" "leyla"];
-        # };
+        jellyfin_media = {
+          gid = 2001;
+          members = ["jellyfin" "leyla" "ester" "eve"];
+        };
+
+        forgejo = {
+          uid = 2002;
+          members = ["forgejo" "leyla"];
+        };
       };
 
       users = {
@@ -68,11 +71,11 @@
           isSystemUser = true;
         };
 
-        # forgejo = {
-        #   uid = 2001;
-        #   group = "forgejo";
-        #   isSystemUser = true;
-        # };
+        forgejo = {
+          uid = 2002;
+          group = "forgejo";
+          isSystemUser = true;
+        };
       };
     };
 
@@ -81,8 +84,8 @@
       "d /home/jellyfin/media 775 jellyfin jellyfin_media -"
       "d /home/jellyfin/config 750 jellyfin jellyfin -"
       "d /home/jellyfin/cache 755 jellyfin jellyfin_media -"
-      # "d /home/forgejo 750 forgejo forgejo -"
-      # "d /home/forgejo/data 750 forgejo forgejo -"
+      "d /home/forgejo 750 forgejo forgejo -"
+      "d /home/forgejo/data 750 forgejo forgejo -"
     ];
 
     services = {
@@ -131,19 +134,19 @@
         cacheDir = "/home/jellyfin/cache"; # location on existing server: /home/docker/jellyfin/cache
       };
 
-      # TODO: figure out what needs to be here
-      # forgejo = {
-      #   enable = true;
-      #   database.type = "postgres";
-      #   lfs.enable = true;
-      #   settings = {
-      #     server = {
-      #       DOMAIN = forgejoDomain;
-      #       HTTP_PORT = 8081;
-      #     };
-      #     service.DISABLE_REGISTRATION = true;
-      #   };
-      # };
+      forgejo = {
+        enable = true;
+        database.type = "postgres";
+        lfs.enable = true;
+        settings = {
+          server = {
+            DOMAIN = config.domains.forgejo.hostname;
+            HTTP_PORT = 8081;
+          };
+          service.DISABLE_REGISTRATION = true;
+        };
+        stateDir = "/home/forgejo/data";
+      };
 
       nginx = {
         enable = false; # TODO: enable this when you want to test all the configs
@@ -161,11 +164,11 @@
             enableACME = true;
             locations."/".proxyPass = "http://localhost:8096";
           };
-          # ${config.domains.forgejo.hostname} = {
-          #   forceSSL = true;
-          #   enableACME = true;
-          #   locations."/".proxyPass = "http://localhost:${toString config.services.forgejo.settings.server.HTTP_PORT}";
-          # };
+          ${config.domains.forgejo.hostname} = {
+            forceSSL = true;
+            enableACME = true;
+            locations."/".proxyPass = "http://localhost:${toString config.services.forgejo.settings.server.HTTP_PORT}";
+          };
         };
       };
     };
@@ -183,7 +186,7 @@
       hybrid-sleep.enable = false;
     };
 
-    networking.firewall.allowedTCPPorts = [2049];
+    networking.firewall.allowedTCPPorts = [2049 8081];
 
     environment.systemPackages = [
       config.services.headscale.package
