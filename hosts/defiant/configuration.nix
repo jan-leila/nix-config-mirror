@@ -27,6 +27,9 @@
 
   domains = {
     base_domain = "jan-leila.com";
+    headscale.subdomain = "vpn";
+    jellyfin.subdomain = "media";
+    forgejo.subdomain = "git";
   };
 
   services = {
