@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+git stash -q --keep-index
+
+./lint.sh
+
+RESULT=$?
+
+git add -u
+
+exit $RESULT
