@@ -32,6 +32,7 @@
 
 ## Configuration
 updating passwords: `sops secrets/secrets.yaml`
+set up git pre-commit and post commit hooks: `git config core.hooksPath hooks`
 
 # Tasks:
 
