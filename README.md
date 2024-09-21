@@ -29,6 +29,7 @@
 - Look into this for openssh known configurations https://search.nixos.org/options?channel=unstable&from=0&size=15&sort=alpha_asc&type=packages&query=services.openssh
 - Look into this for flake templates https://nix.dev/manual/nix/2.22/command-ref/new-cli/nix3-flake-init
 - Look into this for headscale https://carlosvaz.com/posts/setting-up-headscale-on-nixos/
+- Look into this for home assistant configuration https://nixos.wiki/wiki/Home_Assistant https://myme.no/posts/2021-11-25-nixos-home-assistant.html
 
 ## Configuration
 updating passwords: `sops secrets/secrets.yaml`
