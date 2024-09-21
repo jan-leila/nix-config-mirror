@@ -25,6 +25,10 @@
 
   nixpkgs.config.allowUnfree = true;
 
+  domains = {
+    base_domain = "jan-leila.com";
+  };
+
   services = {
     zfs = {
       autoScrub.enable = true;

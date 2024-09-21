@@ -38,8 +38,6 @@ set up git configuration for local development: `git config --local include.path
 
 ## Tech Debt
 - allowUnfree should be enabled user side not host side (this isn't enabled at all right now for some reason???)
-- move services from defiant into own flake
-- made base domain in nas services configurable
 - vscode extensions should be in own flake (make sure to add the nixpkgs.overlays in it too)
 - server service system users should also be on local systems for file permission reasons
 ## New Features
