@@ -57,7 +57,6 @@ set up git configuration for local development: `git config --local include.path
 - Open GL?
 - util functions
 - openssh known hosts
-- limit boot configurations to 2 on defiant
 - rotate sops encryption keys periodically (and somehow sync between devices?)
 - zfs email after scrubbing
 - headscale server
