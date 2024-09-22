@@ -45,6 +45,7 @@ set up git configuration for local development: `git config --local include.path
 ## New Features
 - GNOME default monitors per hardware configuration?
 - offline access for nfs mounts (overlay with rsync might be a good option here? https://www.spinics.net/lists/linux-unionfs/msg07105.html note about nfs4 and overlay fs)
+- fix pre commit hook
 - Flake templates
 - home assistant virtual machine
 - pi hole docker
