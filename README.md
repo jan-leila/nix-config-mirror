@@ -58,7 +58,7 @@ set up git configuration for local development: `git config --local include.path
 - openssh known hosts
 - rotate sops encryption keys periodically (and somehow sync between devices?)
 - zfs email after scrubbing
-- headscale server
+- headscale server (just needs to be tested)
 - mastodon server
 - tail scale clients
 - wake on LAN
