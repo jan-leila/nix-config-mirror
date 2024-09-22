@@ -26,11 +26,6 @@
     zfs.extraPools = ["zroot"];
   };
 
-  # fileSystems."/" =
-  #   { device = "/dev/disk/by-uuid/dc6a9664-80f2-4988-afd7-fee5bd3ee2ca";
-  #     fsType = "ext4";
-  #   };
-
   swapDevices = [];
 
   networking = {
