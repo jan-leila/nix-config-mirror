@@ -86,6 +86,11 @@
         members = ["eve"];
       };
 
+      useres = {
+        gid = 100;
+        members = ["lelya" "ester" "eve"];
+      };
+
       jellyfin = {
         gid = 2000;
         members = ["jellyfin" "leyla"];

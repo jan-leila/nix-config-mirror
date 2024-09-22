@@ -30,7 +30,7 @@ in {
       then {
         isNormalUser = true;
         extraGroups = lib.mkMerge [
-          ["networkmanager" "wheel" "users"]
+          ["networkmanager" "wheel"]
           (
             lib.mkIf (!cfg.isThinUser) ["adbusers"]
           )
