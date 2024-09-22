@@ -41,8 +41,8 @@ set up git configuration for local development: `git config --local include.path
 - allowUnfree should be enabled user side not host side (this isn't enabled at all right now for some reason???)
 - vscode extensions should be in own flake (make sure to add the nixpkgs.overlays in it too)
 - join config for systemd.tmpfiles.rules and service directory bindings
+- monitor configuration in `~/.config/monitors.xml` should be sym linked to `/run/gdm/.config/monitors.xml`
 ## New Features
-- GNOME default monitors per hardware configuration? read this: https://discourse.nixos.org/t/gdm-monitor-configuration/6356/3
 - offline access for nfs mounts (overlay with rsync might be a good option here? https://www.spinics.net/lists/linux-unionfs/msg07105.html note about nfs4 and overlay fs)
 - fix pre commit hook
 - Flake templates
