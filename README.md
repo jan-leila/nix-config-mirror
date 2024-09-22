@@ -43,7 +43,7 @@ set up git configuration for local development: `git config --local include.path
 - server service system users should also be on local systems for file permission reasons
 - join config for systemd.tmpfiles.rules and service directory bindings
 ## New Features
-- GNOME default monitors per hardware configuration?
+- GNOME default monitors per hardware configuration? read this: https://discourse.nixos.org/t/gdm-monitor-configuration/6356/3
 - offline access for nfs mounts (overlay with rsync might be a good option here? https://www.spinics.net/lists/linux-unionfs/msg07105.html note about nfs4 and overlay fs)
 - fix pre commit hook
 - Flake templates
