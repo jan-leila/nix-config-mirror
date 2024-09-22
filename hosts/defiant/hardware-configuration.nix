@@ -34,15 +34,53 @@
   swapDevices = [];
 
   networking = {
-    # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
-    # (the default) this is the recommended approach. When using systemd-networkd it's
-    # still possible to use this option, but it's recommended to use it in conjunction
-    # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
-    useDHCP = lib.mkDefault true;
-    # networking.interfaces.eno1.useDHCP = lib.mkDefault true;
-    # networking.interfaces.eno2.useDHCP = lib.mkDefault true;
     hostId = "c51763d6";
     hostName = "defiant"; # Define your hostname.
+    useNetworkd = true;
+  };
+  
+  systemd.network = {
+    enable = true;
+
+    netdevs = {
+      "10-bond0" = {
+        netdevConfig = {
+          Kind = "bond";
+          Name = "bond0";
+        };
+        bondConfig = {
+          Mode = "802.3ad";
+          TransmitHashPolicy = "layer3+4";
+        };
+      };
+    };
+
+    networks = {
+      "30-enp4s0" = {
+        matchConfig.Name = "enp4s0";
+        networkConfig.Bond = "bond0";
+        DHCP = "ipv4";
+      };
+      "30-enp5s0" = {
+        matchConfig.Name = "enp5s0";
+        networkConfig.Bond = "bond0";
+        DHCP = "ipv4";
+      };
+
+      "40-bond0" = {
+        matchConfig.Name = "bond0";
+        linkConfig = {
+          RequiredForOnline = "carrier";
+        };
+        networkConfig.LinkLocalAddressing = "no";
+
+        address = [
+          # configure addresses including subnet mask
+          "192.168.1.10/24"
+          # TODO: ipv6 address configuration
+        ];
+      };
+    };
   };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
