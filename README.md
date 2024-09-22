@@ -38,7 +38,6 @@ set up git configuration for local development: `git config --local include.path
 # Tasks:
 
 ## Tech Debt
-- allowUnfree should be enabled user side not host side (this isn't enabled at all right now for some reason???)
 - vscode extensions should be in own flake (make sure to add the nixpkgs.overlays in it too)
 - join config for systemd.tmpfiles.rules and service directory bindings
 - monitor configuration in `~/.config/monitors.xml` should be sym linked to `/run/gdm/.config/monitors.xml`

@@ -23,8 +23,6 @@
     efiInstallAsRemovable = true;
   };
 
-  nixpkgs.config.allowUnfree = true;
-
   domains = {
     base_domain = "jan-leila.com";
     headscale.subdomain = "vpn";

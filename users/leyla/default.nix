@@ -1,7 +1,6 @@
 {
   lib,
   config,
-  pkgs,
   ...
 }: let
   cfg = config.users.leyla;
@@ -17,6 +16,8 @@ in {
   };
 
   config = {
+    nixpkgs.config.allowUnfree = true;
+
     sops.secrets = lib.mkIf (cfg.isFullUser || cfg.isThinUser) {
       "passwords/leyla" = {
         neededForUsers = true;

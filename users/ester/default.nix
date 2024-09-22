@@ -11,6 +11,8 @@ in {
   };
 
   config = {
+    nixpkgs.config.allowUnfree = true;
+
     sops.secrets = lib.mkIf cfg.isFullUser {
       "passwords/ester" = {
         neededForUsers = true;
