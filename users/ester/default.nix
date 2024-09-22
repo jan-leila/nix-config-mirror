@@ -18,33 +18,23 @@ in {
       };
     };
 
-    users.groups.ester = {};
+    users.users.ester = (
+      if cfg.isFullUser
+      then {
+        isNormalUser = true;
+        extraGroups = ["networkmanager" "users"];
 
-    users.users.ester = lib.mkMerge [
-      {
-        uid = 1001;
-        description = "Ester";
-        group = "ester";
+        hashedPasswordFile = config.sops.secrets."passwords/ester".path;
+
+        packages = with pkgs; [
+          firefox
+          bitwarden
+          discord
+        ];
       }
-
-      (
-        if cfg.isFullUser
-        then {
-          isNormalUser = true;
-          extraGroups = ["networkmanager" "users"];
-
-          hashedPasswordFile = config.sops.secrets."passwords/ester".path;
-
-          packages = with pkgs; [
-            firefox
-            bitwarden
-            discord
-          ];
-        }
-        else {
-          isSystemUser = true;
-        }
-      )
-    ];
+      else {
+        isSystemUser = true;
+      }
+    );
   };
 }

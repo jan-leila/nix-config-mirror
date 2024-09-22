@@ -31,7 +31,82 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  users.groups.users = {};
+  users = {
+    users = {
+      leyla = {
+        uid = 1000;
+        description = "Leyla";
+        group = "leyla";
+      };
+
+      ester = {
+        uid = 1001;
+        description = "Ester";
+        group = "ester";
+      };
+
+      eve = {
+        uid = 1002;
+        description = "Eve";
+        group = "eve";
+      };
+
+      jellyfin = {
+        uid = 2000;
+        group = "jellyfin";
+        isSystemUser = true;
+      };
+
+      forgejo = {
+        uid = 2002;
+        group = "forgejo";
+        isSystemUser = true;
+      };
+
+      # pihole = {
+      #   uid = 2003;
+      #   group = "forgejo";
+      #   isSystemUser = true;
+      # };
+    };
+
+    groups = {
+      leyla = {
+        gid = 1000;
+        members = ["lelya"];
+      };
+
+      ester = {
+        gid = 1001;
+        members = ["ester"];
+      };
+
+      eve = {
+        gid = 1002;
+        members = ["eve"];
+      };
+
+      jellyfin = {
+        gid = 2000;
+        members = ["jellyfin" "leyla"];
+      };
+
+      jellyfin_media = {
+        gid = 2001;
+        members = ["jellyfin" "leyla" "ester" "eve"];
+      };
+
+      forgejo = {
+        gid = 2002;
+        members = ["forgejo" "leyla"];
+      };
+
+      # pihole = {
+      #   gid = 2003;
+      #   members = ["pihole" "leyla"];
+      # };
+    };
+  };
 
   services = {
     openssh = {

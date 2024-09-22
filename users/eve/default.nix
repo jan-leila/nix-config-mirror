@@ -18,35 +18,25 @@ in {
       };
     };
 
-    users.groups.eve = {};
+    users.users.eve = (
+      if cfg.isFullUser
+      then {
+        isNormalUser = true;
+        extraGroups = ["networkmanager" "users"];
 
-    users.users.eve = lib.mkMerge [
-      {
-        uid = 1002;
-        description = "Eve";
-        group = "eve";
+        hashedPasswordFile = config.sops.secrets."passwords/eve".path;
+
+        packages = with pkgs; [
+          firefox
+          bitwarden
+          discord
+          makemkv
+          signal-desktop
+        ];
       }
-
-      (
-        if cfg.isFullUser
-        then {
-          isNormalUser = true;
-          extraGroups = ["networkmanager" "users"];
-
-          hashedPasswordFile = config.sops.secrets."passwords/eve".path;
-
-          packages = with pkgs; [
-            firefox
-            bitwarden
-            discord
-            makemkv
-            signal-desktop
-          ];
-        }
-        else {
-          isSystemUser = true;
-        }
-      )
-    ];
+      else {
+        isSystemUser = true;
+      }
+    );
   };
 }

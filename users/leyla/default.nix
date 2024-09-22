@@ -24,40 +24,30 @@ in {
       };
     };
 
-    users.groups.leyla = {};
+    users.users.leyla = (
+      if (cfg.isFullUser || cfg.isThinUser)
+      then {
+        isNormalUser = true;
+        extraGroups = lib.mkMerge [
+          ["networkmanager" "wheel" "users"]
+          (
+            lib.mkIf (!cfg.isThinUser) ["adbusers"]
+          )
+        ];
 
-    users.users.leyla = lib.mkMerge [
-      {
-        uid = 1000;
-        description = "Leyla";
-        group = "leyla";
-      }
+        hashedPasswordFile = config.sops.secrets."passwords/leyla".path;
 
-      (
-        if (cfg.isFullUser || cfg.isThinUser)
-        then {
-          isNormalUser = true;
-          extraGroups = lib.mkMerge [
-            ["networkmanager" "wheel" "users"]
-            (
-              lib.mkIf (!cfg.isThinUser) ["adbusers"]
-            )
+        openssh = {
+          authorizedKeys.keys = [
+            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJHeItmt8TRW43uNcOC+eIurYC7Eunc0V3LGocQqLaYj leyla@horizon"
+            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKBiZkg1c2aaNHiieBX4cEziqvJVj9pcDfzUrKU/mO0I leyla@twilight"
           ];
-
-          hashedPasswordFile = config.sops.secrets."passwords/leyla".path;
-
-          openssh = {
-            authorizedKeys.keys = [
-              "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJHeItmt8TRW43uNcOC+eIurYC7Eunc0V3LGocQqLaYj leyla@horizon"
-              "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKBiZkg1c2aaNHiieBX4cEziqvJVj9pcDfzUrKU/mO0I leyla@twilight"
-            ];
-          };
-        }
-        else {
-          isSystemUser = true;
-        }
-      )
-    ];
+        };
+      }
+      else {
+        isSystemUser = true;
+      }
+    );
 
     # TODO: this should reference the home directory from the user config
     services.openssh.hostKeys = [
