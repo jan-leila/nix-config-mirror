@@ -62,3 +62,4 @@ set up git configuration for local development: `git config --local include.path
 - mastodon server
 - tail scale clients
 - wake on LAN
+- ISO target that contains authorized keys for nixos-anywhere
