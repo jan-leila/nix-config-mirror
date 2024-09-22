@@ -33,7 +33,7 @@
     hostName = "defiant"; # Define your hostname.
     useNetworkd = true;
   };
-  
+
   systemd.network = {
     enable = true;
 
