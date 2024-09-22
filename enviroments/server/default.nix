@@ -78,7 +78,7 @@
         "d /home/jellyfin/cache 755 jellyfin jellyfin_media -"
         "d /home/forgejo 750 forgejo forgejo -"
         "d /home/forgejo/data 750 forgejo forgejo -"
-        # "d /home/forgejo 750 pihole pihole -"
+        # "d /home/pihole 750 pihole pihole -"
       ];
 
       # services = {
