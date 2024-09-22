@@ -108,7 +108,7 @@
         "dock-position" = "LEFT";
         "intellihide-mode" = "ALL_WINDOWS";
         "show-trash" = false;
-        "require-pressure-to-show" = true;
+        "require-pressure-to-show" = false;
         "show-mounts" = false;
       };
 
