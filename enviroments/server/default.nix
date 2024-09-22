@@ -49,9 +49,9 @@
 
   config = {
     # virtualisation.oci-containers.containers.pihole = {
-    #   image = "pihole/pihole:latest";
+    #   image = "pihole/pihole:2024.07.0";
     #   environment = {
-    #     TZ = "America/Chicago"; # TODO: set this to the systems timezone
+    #     TZ = time.timeZone;
     #     WEBPASSWORD_FILE = "..."; # TODO: set this from secrets file/config that is set to secrets file (I think this also needs to be mounted in volumns?)
     #   };
     #   volumes = [

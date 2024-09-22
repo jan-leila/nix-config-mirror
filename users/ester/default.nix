@@ -16,7 +16,7 @@ in {
     sops.secrets = lib.mkIf cfg.isFullUser {
       "passwords/ester" = {
         neededForUsers = true;
-        # sopsFile = ../secrets.yaml;
+        sopsFile = ../../secrets/user-passwords.yaml;
       };
     };
 
