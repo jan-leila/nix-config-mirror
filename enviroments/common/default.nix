@@ -3,8 +3,13 @@
     ../../users
   ];
 
-  nix.settings.experimental-features = ["nix-command" "flakes"];
-  nix.settings.trusted-users = ["leyla"];
+  nix = {
+    settings = {
+      experimental-features = ["nix-command" "flakes"];
+      trusted-users = ["leyla"];
+    };
+    gc.automatic = true;
+  };
 
   # Enable networking
   networking.networkmanager.enable = true;
