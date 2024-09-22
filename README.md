@@ -40,7 +40,6 @@ set up git configuration for local development: `git config --local include.path
 ## Tech Debt
 - allowUnfree should be enabled user side not host side (this isn't enabled at all right now for some reason???)
 - vscode extensions should be in own flake (make sure to add the nixpkgs.overlays in it too)
-- server service system users should also be on local systems for file permission reasons
 - join config for systemd.tmpfiles.rules and service directory bindings
 ## New Features
 - GNOME default monitors per hardware configuration? read this: https://discourse.nixos.org/t/gdm-monitor-configuration/6356/3
