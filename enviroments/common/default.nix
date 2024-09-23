@@ -86,7 +86,7 @@
         members = ["eve"];
       };
 
-      useres = {
+      users = {
         gid = 100;
         members = ["lelya" "ester" "eve"];
       };
