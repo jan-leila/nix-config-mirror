@@ -1,7 +1,11 @@
 keys:
   - &leyla age15ga3jmn2mqtlgwwtdcdh6l5vdx6um9aftrkexxfyue6xvcqapqusle75jh
 creation_rules:
-  - path_regex: secrets/secrets.yaml$
+  - path_regex: secrets/user-passwords.yaml$
+    key_groups:
+      - age:
+        - *leyla
+  - path_regex: secrets/defiant-services.yaml$
     key_groups:
       - age:
         - *leyla
