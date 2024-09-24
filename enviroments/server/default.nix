@@ -97,25 +97,27 @@
       oci-containers = {
         backend = "podman";
 
-        containers.pihole = let
-          passwordFileLocation = "/var/lib/pihole/webpassword.txt";
-        in {
-          image = config.apps.pihole.image;
-          volumes = [
-            "/home/pihole:/etc/pihole:rw" # TODO; set this based on configs and bond with tmpfiles.rules
-            "${config.sops.secrets."services/pi-hole".path}:${passwordFileLocation}"
-          ];
-          environment = {
-            TZ = config.time.timeZone;
-            WEBPASSWORD_FILE = passwordFileLocation;
-            PIHOLE_UID = toString config.users.users.pihole.uid;
-            PIHOLE_GID = toString config.users.groups.pihole.gid;
+        containers = {
+          pihole = let
+            passwordFileLocation = "/var/lib/pihole/webpassword.txt";
+          in {
+            image = config.apps.pihole.image;
+            volumes = [
+              "/home/pihole:/etc/pihole:rw" # TODO; set this based on configs and bond with tmpfiles.rules
+              "${config.sops.secrets."services/pi-hole".path}:${passwordFileLocation}"
+            ];
+            environment = {
+              TZ = config.time.timeZone;
+              WEBPASSWORD_FILE = passwordFileLocation;
+              PIHOLE_UID = toString config.users.users.pihole.uid;
+              PIHOLE_GID = toString config.users.groups.pihole.gid;
+            };
+            log-driver = "journald";
+            extraOptions = [
+              "--ip=${config.apps.pihole.ip}"
+              "--network=macvlan"
+            ];
           };
-          log-driver = "journald";
-          extraOptions = [
-            "--ip=${config.apps.pihole.ip}"
-            "--network=macvlan"
-          ];
         };
       };
     };
