@@ -43,12 +43,12 @@ to update passwords run: `nix shell nixpkgs#sops -c sops secrets/user-passwords.
 - join config for systemd.tmpfiles.rules and service directory bindings
 - monitor configuration in `~/.config/monitors.xml` should be sym linked to `/run/gdm/.config/monitors.xml`
 - move applications in server environment into their own flakes
+- pihole config files
 ## New Features
 - offline access for nfs mounts (overlay with rsync might be a good option here? https://www.spinics.net/lists/linux-unionfs/msg07105.html note about nfs4 and overlay fs)
 - fix pre commit hook
 - Flake templates
 - home assistant virtual machine
-- pi hole docker
 - searxng docker
 - nextcloud ???
 - samba mounts
