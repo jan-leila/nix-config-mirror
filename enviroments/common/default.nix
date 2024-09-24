@@ -63,11 +63,11 @@
         isSystemUser = true;
       };
 
-      # pihole = {
-      #   uid = 2003;
-      #   group = "forgejo";
-      #   isSystemUser = true;
-      # };
+      pihole = {
+        uid = 2003;
+        group = "pihole";
+        isSystemUser = true;
+      };
     };
 
     groups = {
@@ -88,7 +88,7 @@
 
       users = {
         gid = 100;
-        members = ["lelya" "ester" "eve"];
+        members = ["leyla" "ester" "eve"];
       };
 
       jellyfin = {
@@ -106,10 +106,10 @@
         members = ["forgejo" "leyla"];
       };
 
-      # pihole = {
-      #   gid = 2003;
-      #   members = ["pihole" "leyla"];
-      # };
+      pihole = {
+        gid = 2003;
+        members = ["pihole" "leyla"];
+      };
     };
   };
 
@@ -126,6 +126,11 @@
     };
   };
 
+  environment.sessionVariables = rec {
+    AGE_KEY_DIRECTORY = "/var/lib/sops-nix";
+    AGE_KEY_FILE = "${AGE_KEY_DIRECTORY}/key.txt";
+  };
+
   sops = {
     defaultSopsFormat = "yaml";
     gnupg.sshKeyPaths = [];
@@ -136,10 +141,6 @@
       # generateKey = true;
     };
   };
-  environment.sessionVariables = {
-    AGE_KEY_FILE_LOCATION = "/var/lib/sops-nix/";
-  };
-
   # List packages installed in system profile.
   environment.systemPackages = with pkgs; [
     wget
