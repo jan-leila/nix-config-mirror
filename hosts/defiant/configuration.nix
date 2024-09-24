@@ -25,9 +25,24 @@
 
   apps = {
     base_domain = "jan-leila.com";
-    headscale.subdomain = "vpn";
-    jellyfin.subdomain = "media";
-    forgejo.subdomain = "git";
+    macvlan = {
+      subnet = "192.168.1.0/24";
+      gateway = "192.168.1.1";
+      networkInterface = "bond0";
+    };
+    pihole = {
+      image = "pihole/pihole:2024.07.0";
+      ip = "192.168.1.201";
+    };
+    headscale = {
+      subdomain = "vpn";
+    };
+    jellyfin = {
+      subdomain = "media";
+    };
+    forgejo = {
+      subdomain = "git";
+    };
   };
 
   services = {

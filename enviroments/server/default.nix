@@ -13,6 +13,33 @@
       base_domain = lib.mkOption {
         type = lib.types.str;
       };
+      macvlan = {
+        subnet = lib.mkOption {
+          type = lib.types.str;
+          description = "Subnet for macvlan address range";
+        };
+        gateway = lib.mkOption {
+          type = lib.types.str;
+          description = "Gateway for macvlan";
+          # TODO: see if we can default this to systemd network gateway
+        };
+        networkInterface = lib.mkOption {
+          type = lib.types.str;
+          description = "Parent network interface for macvlan";
+          # TODO: see if we can default this some interface?
+        };
+      };
+      pihole = {
+        image = lib.mkOption {
+          type = lib.types.str;
+          description = "container image to use for pi-hole";
+        };
+        # TODO: check against subnet for macvlan
+        ip = lib.mkOption {
+          type = lib.types.str;
+          description = "ip address to use for pi-hole";
+        };
+      };
       headscale = {
         subdomain = lib.mkOption {
           type = lib.types.str;
@@ -54,36 +81,42 @@
       };
     };
 
-    # Runtime
-    virtualisation.podman = {
-      enable = true;
-      autoPrune.enable = true;
-      dockerCompat = true;
-      defaultNetwork.settings = {
-        # Required for container networking to be able to use names.
-        dns_enabled = true;
+    virtualisation = {
+      # Runtime
+      podman = {
+        enable = true;
+        autoPrune.enable = true;
+        dockerCompat = true;
+        defaultNetwork.settings = {
+          # Required for container networking to be able to use names.
+          dns_enabled = true;
+        };
       };
-    };
-    virtualisation.oci-containers.backend = "podman";
 
-    virtualisation.oci-containers.containers.pihole = {
-      image = "pihole/pihole:2024.07.0";
-      hostname = "pihole";
-      volumes = [
-        "/home/pihole:/etc/pihole:rw" # TODO; set this based on configs
-        "${config.sops.secrets."services/pi-hole".path}:/var/lib/pihole/webpassword.txt"
-      ];
-      environment = {
-        TZ = config.time.timeZone;
-        WEBPASSWORD_FILE = "/var/lib/pihole/webpassword.txt";
-        PIHOLE_UID = toString config.users.users.pihole.uid;
-        PIHOLE_GID = toString config.users.groups.pihole.gid;
+      oci-containers = {
+        backend = "podman";
+
+        containers.pihole = let
+          passwordFileLocation = "/var/lib/pihole/webpassword.txt";
+        in {
+          image = config.apps.pihole.image;
+          volumes = [
+            "/home/pihole:/etc/pihole:rw" # TODO; set this based on configs and bond with tmpfiles.rules
+            "${config.sops.secrets."services/pi-hole".path}:${passwordFileLocation}"
+          ];
+          environment = {
+            TZ = config.time.timeZone;
+            WEBPASSWORD_FILE = passwordFileLocation;
+            PIHOLE_UID = toString config.users.users.pihole.uid;
+            PIHOLE_GID = toString config.users.groups.pihole.gid;
+          };
+          log-driver = "journald";
+          extraOptions = [
+            "--ip=${config.apps.pihole.ip}"
+            "--network=macvlan"
+          ];
+        };
       };
-      log-driver = "journald";
-      extraOptions = [
-        "--ip=192.168.1.201" # TODO: set this to some ip address from configs
-        "--network=macvlan"
-      ];
     };
 
     systemd = {
@@ -123,11 +156,8 @@
             RemainAfterExit = true;
             ExecStop = "podman network rm -f macvlan";
           };
-          # TODO: check subnet against pi-hole ip address
-          # TODO: make lan configurable
-          # TODO: make parent interface configurable
           script = ''
-            podman network inspect macvlan || podman network create --driver macvlan --subnet 192.168.1.0/24 --gateway 192.168.1.1 --opt parent=bond0 macvlan
+            podman network inspect macvlan || podman network create --driver macvlan --subnet ${config.apps.macvlan.subnet} --gateway ${config.apps.macvlan.gateway} --opt parent=${config.apps.macvlan.networkInterface} macvlan
           '';
           partOf = [ "podman-compose-root.target" ];
           wantedBy = [ "podman-compose-root.target" ];
