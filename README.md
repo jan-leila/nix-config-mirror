@@ -41,7 +41,7 @@ to update passwords run: `nix shell nixpkgs#sops -c sops secrets/user-passwords.
 ## Tech Debt
 - vscode extensions should be in own flake (make sure to add the nixpkgs.overlays in it too)
 - join config for systemd.tmpfiles.rules and service directory bindings
-- monitor configuration in `~/.config/monitors.xml` should be sym linked to `/run/gdm/.config/monitors.xml`
+- monitor configuration in `~/.config/monitors.xml` should be sym linked to `/run/gdm/.config/monitors.xml` (https://www.reddit.com/r/NixOS/comments/u09cz9/home_manager_create_my_own_symlinks_automatically/)
 - move applications in server environment into their own flakes
 ## New Features
 - offline access for nfs mounts (overlay with rsync might be a good option here? https://www.spinics.net/lists/linux-unionfs/msg07105.html note about nfs4 and overlay fs)
