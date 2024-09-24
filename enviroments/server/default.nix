@@ -48,27 +48,43 @@
   };
 
   config = {
-    # virtualisation.oci-containers.containers.pihole = {
-    #   image = "pihole/pihole:2024.07.0";
-    #   environment = {
-    #     TZ = time.timeZone;
-    #     WEBPASSWORD_FILE = "..."; # TODO: set this from secrets file/config that is set to secrets file (I think this also needs to be mounted in volumns?)
-    #   };
-    #   volumes = [
-    #     "/home/docker/pihole:/etc/pihole:rw" # TODO; set this based on configs
-    #   ];
-    #   ports = [
-    #     "53:53/tcp"
-    #     "53:53/udp"
-    #     "3000:80/tcp" # TODO: bind container ip address?
-    #   ];
-    #   log-driver = "journald";
-    #   extraOptions = [
-    #     "--ip=172.18.1.5" # TODO: set this to some ip address from configs
-    #     "--network-alias=pihole" # TODO: set this from configs
-    #     "--network=nas_default"
-    #   ];
-    # };
+    sops.secrets = {
+      "services/pi-hole" = {
+        sopsFile = ../../secrets/defiant-services.yaml;
+      };
+    };
+
+    # Runtime
+    virtualisation.podman = {
+      enable = true;
+      autoPrune.enable = true;
+      dockerCompat = true;
+      defaultNetwork.settings = {
+        # Required for container networking to be able to use names.
+        dns_enabled = true;
+      };
+    };
+    virtualisation.oci-containers.backend = "podman";
+
+    virtualisation.oci-containers.containers.pihole = {
+      image = "pihole/pihole:2024.07.0";
+      hostname = "pihole";
+      volumes = [
+        "/home/pihole:/etc/pihole:rw" # TODO; set this based on configs
+        "${config.sops.secrets."services/pi-hole".path}:/var/lib/pihole/webpassword.txt"
+      ];
+      environment = {
+        TZ = config.time.timeZone;
+        WEBPASSWORD_FILE = "/var/lib/pihole/webpassword.txt";
+        PIHOLE_UID = toString config.users.users.pihole.uid;
+        PIHOLE_GID = toString config.users.groups.pihole.gid;
+      };
+      log-driver = "journald";
+      extraOptions = [
+        "--ip=192.168.1.201" # TODO: set this to some ip address from configs
+        "--network=macvlan"
+      ];
+    };
 
     systemd = {
       tmpfiles.rules = [
@@ -78,28 +94,45 @@
         "d /home/jellyfin/cache 755 jellyfin jellyfin_media -"
         "d /home/forgejo 750 forgejo forgejo -"
         "d /home/forgejo/data 750 forgejo forgejo -"
-        # "d /home/pihole 750 pihole pihole -"
+        "d /home/pihole 750 pihole pihole -"
       ];
 
-      # services = {
-      #   pihole = {
-      #     serviceConfig = {
-      #       Restart = lib.mkOverride 500 "always";
-      #     };
-      #     after = [
-      #       "podman-network-nas_default.service"
-      #     ];
-      #     requires = [
-      #       "podman-network-nas_default.service"
-      #     ];
-      #     partOf = [
-      #       "podman-compose-nas-root.target"
-      #     ];
-      #     wantedBy = [
-      #       "podman-compose-nas-root.target"
-      #     ];
-      #   };
-      # };
+      services = {
+        "podman-pihole" = {
+          serviceConfig = {
+            Restart = lib.mkOverride 500 "always";
+          };
+          after = [
+            "podman-network-macvlan.service"
+          ];
+          requires = [
+            "podman-network-macvlan.service"
+          ];
+          partOf = [
+            "podman-compose-root.target"
+          ];
+          wantedBy = [
+            "podman-compose-root.target"
+          ];
+        };
+
+        "podman-network-macvlan" = {
+          path = [ pkgs.podman ];
+          serviceConfig = {
+            Type = "oneshot";
+            RemainAfterExit = true;
+            ExecStop = "podman network rm -f macvlan";
+          };
+          # TODO: check subnet against pi-hole ip address
+          # TODO: make lan configurable
+          # TODO: make parent interface configurable
+          script = ''
+            podman network inspect macvlan || podman network create --driver macvlan --subnet 192.168.1.0/24 --gateway 192.168.1.1 --opt parent=bond0 macvlan
+          '';
+          partOf = [ "podman-compose-root.target" ];
+          wantedBy = [ "podman-compose-root.target" ];
+        };
+      };
 
       # disable computer sleeping
       targets = {
@@ -107,10 +140,23 @@
         suspend.enable = false;
         hibernate.enable = false;
         hybrid-sleep.enable = false;
+
+        # Root service
+        # When started, this will automatically create all resources and start
+        # the containers. When stopped, this will teardown all resources.
+        "podman-compose-root" = {
+          unitConfig = {
+            Description = "Root target for podman targets.";
+          };
+          wantedBy = [ "multi-user.target" ];
+        };
       };
     };
 
     services = {
+      # DNS stub needs to be disabled so pi hole can bind
+      # resolved.extraConfig = "DNSStubListener=no";
+
       nfs.server = {
         enable = true;
         exports = ''
@@ -200,7 +246,7 @@
       defaults.email = "jan-leila@protonmail.com";
     };
 
-    networking.firewall.allowedTCPPorts = [2049 8081];
+    networking.firewall.allowedTCPPorts = [53 2049 3000 8081];
 
     environment.systemPackages = [
       config.services.headscale.package

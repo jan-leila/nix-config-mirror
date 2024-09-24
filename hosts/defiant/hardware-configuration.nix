@@ -54,19 +54,17 @@
       "30-enp4s0" = {
         matchConfig.Name = "enp4s0";
         networkConfig.Bond = "bond0";
-        DHCP = "ipv4";
       };
       "30-enp5s0" = {
         matchConfig.Name = "enp5s0";
         networkConfig.Bond = "bond0";
-        DHCP = "ipv4";
       };
 
       "40-bond0" = {
         matchConfig.Name = "bond0";
         linkConfig.RequiredForOnline = "carrier";
         networkConfig.LinkLocalAddressing = "no";
-        networkConfig.DHCP = "yes";
+        DHCP = "ipv4";
 
         address = [
           # configure addresses including subnet mask
