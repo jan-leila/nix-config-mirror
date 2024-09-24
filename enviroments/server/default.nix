@@ -2,6 +2,7 @@
   lib,
   config,
   pkgs,
+  inputs,
   ...
 }: {
   imports = [
@@ -77,7 +78,7 @@
   config = {
     sops.secrets = {
       "services/pi-hole" = {
-        sopsFile = ../../secrets/defiant-services.yaml;
+        sopsFile = "${inputs.secrets}/defiant-services.yaml";
       };
     };
 

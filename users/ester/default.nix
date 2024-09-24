@@ -2,6 +2,7 @@
   lib,
   config,
   pkgs,
+  inputs,
   ...
 }: let
   cfg = config.users.ester;
@@ -16,7 +17,7 @@ in {
     sops.secrets = lib.mkIf cfg.isFullUser {
       "passwords/ester" = {
         neededForUsers = true;
-        sopsFile = ../../secrets/user-passwords.yaml;
+        sopsFile = "${inputs.secrets}/user-passwords.yaml";
       };
     };
 

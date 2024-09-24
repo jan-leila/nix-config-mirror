@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  inputs,
   ...
 }: let
   cfg = config.users.leyla;
@@ -21,7 +22,7 @@ in {
     sops.secrets = lib.mkIf (cfg.isFullUser || cfg.isThinUser) {
       "passwords/leyla" = {
         neededForUsers = true;
-        sopsFile = ../../secrets/user-passwords.yaml;
+        sopsFile = "${inputs.secrets}/user-passwords.yaml";
       };
     };
 

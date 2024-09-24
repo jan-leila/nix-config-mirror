@@ -58,9 +58,9 @@ user=${user:-$USER}
 # access secret files in the submodule this is kinda bad and we should find a way to not need it 
 if [[ "$target" == "$(hostname)" ]];
 then
-	nixos-rebuild $mode --use-remote-sudo --flake path:.#$flake
+	nixos-rebuild $mode --use-remote-sudo --flake .#$flake
 else
-	nixos-rebuild $mode --use-remote-sudo --target-host $user@$target --flake path:.#$flake
+	nixos-rebuild $mode --use-remote-sudo --target-host $user@$target --flake .#$flake
 fi
 
 if [ -d "result" ];

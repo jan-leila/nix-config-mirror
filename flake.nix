@@ -5,8 +5,13 @@
     # base packages
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    # encrypt files that contain secreats that I would like to not encrypt
+    # encrypt files that contain secrets that I would like to not encrypt
     sops-nix.url = "github:Mic92/sops-nix";
+
+    secrets = {
+      url = "git+https://git.jan-leila.com/jan-leila/nix-config-secrets?ref=main";
+      flake = false;
+    };
 
     # declairtive disk configuration
     disko = {
