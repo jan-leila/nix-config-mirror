@@ -54,11 +54,13 @@ flake=${flake:-$target}
 mode=${mode:-switch}
 user=${user:-$USER}
 
+# path: prefixes on rebuilds here make nix not treat this flake like it has a git repo so we can
+# access secret files in the submodule this is kinda bad and we should find a way to not need it 
 if [[ "$target" == "$(hostname)" ]];
 then
-	nixos-rebuild $mode --use-remote-sudo --flake .#$flake
+	nixos-rebuild $mode --use-remote-sudo --flake path:.#$flake
 else
-	nixos-rebuild $mode --use-remote-sudo --target-host $user@$target --flake .#$flake
+	nixos-rebuild $mode --use-remote-sudo --target-host $user@$target --flake path:.#$flake
 fi
 
 if [ -d "result" ];
