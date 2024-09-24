@@ -127,8 +127,8 @@
   };
 
   environment.sessionVariables = rec {
-    AGE_KEY_DIRECTORY = "/var/lib/sops-nix";
-    AGE_KEY_FILE = "${AGE_KEY_DIRECTORY}/key.txt";
+    SOPS_AGE_KEY_DIRECTORY = "/var/lib/sops-nix";
+    SOPS_AGE_KEY_FILE = "${SOPS_AGE_KEY_DIRECTORY}/key.txt";
   };
 
   sops = {

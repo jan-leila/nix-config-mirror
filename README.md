@@ -32,8 +32,9 @@
 - Look into this for home assistant configuration https://nixos.wiki/wiki/Home_Assistant https://myme.no/posts/2021-11-25-nixos-home-assistant.html
 
 ## Configuration
-updating passwords: `sops secrets/secrets.yaml`
 set up git configuration for local development: `git config --local include.path .gitconfig`
+
+to update passwords run: `nix shell nixpkgs#sops -c sops secrets/user-passwords.yaml` (NOTE: this depends on the SOPS_AGE_KEY_DIRECTORY environment variable being set)
 
 # Tasks:
 
