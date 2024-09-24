@@ -66,6 +66,7 @@
         matchConfig.Name = "bond0";
         linkConfig.RequiredForOnline = "carrier";
         networkConfig.LinkLocalAddressing = "no";
+        networkConfig.DHCP = "yes";
 
         address = [
           # configure addresses including subnet mask
