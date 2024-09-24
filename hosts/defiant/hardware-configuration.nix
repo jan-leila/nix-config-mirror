@@ -54,10 +54,12 @@
       "30-enp4s0" = {
         matchConfig.Name = "enp4s0";
         networkConfig.Bond = "bond0";
+        DHCP = "no";
       };
       "30-enp5s0" = {
         matchConfig.Name = "enp5s0";
         networkConfig.Bond = "bond0";
+        DHCP = "no";
       };
 
       "40-bond0" = {
