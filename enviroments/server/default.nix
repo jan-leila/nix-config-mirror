@@ -151,7 +151,7 @@
         };
 
         "podman-network-macvlan" = {
-          path = [ pkgs.podman ];
+          path = [pkgs.podman];
           serviceConfig = {
             Type = "oneshot";
             RemainAfterExit = true;
@@ -160,8 +160,8 @@
           script = ''
             podman network inspect macvlan || podman network create --driver macvlan --subnet ${config.apps.macvlan.subnet} --gateway ${config.apps.macvlan.gateway} --opt parent=${config.apps.macvlan.networkInterface} macvlan
           '';
-          partOf = [ "podman-compose-root.target" ];
-          wantedBy = [ "podman-compose-root.target" ];
+          partOf = ["podman-compose-root.target"];
+          wantedBy = ["podman-compose-root.target"];
         };
       };
 
@@ -179,7 +179,7 @@
           unitConfig = {
             Description = "Root target for podman targets.";
           };
-          wantedBy = [ "multi-user.target" ];
+          wantedBy = ["multi-user.target"];
         };
       };
     };
