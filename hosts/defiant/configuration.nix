@@ -23,7 +23,7 @@
     efiInstallAsRemovable = true;
   };
 
-  domains = {
+  apps = {
     base_domain = "jan-leila.com";
     headscale.subdomain = "vpn";
     jellyfin.subdomain = "media";

@@ -9,7 +9,7 @@
   ];
 
   options = {
-    domains = {
+    apps = {
       base_domain = lib.mkOption {
         type = lib.types.str;
       };
@@ -29,7 +29,7 @@
         hostname = lib.mkOption {
           type = lib.types.str;
           description = "hosname that jellyfin will be hosted at";
-          default = "${config.domains.jellyfin.subdomain}.${config.domains.base_domain}";
+          default = "${config.apps.jellyfin.subdomain}.${config.apps.base_domain}";
         };
       };
       forgejo = {
@@ -41,7 +41,7 @@
         hostname = lib.mkOption {
           type = lib.types.str;
           description = "hosname that forgejo will be hosted at";
-          default = "${config.domains.forgejo.subdomain}.${config.domains.base_domain}";
+          default = "${config.apps.forgejo.subdomain}.${config.apps.base_domain}";
         };
       };
     };
@@ -188,8 +188,8 @@
         address = "0.0.0.0";
         port = 8080;
         settings = {
-          server_url = "http://${config.domains.headscale.subdomain}.${config.domains.base_domain}";
-          dns_config.base_domain = config.domains.base_domain;
+          server_url = "http://${config.apps.headscale.subdomain}.${config.apps.base_domain}";
+          dns_config.base_domain = config.apps.base_domain;
           logtail.enabled = false;
         };
       };
@@ -208,7 +208,7 @@
         lfs.enable = true;
         settings = {
           server = {
-            DOMAIN = config.domains.forgejo.hostname;
+            DOMAIN = config.apps.forgejo.hostname;
             HTTP_PORT = 8081;
           };
           service.DISABLE_REGISTRATION = true;
@@ -219,7 +219,7 @@
       nginx = {
         enable = false; # TODO: enable this when you want to test all the configs
         virtualHosts = {
-          ${config.domains.headscale.hostname} = {
+          ${config.apps.headscale.hostname} = {
             forceSSL = true;
             enableACME = true;
             locations."/" = {
@@ -227,12 +227,12 @@
               proxyWebsockets = true;
             };
           };
-          ${config.domains.jellyfin.hostname} = {
+          ${config.apps.jellyfin.hostname} = {
             forceSSL = true;
             enableACME = true;
             locations."/".proxyPass = "http://localhost:8096";
           };
-          ${config.domains.forgejo.hostname} = {
+          ${config.apps.forgejo.hostname} = {
             forceSSL = true;
             enableACME = true;
             locations."/".proxyPass = "http://localhost:${toString config.services.forgejo.settings.server.HTTP_PORT}";
