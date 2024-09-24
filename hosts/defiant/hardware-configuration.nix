@@ -64,9 +64,7 @@
 
       "40-bond0" = {
         matchConfig.Name = "bond0";
-        linkConfig = {
-          RequiredForOnline = "carrier";
-        };
+        linkConfig.RequiredForOnline = "carrier";
         networkConfig.LinkLocalAddressing = "no";
 
         address = [
