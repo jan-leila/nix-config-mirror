@@ -5,33 +5,36 @@
     # base packages
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    # encrypt files that contain secrets that I would like to not encrypt
+    # secret encryption
     sops-nix.url = "github:Mic92/sops-nix";
 
+    # self hosted repo of secrets file to further protect files in case of future encryption vunrabilities
     secrets = {
       url = "git+https://git.jan-leila.com/jan-leila/nix-config-secrets?ref=main";
       flake = false;
     };
 
-    # declairtive disk configuration
+    # disk configurations
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # managment per user
+    # users home directories
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # repo of hardware configs for prebuilt systems
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-
     # vscode extensions
     nix-vscode-extensions = {
       url = "github:nix-community/nix-vscode-extensions";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # pregenerated hardware configurations
+    nixos-hardware = {
+      url = "github:NixOS/nixos-hardware/master";
     };
   };
 
