@@ -126,9 +126,30 @@
     };
   };
 
-  environment.sessionVariables = rec {
-    SOPS_AGE_KEY_DIRECTORY = "/var/lib/sops-nix";
-    SOPS_AGE_KEY_FILE = "${SOPS_AGE_KEY_DIRECTORY}/key.txt";
+  environment = {
+    # List packages installed in system profile.
+    systemPackages = with pkgs; [
+      qemu
+      (pkgs.writeShellScriptBin "qemu-system-x86_64-uefi" ''
+        qemu-system-x86_64 \
+          -bios ${OVMF.fd}/FV/OVMF.fd \
+          "$@"
+      '')
+
+      wget
+
+      # version control
+      git
+
+      # system debuging tools
+      iputils
+      dnsutils
+    ];
+  
+    sessionVariables = rec {
+      SOPS_AGE_KEY_DIRECTORY = "/var/lib/sops-nix";
+      SOPS_AGE_KEY_FILE = "${SOPS_AGE_KEY_DIRECTORY}/key.txt";
+    };
   };
 
   sops = {
@@ -141,15 +162,4 @@
       # generateKey = true;
     };
   };
-  # List packages installed in system profile.
-  environment.systemPackages = with pkgs; [
-    wget
-
-    # version control
-    git
-
-    # system debuging tools
-    iputils
-    dnsutils
-  ];
 }
