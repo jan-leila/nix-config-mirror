@@ -106,6 +106,8 @@ in {
 
                   # misc extensions
                   bungcip.better-toml
+
+                  open-vsx."10nates".ollama-autocoder
                 ]
                 ++ (with vscode-marketplace; [
                   # js extensions

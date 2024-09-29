@@ -51,15 +51,23 @@ in {
       }
     );
 
-    # TODO: this should reference the home directory from the user config
-    services.openssh.hostKeys = [
-      {
-        comment = "leyla@" + config.networking.hostName;
-        path = "/home/leyla/.ssh/leyla_" + config.networking.hostName + "_ed25519";
-        rounds = 100;
-        type = "ed25519";
-      }
-    ];
+    services = {
+      ollama = {
+        enable = true;
+        acceleration = lib.mkIf cfg.hasGPU "cuda";
+      };
+
+
+      # TODO: this should reference the home directory from the user config
+      openssh.hostKeys = [
+        {
+          comment = "leyla@" + config.networking.hostName;
+          path = "/home/leyla/.ssh/leyla_" + config.networking.hostName + "_ed25519";
+          rounds = 100;
+          type = "ed25519";
+        }
+      ];
+    };
 
     home-manager.users.leyla = lib.mkIf (cfg.isFullUser || cfg.isThinUser) (import ./home.nix);
   };
