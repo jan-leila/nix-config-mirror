@@ -26,6 +26,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # # virtual machine managment
+    # nix-virt = {
+    #   url = "https://flakehub.com/f/AshleyYakeley/NixVirt/*.tar.gz";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
+
     # vscode extensions
     nix-vscode-extensions = {
       url = "github:nix-community/nix-vscode-extensions";
