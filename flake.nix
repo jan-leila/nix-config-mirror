@@ -26,9 +26,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # # virtual machine managment
-    # nix-virt = {
-    #   url = "https://flakehub.com/f/AshleyYakeley/NixVirt/*.tar.gz";
+    # firefox-addons = {
+    #   url = "gitlab.com:rycee/nur-expressions?dir=pkgs/firefox-addons";
     #   inputs.nixpkgs.follows = "nixpkgs";
     # };
 
