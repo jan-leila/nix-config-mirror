@@ -6,7 +6,10 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     # secret encryption
-    sops-nix.url = "github:Mic92/sops-nix";
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # self hosted repo of secrets file to further protect files in case of future encryption vunrabilities
     secrets = {
@@ -48,6 +51,7 @@
     nixpkgs,
     disko,
     nixos-hardware,
+    home-manager,
     ...
   } @ inputs: let
     forEachSystem = nixpkgs.lib.genAttrs [
@@ -66,8 +70,14 @@
         specialArgs = {inherit inputs;};
         modules = [
           ./hosts/horizon/configuration.nix
-          inputs.home-manager.nixosModules.default
           nixos-hardware.nixosModules.framework-11th-gen-intel
+          home-manager.nixosModules.default
+          # {
+          #   home-manager.useGlobalPkgs = true;
+          #   home-manager.useUserPackages = true;
+          #   home-manager.extraSpecialArgs = { inherit inputs; };
+          #   home-manager.users = import ./users;
+          # }
         ];
       };
       # Leyla Desktop
@@ -75,7 +85,7 @@
         specialArgs = {inherit inputs;};
         modules = [
           ./hosts/twilight/configuration.nix
-          inputs.home-manager.nixosModules.default
+          home-manager.nixosModules.default
         ];
       };
       # NAS Service
