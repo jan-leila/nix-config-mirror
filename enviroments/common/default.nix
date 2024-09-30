@@ -15,7 +15,7 @@
   networking.networkmanager.enable = true;
 
   # Set your time zone.
-  time.timeZone = "America/Chicago";
+  # time.timeZone = "America/Chicago";
 
   i18n.defaultLocale = "en_US.UTF-8";
 
@@ -114,6 +114,10 @@
   };
 
   services = {
+    automatic-timezoned = {
+      enable = true;
+    };
+    
     openssh = {
       enable = true;
       ports = [22];
