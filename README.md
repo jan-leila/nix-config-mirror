@@ -45,7 +45,7 @@ to update passwords run: `nix shell nixpkgs#sops -c sops secrets/user-passwords.
 - monitor configuration in `~/.config/monitors.xml` should be sym linked to `/run/gdm/.config/monitors.xml` (https://www.reddit.com/r/NixOS/comments/u09cz9/home_manager_create_my_own_symlinks_automatically/)
 - move applications in server environment into their own flakes
 - Eve and Ester home-manager
-- get rid of default config and import it in hardware-configuration.nix
+- get rid of disko config and import it in hardware-configuration.nix
 ## New Features
 - offline access for nfs mounts (overlay with rsync might be a good option here? https://www.spinics.net/lists/linux-unionfs/msg07105.html note about nfs4 and overlay fs)
 - fix pre commit hook
