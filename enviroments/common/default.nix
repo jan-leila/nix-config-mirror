@@ -9,6 +9,7 @@
       trusted-users = ["leyla"];
     };
     gc.automatic = true;
+    optimise.automatic = true;
   };
 
   # Enable networking
