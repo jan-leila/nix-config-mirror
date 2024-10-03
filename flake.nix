@@ -71,13 +71,13 @@
         modules = [
           ./hosts/horizon/configuration.nix
           nixos-hardware.nixosModules.framework-11th-gen-intel
-          home-manager.nixosModules.default
-          # {
-          #   home-manager.useGlobalPkgs = true;
-          #   home-manager.useUserPackages = true;
-          #   home-manager.extraSpecialArgs = { inherit inputs; };
-          #   home-manager.users = import ./users;
-          # }
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.backupFileExtension = "backup";
+            home-manager.extraSpecialArgs = { inherit inputs; };
+          }
         ];
       };
       # Leyla Desktop

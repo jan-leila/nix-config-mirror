@@ -14,6 +14,10 @@
     ../../enviroments/client
   ];
 
+  home-manager.users.leyla.config = {
+    isFullUser = true;
+  };
+
   users = {
     leyla.isFullUser = true;
     ester.isFullUser = true;

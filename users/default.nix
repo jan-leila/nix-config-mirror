@@ -4,4 +4,5 @@
   users.mutableUsers = false;
 
   home-manager.extraSpecialArgs = {inherit inputs;};
+  home-manager.users = import ./home.nix;
 }

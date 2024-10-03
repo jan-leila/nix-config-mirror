@@ -6,9 +6,9 @@
 }: let
   cfg = config.users.leyla;
 in {
-  imports = [
-    ./packages.nix
-  ];
+  # imports = [
+  #   ./packages.nix
+  # ];
 
   options.users.leyla = {
     isFullUser = lib.mkEnableOption "create usable leyla user";
@@ -69,6 +69,6 @@ in {
       ];
     };
 
-    home-manager.users.leyla = lib.mkIf (cfg.isFullUser || cfg.isThinUser) (import ./home.nix);
+    # home-manager.users.leyla = lib.mkIf (cfg.isFullUser || cfg.isThinUser) (import ./home.nix);
   };
 }
