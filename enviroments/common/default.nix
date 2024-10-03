@@ -8,8 +8,15 @@
       experimental-features = ["nix-command" "flakes"];
       trusted-users = ["leyla"];
     };
-    gc.automatic = true;
-    optimise.automatic = true;
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 7d";
+    };
+    optimise = {
+      automatic = true;
+      dates = "weekly";
+    };
   };
 
   # Enable networking
