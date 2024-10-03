@@ -71,17 +71,6 @@
           karyfoundation.nearley
         ]);
     };
-
-    # steam = lib.mkIf config.isFullUser {
-    #   enable = true;
-    #   remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-    #   dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated ServerServer
-    #   localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
-    # };
-
-    # noisetorch.enable = config.isFullUser;
-
-    # adb.enable = config.isFullUser;
   };
 
   home = {
