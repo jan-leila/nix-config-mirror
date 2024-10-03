@@ -64,18 +64,20 @@
   in {
     packages = forEachPkgs (pkgs: import ./pkgs {inherit pkgs;});
 
-    nixosConfigurations = {
+    nixosConfigurations = let
+      home-manager-config = {
+        home-manager.useGlobalPkgs = true;
+        home-manager.useUserPackages = true;
+        home-manager.backupFileExtension = "backup";
+        home-manager.extraSpecialArgs = {inherit inputs;};
+      };
+    in
+    {
       # Leyla Laptop
       horizon = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs;};
         modules = [
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.backupFileExtension = "backup";
-            home-manager.extraSpecialArgs = {inherit inputs;};
-          }
+          home-manager.nixosModules.home-manager home-manager-config
           ./hosts/horizon/configuration.nix
           nixos-hardware.nixosModules.framework-11th-gen-intel
         ];
@@ -84,13 +86,7 @@
       twilight = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs;};
         modules = [
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.backupFileExtension = "backup";
-            home-manager.extraSpecialArgs = {inherit inputs;};
-          }
+          home-manager.nixosModules.home-manager home-manager-config
           ./hosts/twilight/configuration.nix
         ];
       };
@@ -99,13 +95,7 @@
         specialArgs = {inherit inputs;};
         modules = [
           disko.nixosModules.disko
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.backupFileExtension = "backup";
-            home-manager.extraSpecialArgs = {inherit inputs;};
-          }
+          home-manager.nixosModules.home-manager home-manager-config
           ./hosts/defiant/disko-config.nix
           ./hosts/defiant/configuration.nix
         ];
