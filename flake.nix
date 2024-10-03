@@ -54,6 +54,12 @@
     home-manager,
     ...
   } @ inputs: let
+    home-manager-config = {
+      home-manager.useGlobalPkgs = true;
+      home-manager.useUserPackages = true;
+      home-manager.backupFileExtension = "backup";
+      home-manager.extraSpecialArgs = {inherit inputs;};
+    };
     forEachSystem = nixpkgs.lib.genAttrs [
       "aarch64-darwin"
       "aarch64-linux"
@@ -64,15 +70,7 @@
   in {
     packages = forEachPkgs (pkgs: import ./pkgs {inherit pkgs;});
 
-    nixosConfigurations = let
-      home-manager-config = {
-        home-manager.useGlobalPkgs = true;
-        home-manager.useUserPackages = true;
-        home-manager.backupFileExtension = "backup";
-        home-manager.extraSpecialArgs = {inherit inputs;};
-      };
-    in
-    {
+    nixosConfigurations = {
       # Leyla Laptop
       horizon = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs;};
