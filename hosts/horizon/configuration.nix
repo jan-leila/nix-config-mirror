@@ -14,13 +14,16 @@
     ../../enviroments/client
   ];
 
-  home-manager.users.leyla.config = {
-    isFullUser = true;
-  };
-
-  users = {
-    ester.isFullUser = true;
-    eve.isFullUser = true;
+  home-manager.users = {
+    leyla.config = {
+      isDesktopUser = true;
+    };
+    ester.config = {
+      isDesktopUser = true;
+    };
+    eve.config = {
+      isDesktopUser = true;
+    };
   };
 
   # enabled virtualisation for docker

@@ -5,16 +5,12 @@
   inputs,
   ...
 }: let
-  cfg = config.users.eve;
+  cfg = config.home-manager.users.eve;
 in {
-  options.users.eve = {
-    isFullUser = lib.mkEnableOption "eve";
-  };
-
   config = {
     nixpkgs.config.allowUnfree = true;
 
-    sops.secrets = lib.mkIf cfg.isFullUser {
+    sops.secrets = lib.mkIf cfg.isDesktopUser {
       "passwords/eve" = {
         neededForUsers = true;
         sopsFile = "${inputs.secrets}/user-passwords.yaml";
@@ -22,20 +18,12 @@ in {
     };
 
     users.users.eve = (
-      if cfg.isFullUser
+      if cfg.isDesktopUser
       then {
         isNormalUser = true;
         extraGroups = ["networkmanager"];
 
         hashedPasswordFile = config.sops.secrets."passwords/eve".path;
-
-        packages = with pkgs; [
-          firefox
-          bitwarden
-          discord
-          makemkv
-          signal-desktop
-        ];
       }
       else {
         isSystemUser = true;

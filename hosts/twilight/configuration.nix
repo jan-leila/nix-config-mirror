@@ -14,14 +14,17 @@
     ../../enviroments/client
   ];
 
-  home-manager.users.leyla.config = {
-    isFullUser = true;
-    hasGPU = true;
-  };
-
-  users = {
-    ester.isFullUser = true;
-    eve.isFullUser = true;
+  home-manager.users = {
+    leyla.config = {
+      isDesktopUser = true;
+      hasGPU = true;
+    };
+    ester.config = {
+      isDesktopUser = true;
+    };
+    eve.config = {
+      isDesktopUser = true;
+    };
   };
 
   systemd.tmpfiles.rules = [

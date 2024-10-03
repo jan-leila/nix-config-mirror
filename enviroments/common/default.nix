@@ -42,18 +42,21 @@
         uid = 1000;
         description = "Leyla";
         group = "leyla";
+        home = "/home/leyla";
       };
 
       ester = {
         uid = 1001;
         description = "Ester";
         group = "ester";
+        home = "/home/ester";
       };
 
       eve = {
         uid = 1002;
         description = "Eve";
         group = "eve";
+        home = "/home/eve";
       };
 
       jellyfin = {

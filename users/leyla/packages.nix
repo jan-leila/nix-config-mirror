@@ -11,7 +11,7 @@
   ];
 
   home = {
-    packages = lib.mkIf (config.isFullUser || config.isThinUser) (
+    packages = lib.mkIf (config.isDesktopUser || config.isTerminalUser) (
       lib.mkMerge [
         (
           with pkgs; [
@@ -22,7 +22,7 @@
           ]
         )
         (
-          lib.mkIf (!config.isThinUser) (
+          lib.mkIf (!config.isTerminalUser) (
             with pkgs; [
               #foss platforms
               signal-desktop

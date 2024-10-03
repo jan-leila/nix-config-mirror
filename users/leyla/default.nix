@@ -9,7 +9,7 @@ in {
   config = {
     nixpkgs.config.allowUnfree = true;
 
-    sops.secrets = lib.mkIf (cfg.isFullUser || cfg.isThinUser) {
+    sops.secrets = lib.mkIf (cfg.isDesktopUser || cfg.isTerminalUser) {
       "passwords/leyla" = {
         neededForUsers = true;
         sopsFile = "${inputs.secrets}/user-passwords.yaml";
@@ -17,15 +17,13 @@ in {
     };
 
     users.users.leyla = (
-      if (cfg.isFullUser || cfg.isThinUser)
+      if (cfg.isDesktopUser || cfg.isTerminalUser)
       then {
         isNormalUser = true;
-        extraGroups = lib.mkMerge [
+        extraGroups = (
           ["networkmanager" "wheel"]
-          (
-            lib.mkUnless cfg.isThinUser ["adbusers"]
-          )
-        ];
+          ++ lib.lists.optional (!cfg.isTerminalUser) "adbusers"
+        );
 
         hashedPasswordFile = config.sops.secrets."passwords/leyla".path;
 
@@ -43,8 +41,8 @@ in {
 
     services = {
       ollama = {
-        enable = true;
-        acceleration = lib.mkIf cfg.hasGPU "cuda";
+        enable = cfg.hasGPU;
+        acceleration = "cuda";
       };
 
       # TODO: this should reference the home directory from the user config
@@ -59,16 +57,16 @@ in {
     };
 
     programs = {
-      steam = lib.mkIf cfg.isFullUser {
+      steam = lib.mkIf cfg.isDesktopUser {
         enable = true;
         remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
         dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated ServerServer
         localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
       };
 
-      noisetorch.enable = cfg.isFullUser;
+      noisetorch.enable = cfg.isDesktopUser;
 
-      adb.enable = cfg.isFullUser;
+      adb.enable = cfg.isDesktopUser;
     };
   };
 }

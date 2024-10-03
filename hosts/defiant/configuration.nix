@@ -15,7 +15,7 @@
   ];
 
   home-manager.users.leyla.config = {
-    isThinUser = true;
+    isTerminalUser = true;
   };
 
   boot.loader.grub = {
