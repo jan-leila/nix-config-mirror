@@ -7,6 +7,8 @@ else
   preserve_result=false
 fi
 
+show_trace=false
+
 while [ $# -gt 0 ]; do
   case "$1" in
     --target*|-t*)
@@ -31,6 +33,9 @@ while [ $# -gt 0 ]; do
     --no-preserve-result)
       preserve_result=false
       ;;
+    --show-trace)
+      show_trace=true
+      ;;
     --help|-h)
       echo "--help -h: print this message"
       echo "--target -t: set the target system to rebuild on"
@@ -39,6 +44,7 @@ while [ $# -gt 0 ]; do
       echo "--user -u: set the user to rebuild flake as on the target system"
       echo "--preserve-result: do not remove the generated result folder after building"
       echo "--no-preserve-result: remove any result folder after building"
+      echo "--show-trace: show trace on builds"
       exit 0
       ;;
     *)
@@ -54,14 +60,19 @@ flake=${flake:-$target}
 mode=${mode:-switch}
 user=${user:-$USER}
 
-# path: prefixes on rebuilds here make nix not treat this flake like it has a git repo so we can
-# access secret files in the submodule this is kinda bad and we should find a way to not need it 
-if [[ "$target" == "$(hostname)" ]];
+command="nixos-rebuild $mode --use-remote-sudo --flake .#$flake"
+
+if [[ "$target" != "$(hostname)" ]];
 then
-	nixos-rebuild $mode --use-remote-sudo --flake .#$flake
-else
-	nixos-rebuild $mode --use-remote-sudo --target-host $user@$target --flake .#$flake
+	command="$command --target-host $user@$target"
 fi
+
+if [[ "$show_trace" = true ]];
+then
+	command="$command --show-trace"
+fi
+
+$command
 
 if [ -d "result" ];
 then
