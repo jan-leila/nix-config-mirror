@@ -19,7 +19,6 @@
   };
 
   users = {
-    leyla.isFullUser = true;
     ester.isFullUser = true;
     eve.isFullUser = true;
   };

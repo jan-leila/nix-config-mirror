@@ -17,7 +17,6 @@
   home-manager.users.leyla.config = {
     isThinUser = true;
   };
-  users.leyla.isThinUser = true;
 
   boot.loader.grub = {
     enable = true;

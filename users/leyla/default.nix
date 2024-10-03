@@ -4,18 +4,8 @@
   inputs,
   ...
 }: let
-  cfg = config.users.leyla;
+  cfg = config.home-manager.users.leyla;
 in {
-  # imports = [
-  #   ./packages.nix
-  # ];
-
-  options.users.leyla = {
-    isFullUser = lib.mkEnableOption "create usable leyla user";
-    isThinUser = lib.mkEnableOption "create usable user but witohut user applications";
-    hasGPU = lib.mkEnableOption "installs gpu intensive programs";
-  };
-
   config = {
     nixpkgs.config.allowUnfree = true;
 
@@ -67,7 +57,5 @@ in {
         }
       ];
     };
-
-    # home-manager.users.leyla = lib.mkIf (cfg.isFullUser || cfg.isThinUser) (import ./home.nix);
   };
 }

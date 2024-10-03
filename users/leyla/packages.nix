@@ -75,7 +75,8 @@
     # steam = lib.mkIf config.isFullUser {
     #   enable = true;
     #   remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-    #   dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+    #   dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated ServerServer
+    #   localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
     # };
 
     # noisetorch.enable = config.isFullUser;
@@ -126,44 +127,6 @@
               (lib.mkIf config.hasGPU davinci-resolve)
 
               # development tools
-              # (vscode-with-extensions.override {
-              #   vscode = vscodium;
-              #   vscodeExtensions = with open-vsx;
-              #     [
-              #       # vs code feel extensions
-              #       ms-vscode.atom-keybindings
-              #       akamud.vscode-theme-onedark
-              #       streetsidesoftware.code-spell-checker
-              #       streetsidesoftware.code-spell-checker-german
-              #       streetsidesoftware.code-spell-checker-italian
-              #       jeanp413.open-remote-ssh
-
-              #       # nix extensions
-              #       pinage404.nix-extension-pack
-              #       jnoortheen.nix-ide
-
-              #       # html extensions
-              #       formulahendry.auto-rename-tag
-              #       ms-vscode.live-server
-
-              #       # js extensions
-              #       dsznajder.es7-react-js-snippets
-              #       dbaeumer.vscode-eslint
-              #       standard.vscode-standard
-              #       firsttris.vscode-jest-runner
-              #       stylelint.vscode-stylelint
-              #       tauri-apps.tauri-vscode
-
-              #       # misc extensions
-              #       bungcip.better-toml
-
-              #       open-vsx."10nates".ollama-autocoder
-              #     ]
-              #     ++ (with vscode-marketplace; [
-              #       # js extensions
-              #       karyfoundation.nearley
-              #     ]);
-              # })
               androidStudioPackages.canary
               jetbrains.idea-community
               dbeaver-bin
