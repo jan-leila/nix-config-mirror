@@ -8,6 +8,7 @@
 }: {
   imports = [
     ./vscode.nix
+    ./firefox.nix
   ];
 
   home = {
