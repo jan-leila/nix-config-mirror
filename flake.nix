@@ -69,23 +69,27 @@
       horizon = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs;};
         modules = [
-          ./hosts/horizon/configuration.nix
-          nixos-hardware.nixosModules.framework-11th-gen-intel
-          home-manager.nixosModules.home-manager
-          {
+          home-manager.nixosModules.home-manager {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.backupFileExtension = "backup";
             home-manager.extraSpecialArgs = { inherit inputs; };
           }
+          ./hosts/horizon/configuration.nix
+          nixos-hardware.nixosModules.framework-11th-gen-intel
         ];
       };
       # Leyla Desktop
       twilight = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs;};
         modules = [
+          home-manager.nixosModules.home-manager {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.backupFileExtension = "backup";
+            home-manager.extraSpecialArgs = { inherit inputs; };
+          }
           ./hosts/twilight/configuration.nix
-          home-manager.nixosModules.default
         ];
       };
       # NAS Service
@@ -93,6 +97,12 @@
         specialArgs = {inherit inputs;};
         modules = [
           disko.nixosModules.disko
+          home-manager.nixosModules.home-manager {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.backupFileExtension = "backup";
+            home-manager.extraSpecialArgs = { inherit inputs; };
+          }
           ./hosts/defiant/disko-config.nix
           ./hosts/defiant/configuration.nix
         ];

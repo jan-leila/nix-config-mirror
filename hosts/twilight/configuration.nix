@@ -14,11 +14,13 @@
     ../../enviroments/client
   ];
 
+  home-manager.users.leyla.config = {
+    isFullUser = true;
+    hasGPU = true;
+  };
+
   users = {
-    leyla = {
-      isFullUser = true;
-      hasGPU = true;
-    };
+    leyla.isFullUser = true;
     ester.isFullUser = true;
     eve.isFullUser = true;
   };

@@ -107,7 +107,7 @@
               "${config.sops.secrets."services/pi-hole".path}:${passwordFileLocation}"
             ];
             environment = {
-              TZ = config.time.timeZone;
+              TZ = "America/Chicago";
               WEBPASSWORD_FILE = passwordFileLocation;
               PIHOLE_UID = toString config.users.users.pihole.uid;
               PIHOLE_GID = toString config.users.groups.pihole.gid;
