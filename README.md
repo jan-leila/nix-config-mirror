@@ -44,7 +44,6 @@ to update passwords run: `nix shell nixpkgs#sops -c sops secrets/user-passwords.
 - join config for systemd.tmpfiles.rules and service directory bindings
 - monitor configuration in `~/.config/monitors.xml` should be sym linked to `/run/gdm/.config/monitors.xml` (https://www.reddit.com/r/NixOS/comments/u09cz9/home_manager_create_my_own_symlinks_automatically/)
 - move applications in server environment into their own flakes
-- we shouldn't have 2 versions of isFulluser and isThinuser (in home home.nix and default.nix for each user)
 - Eve and Ester home-manager
 - get rid of default config and import it in hardware-configuration.nix
 ## New Features
