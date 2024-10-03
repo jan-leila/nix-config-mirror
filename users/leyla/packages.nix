@@ -32,6 +32,9 @@
 
       userSettings = {
         "workbench.colorTheme" = "Atom One Dark";
+        "cSpell.userWords" = [
+          "webdav"
+        ];
       };
 
       extensions = with extensions.open-vsx;
