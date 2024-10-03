@@ -67,13 +67,14 @@
       "x86_64-linux"
     ];
     forEachPkgs = lambda: forEachSystem (system: lambda nixpkgs.legacyPackages.${system});
-  in {
-    packages = forEachPkgs (pkgs: import ./pkgs {inherit pkgs;});
 
+    callPackage = nixpkgs.lib.callPackageWith (nixpkgs // { lib = lib; });
+    lib = callPackage ./util {} // nixpkgs.lib;
+  in {
     nixosConfigurations = {
       # Leyla Laptop
       horizon = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs;};
+        specialArgs = {inherit inputs lib;};
         modules = [
           home-manager.nixosModules.home-manager home-manager-config
           ./hosts/horizon/configuration.nix
@@ -82,7 +83,7 @@
       };
       # Leyla Desktop
       twilight = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs;};
+        specialArgs = {inherit inputs lib;};
         modules = [
           home-manager.nixosModules.home-manager home-manager-config
           ./hosts/twilight/configuration.nix
@@ -90,7 +91,7 @@
       };
       # NAS Service
       defiant = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs;};
+        specialArgs = {inherit inputs lib;};
         modules = [
           disko.nixosModules.disko
           home-manager.nixosModules.home-manager home-manager-config

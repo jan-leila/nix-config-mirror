@@ -23,7 +23,7 @@ in {
         extraGroups = lib.mkMerge [
           ["networkmanager" "wheel"]
           (
-            lib.mkIf (!cfg.isThinUser) ["adbusers"]
+            lib.mkUnless cfg.isThinUser ["adbusers"]
           )
         ];
 
