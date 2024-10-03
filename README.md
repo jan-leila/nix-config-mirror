@@ -47,7 +47,6 @@ to update passwords run: `nix shell nixpkgs#sops -c sops secrets/user-passwords.
 - get rid of disko config and import it in hardware-configuration.nix
 ## New Features
 - offline access for nfs mounts (overlay with rsync might be a good option here? https://www.spinics.net/lists/linux-unionfs/msg07105.html note about nfs4 and overlay fs)
-- fix pre commit hook
 - Flake templates
 - home assistant virtual machine
 - searxng docker
