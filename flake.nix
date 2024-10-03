@@ -68,7 +68,7 @@
     ];
     forEachPkgs = lambda: forEachSystem (system: lambda nixpkgs.legacyPackages.${system});
 
-    callPackage = nixpkgs.lib.callPackageWith (nixpkgs // { lib = lib; });
+    callPackage = nixpkgs.lib.callPackageWith (nixpkgs // {lib = lib;});
     lib = callPackage ./util {} // nixpkgs.lib;
   in {
     nixosConfigurations = {
@@ -76,7 +76,8 @@
       horizon = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs lib;};
         modules = [
-          home-manager.nixosModules.home-manager home-manager-config
+          home-manager.nixosModules.home-manager
+          home-manager-config
           ./hosts/horizon/configuration.nix
           nixos-hardware.nixosModules.framework-11th-gen-intel
         ];
@@ -85,7 +86,8 @@
       twilight = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs lib;};
         modules = [
-          home-manager.nixosModules.home-manager home-manager-config
+          home-manager.nixosModules.home-manager
+          home-manager-config
           ./hosts/twilight/configuration.nix
         ];
       };
@@ -94,7 +96,8 @@
         specialArgs = {inherit inputs lib;};
         modules = [
           disko.nixosModules.disko
-          home-manager.nixosModules.home-manager home-manager-config
+          home-manager.nixosModules.home-manager
+          home-manager-config
           ./hosts/defiant/disko-config.nix
           ./hosts/defiant/configuration.nix
         ];
