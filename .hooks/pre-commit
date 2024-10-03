@@ -2,6 +2,13 @@
 
 git stash -q --keep-index
 
+
+nix flake check
+
+if [ $? -eq 0 ]; then
+    exit 1
+fi
+
 ./lint.sh
 
 RESULT=$?
