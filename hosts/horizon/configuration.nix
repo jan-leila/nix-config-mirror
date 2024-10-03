@@ -14,14 +14,14 @@
     ../../enviroments/client
   ];
 
-  home-manager.users = {
-    leyla.config = {
+  nixos.users = {
+    leyla = {
       isDesktopUser = true;
     };
-    ester.config = {
+    ester = {
       isDesktopUser = true;
     };
-    eve.config = {
+    eve = {
       isDesktopUser = true;
     };
   };

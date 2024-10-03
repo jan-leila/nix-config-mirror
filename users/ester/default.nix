@@ -5,8 +5,12 @@
   inputs,
   ...
 }: let
-  cfg = config.home-manager.users.ester;
+  cfg = config.nixos.users.ester;
 in {
+  options.nixos.users.ester = {
+    isDesktopUser = lib.mkEnableOption "install applications intended for desktop use";
+  };
+
   config = {
     nixpkgs.config.allowUnfree = true;
 

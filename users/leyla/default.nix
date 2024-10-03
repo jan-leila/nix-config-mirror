@@ -4,8 +4,14 @@
   inputs,
   ...
 }: let
-  cfg = config.home-manager.users.leyla;
+  cfg = config.nixos.users.leyla;
 in {
+  options.nixos.users.leyla = {
+    isDesktopUser = lib.mkEnableOption "install applications intended for desktop use";
+    isTerminalUser = lib.mkEnableOption "install applications intended for terminal use";
+    hasGPU = lib.mkEnableOption "installs gpu intensive programs";
+  };
+
   config = {
     nixpkgs.config.allowUnfree = true;
 

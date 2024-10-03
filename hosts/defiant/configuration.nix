@@ -14,8 +14,10 @@
     ../../enviroments/server
   ];
 
-  home-manager.users.leyla.config = {
-    isTerminalUser = true;
+  nixos.users = {
+    leyla = {
+      isTerminalUser = true;
+    };
   };
 
   boot.loader.grub = {

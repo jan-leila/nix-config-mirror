@@ -5,14 +5,16 @@
   pkgs,
   inputs,
   ...
-}: {
+}: let
+  cfg = osConfig.nixos.users.leyla;
+in {
   imports = [
     ./vscode.nix
     ./firefox.nix
   ];
 
   home = {
-    packages = lib.mkIf (config.isDesktopUser || config.isTerminalUser) (
+    packages = lib.mkIf (cfg.isDesktopUser || cfg.isTerminalUser) (
       lib.mkMerge [
         (
           with pkgs; [
@@ -23,7 +25,7 @@
           ]
         )
         (
-          lib.mkIf (!config.isTerminalUser) (
+          lib.mkIf (!cfg.isTerminalUser) (
             with pkgs; [
               #foss platforms
               signal-desktop
@@ -42,7 +44,7 @@
               onionshare
               easytag
               # rhythmbox
-              (lib.mkIf config.hasGPU obs-studio)
+              (lib.mkIf cfg.hasGPU obs-studio)
               # wireshark
               # rpi-imager
               # fritzing
@@ -51,7 +53,7 @@
               discord
               obsidian
               steam
-              (lib.mkIf config.hasGPU davinci-resolve)
+              (lib.mkIf cfg.hasGPU davinci-resolve)
 
               # development tools
               androidStudioPackages.canary

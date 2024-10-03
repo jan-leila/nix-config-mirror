@@ -1,10 +1,12 @@
 {
   lib,
-  config,
+  osConfig,
   pkgs,
   inputs,
   ...
-}: {
+}: let
+  cfg = osConfig.nixos.users.leyla;
+in {
   nixpkgs = {
     overlays = [
       inputs.nix-vscode-extensions.overlays.default
@@ -12,7 +14,7 @@
   };
 
   programs = {
-    bash.shellAliases = lib.mkIf config.isDesktopUser {
+    bash.shellAliases = lib.mkIf cfg.isDesktopUser {
       code = "codium";
     };
 

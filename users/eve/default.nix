@@ -5,8 +5,12 @@
   inputs,
   ...
 }: let
-  cfg = config.home-manager.users.eve;
+  cfg = config.nixos.users.eve;
 in {
+  options.nixos.users.eve = {
+    isDesktopUser = lib.mkEnableOption "install applications intended for desktop use";
+  };
+
   config = {
     nixpkgs.config.allowUnfree = true;
 

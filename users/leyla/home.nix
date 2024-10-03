@@ -1,25 +1,19 @@
 {
   lib,
-  config,
   pkgs,
+  osConfig,
   ...
 }: {
   imports = [
     ./packages.nix
   ];
 
-  options = {
-    isDesktopUser = lib.mkEnableOption "install applications intended for desktop use";
-    isTerminalUser = lib.mkEnableOption "install applications intended for terminal use";
-    hasGPU = lib.mkEnableOption "installs gpu intensive programs";
-  };
-
   config = {
     # Home Manager needs a bit of information about you and the paths it should
     # manage.
     home = {
       username = "leyla";
-      homeDirectory = "/home/leyla";
+      homeDirectory = osConfig.users.users.leyla.home;
 
       # This value determines the Home Manager release that your configuration is
       # compatible with. This helps avoid breakage when a new Home Manager release

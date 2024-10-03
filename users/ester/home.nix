@@ -2,16 +2,15 @@
   pkgs,
   lib,
   config,
+  osConfig,
   ...
-}: {
-  options = {
-    isDesktopUser = lib.mkEnableOption "install applications intended for desktop use";
-  };
-
+}: let
+  cfg = osConfig.nixos.users.ester;
+in {
   config = {
     home = {
       username = "ester";
-      homeDirectory = "/home/ester";
+      homeDirectory = osConfig.users.users.ester.home;
 
       # This value determines the Home Manager release that your configuration is
       # compatible with. This helps avoid breakage when a new Home Manager release
@@ -56,7 +55,7 @@
         # EDITOR = "emacs";
       };
 
-      packages = lib.mkIf config.isDesktopUser (
+      packages = lib.mkIf cfg.isDesktopUser (
         with pkgs; [
           firefox
           bitwarden
