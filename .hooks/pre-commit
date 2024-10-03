@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+echo "stashing all uncommitted changes"
 git stash -q --keep-index
 
 echo "checking flakes all compile"
@@ -14,6 +15,7 @@ echo "running linter"
 
 RESULT=$?
 
+echo "adding lint changes to commit"
 git add -u
 
 exit $RESULT
