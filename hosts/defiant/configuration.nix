@@ -14,7 +14,6 @@
     ../../enviroments/server
   ];
 
-
   home-manager.users.leyla.config = {
     isThinUser = true;
   };

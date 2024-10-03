@@ -105,7 +105,7 @@
         nix-direnv.enable = true;
       };
       bash.enable = true; # see note on other shells below
-      
+
       # firefox = {
       #   enable = true;
       #   profiles.leyla = {

@@ -57,7 +57,6 @@ in {
         acceleration = lib.mkIf cfg.hasGPU "cuda";
       };
 
-
       # TODO: this should reference the home directory from the user config
       openssh.hostKeys = [
         {

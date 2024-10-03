@@ -69,11 +69,12 @@
       horizon = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs;};
         modules = [
-          home-manager.nixosModules.home-manager {
+          home-manager.nixosModules.home-manager
+          {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.backupFileExtension = "backup";
-            home-manager.extraSpecialArgs = { inherit inputs; };
+            home-manager.extraSpecialArgs = {inherit inputs;};
           }
           ./hosts/horizon/configuration.nix
           nixos-hardware.nixosModules.framework-11th-gen-intel
@@ -83,11 +84,12 @@
       twilight = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs;};
         modules = [
-          home-manager.nixosModules.home-manager {
+          home-manager.nixosModules.home-manager
+          {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.backupFileExtension = "backup";
-            home-manager.extraSpecialArgs = { inherit inputs; };
+            home-manager.extraSpecialArgs = {inherit inputs;};
           }
           ./hosts/twilight/configuration.nix
         ];
@@ -97,11 +99,12 @@
         specialArgs = {inherit inputs;};
         modules = [
           disko.nixosModules.disko
-          home-manager.nixosModules.home-manager {
+          home-manager.nixosModules.home-manager
+          {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.backupFileExtension = "backup";
-            home-manager.extraSpecialArgs = { inherit inputs; };
+            home-manager.extraSpecialArgs = {inherit inputs;};
           }
           ./hosts/defiant/disko-config.nix
           ./hosts/defiant/configuration.nix

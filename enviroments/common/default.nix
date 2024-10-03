@@ -122,7 +122,7 @@
     automatic-timezoned = {
       enable = true;
     };
-    
+
     openssh = {
       enable = true;
       ports = [22];
@@ -154,7 +154,7 @@
       iputils
       dnsutils
     ];
-  
+
     sessionVariables = rec {
       SOPS_AGE_KEY_DIRECTORY = "/var/lib/sops-nix";
       SOPS_AGE_KEY_FILE = "${SOPS_AGE_KEY_DIRECTORY}/key.txt";
