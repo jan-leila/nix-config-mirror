@@ -46,11 +46,7 @@
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
 
-  programs.bash.interactiveShellInit = ''eval "$(direnv hook bash)"'';
-
   environment.systemPackages = with pkgs; [
-    direnv
-
     # helvetica font
     aileron
 

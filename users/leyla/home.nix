@@ -77,12 +77,23 @@
   programs = {
     # Let Home Manager install and manage itself.
     home-manager.enable = true;
+
+    # set up git defaults
     git = {
       enable = true;
       userName = "Leyla Becker";
       userEmail = "git@jan-leila.com";
       extraConfig.init.defaultBranch = "main";
     };
+
+    # add direnv to auto load flakes for development
+    direnv = {
+      enable = true;
+      enableBashIntegration = true; # see note on other shells below
+      nix-direnv.enable = true;
+    };
+    bash.enable = true; # see note on other shells below
+
     # firefox = {
     #   enable = true;
     #   profiles.leyla = {
