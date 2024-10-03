@@ -2,13 +2,14 @@
 
 git stash -q --keep-index
 
-
+echo "checking flakes all compile"
 nix flake check
 
-if [ $? -eq 0 ]; then
+if [ ! $? -eq 0 ]; then
     exit 1
 fi
 
+echo "running linter"
 ./lint.sh
 
 RESULT=$?

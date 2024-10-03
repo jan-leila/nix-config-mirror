@@ -33,7 +33,7 @@
 - This person seams to know what they are doing with home manager https://github.com/arvigeus/nixos-config/
 
 ## Configuration
-set up git configuration for local development: `git config --local include.path .gitconfig`
+set up git configuration for local development: `git config core.hooksPath .hooks`
 
 to update passwords run: `nix shell nixpkgs#sops -c sops secrets/user-passwords.yaml` (NOTE: this depends on the SOPS_AGE_KEY_DIRECTORY environment variable being set)
 
