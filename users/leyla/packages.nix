@@ -55,6 +55,8 @@ in {
               steam
               (lib.mkIf cfg.hasGPU davinci-resolve)
 
+              anki-bin
+
               # development tools
               androidStudioPackages.canary
               jetbrains.idea-community
