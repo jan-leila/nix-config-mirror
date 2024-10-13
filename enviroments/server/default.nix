@@ -72,6 +72,18 @@
           default = "${config.apps.forgejo.subdomain}.${config.apps.base_domain}";
         };
       };
+      home-assistant = {
+        subdomain = lib.mkOption {
+          type = lib.types.str;
+          description = "subdomain of base domain that home-assistant will be hosted at";
+          default = "home-assistant";
+        };
+        hostname = lib.mkOption {
+          type = lib.types.str;
+          description = "hosname that home-assistant will be hosted at";
+          default = "${config.apps.home-assistant.subdomain}.${config.apps.base_domain}";
+        };
+      };
     };
   };
 
@@ -249,6 +261,17 @@
         stateDir = "/home/forgejo/data";
       };
 
+      home-assistant = {
+        enable = true;
+        config.http = {
+          server_port = 8082;
+          use_x_forwarded_for = true;
+          trusted_proxies = ["127.0.0.1"];
+          ip_ban_enabled = true;
+          login_attempts_threshold = 10;
+        };
+      };
+
       nginx = {
         enable = false; # TODO: enable this when you want to test all the configs
         virtualHosts = {
@@ -270,6 +293,11 @@
             enableACME = true;
             locations."/".proxyPass = "http://localhost:${toString config.services.forgejo.settings.server.HTTP_PORT}";
           };
+          ${config.apps.home-assistant.hostname} = {
+            forceSSL = true;
+            enableACME = true;
+            locations."/".proxyPass = "http://localhost:${toString config.services.home-assistant.config.http.server_port}";
+          };
         };
       };
     };
@@ -279,7 +307,8 @@
       defaults.email = "jan-leila@protonmail.com";
     };
 
-    networking.firewall.allowedTCPPorts = [53 2049 3000 8081];
+    # TODO: remove 8081 and 8082 when nginx is enabled
+    networking.firewall.allowedTCPPorts = [53 2049 3000 8081 8082];
 
     environment.systemPackages = [
       config.services.headscale.package
