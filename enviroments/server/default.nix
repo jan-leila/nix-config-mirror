@@ -137,12 +137,13 @@
     systemd = {
       tmpfiles.rules = [
         "d /home/jellyfin 755 jellyfin jellyfin -"
-        "d /home/jellyfin/media 775 jellyfin jellyfin_media -"
-        "d /home/jellyfin/config 750 jellyfin jellyfin -"
-        "d /home/jellyfin/cache 755 jellyfin jellyfin_media -"
+        "d /home/jellyfin/media 775 jellyfin jellyfin_media -" # is /home/docker/jellyfin/media on existing server
+        "d /home/jellyfin/config 750 jellyfin jellyfin -" # is /home/docker/jellyfin/config on existing server
+        "d /home/jellyfin/cache 755 jellyfin jellyfin_media -" # is /home/docker/jellyfin/cache on existing server
         "d /home/forgejo 750 forgejo forgejo -"
-        "d /home/forgejo/data 750 forgejo forgejo -"
-        "d /home/pihole 750 pihole pihole -"
+        "d /home/forgejo/data 750 forgejo forgejo -" # is /home/docker/forgejo on existing server
+        "d /home/pihole 750 pihole pihole -" # is /home/docker/pihole on old system
+        "d /home/hass 750 hass hass -" # is /home/docker/hass on old system
       ];
 
       services = {
@@ -243,8 +244,8 @@
         enable = true;
         user = "jellyfin";
         group = "jellyfin";
-        dataDir = "/home/jellyfin/config"; # location on existing server: /home/docker/jellyfin/config
-        cacheDir = "/home/jellyfin/cache"; # location on existing server: /home/docker/jellyfin/cache
+        dataDir = "/home/jellyfin/config";
+        cacheDir = "/home/jellyfin/cache";
       };
 
       forgejo = {
@@ -263,6 +264,7 @@
 
       home-assistant = {
         enable = true;
+        configDir = "/home/hass";
         config.http = {
           server_port = 8082;
           use_x_forwarded_for = true;

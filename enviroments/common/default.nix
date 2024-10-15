@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   imports = [
     ../../users
   ];
@@ -76,6 +80,12 @@
         group = "pihole";
         isSystemUser = true;
       };
+
+      hass = {
+        uid = lib.mkForce 2004;
+        group = "hass";
+        isSystemUser = true;
+      };
     };
 
     groups = {
@@ -117,6 +127,11 @@
       pihole = {
         gid = 2003;
         members = ["pihole" "leyla"];
+      };
+
+      hass = {
+        gid = lib.mkForce 2004;
+        members = ["hass" "leyla"];
       };
     };
   };
