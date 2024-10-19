@@ -48,8 +48,7 @@ to update passwords run: `nix shell nixpkgs#sops -c sops secrets/user-passwords.
 ## New Features
 - offline access for nfs mounts (overlay with rsync might be a good option here? https://www.spinics.net/lists/linux-unionfs/msg07105.html note about nfs4 and overlay fs)
 - Flake templates
-- home assistant virtual machine
-- searxng docker
+- searxng
 - nextcloud ???
 - samba mounts
 - firefox declarative???

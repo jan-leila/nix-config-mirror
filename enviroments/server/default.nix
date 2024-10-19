@@ -84,12 +84,27 @@
           default = "${config.apps.home-assistant.subdomain}.${config.apps.base_domain}";
         };
       };
+      searx = {
+        subdomain = lib.mkOption {
+          type = lib.types.str;
+          description = "subdomain of base domain that searx will be hosted at";
+          default = "search";
+        };
+        hostname = lib.mkOption {
+          type = lib.types.str;
+          description = "hosname that searx will be hosted at";
+          default = "${config.apps.searx.subdomain}.${config.apps.base_domain}";
+        };
+      };
     };
   };
 
   config = {
     sops.secrets = {
       "services/pi-hole" = {
+        sopsFile = "${inputs.secrets}/defiant-services.yaml";
+      };
+      "services/searx" = {
         sopsFile = "${inputs.secrets}/defiant-services.yaml";
       };
     };
@@ -234,8 +249,8 @@
         address = "0.0.0.0";
         port = 8080;
         settings = {
-          server_url = "http://${config.apps.headscale.subdomain}.${config.apps.base_domain}";
-          dns_config.base_domain = config.apps.base_domain;
+          # server_url = "http://${config.apps.headscale.subdomain}.${config.apps.base_domain}";
+          dns.base_domain = config.apps.base_domain;
           logtail.enabled = false;
         };
       };
@@ -274,6 +289,18 @@
         };
       };
 
+      searx = {
+        enable = true;
+        environmentFile = config.sops.secrets."services/searx".path;
+        settings = {
+          server = {
+            port = 8083;
+            base_url = config.apps.searx.hostname;
+            secret_key = "@SEARXNG_SECRET@";
+          };
+        };
+      };
+
       nginx = {
         enable = false; # TODO: enable this when you want to test all the configs
         virtualHosts = {
@@ -300,6 +327,11 @@
             enableACME = true;
             locations."/".proxyPass = "http://localhost:${toString config.services.home-assistant.config.http.server_port}";
           };
+          ${config.apps.searx.hostname} = {
+            forceSSL = true;
+            enableACME = true;
+            locations."/".proxyPass = "http://localhost:${toString config.services.searx.settings.port}";
+          };
         };
       };
     };
@@ -309,8 +341,8 @@
       defaults.email = "jan-leila@protonmail.com";
     };
 
-    # TODO: remove 8081 and 8082 when nginx is enabled
-    networking.firewall.allowedTCPPorts = [53 2049 3000 8081 8082];
+    # TODO: remove 8081, 8082, 8083 when nginx is enabled
+    networking.firewall.allowedTCPPorts = [53 2049 3000 8081 8082 8083];
 
     environment.systemPackages = [
       config.services.headscale.package
