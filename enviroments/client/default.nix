@@ -44,6 +44,7 @@
 
   # Enable sound with pipewire.
   hardware.pulseaudio.enable = false;
+  hardware.flipperzero.enable = true;
   security.rtkit.enable = true;
 
   environment.systemPackages = with pkgs; [

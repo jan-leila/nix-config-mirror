@@ -38,7 +38,7 @@ in {
               krita
               freecad
               # cura
-              kicad-small
+              # kicad-small
               makemkv
               transmission_4-gtk
               onionshare
@@ -62,6 +62,7 @@ in {
               jetbrains.idea-community
               dbeaver-bin
               bruno
+              qFlipper
 
               # system tools
               protonvpn-gui
