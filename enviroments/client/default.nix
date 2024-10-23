@@ -1,7 +1,15 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  inputs,
+  ...
+}: {
   imports = [
     ../common
   ];
+
+  nix = {
+    nixPath = ["nixpkgs=${inputs.nixpkgs}"];
+  };
 
   services = {
     # Enable CUPS to print documents.
@@ -50,6 +58,9 @@
   environment.systemPackages = with pkgs; [
     # helvetica font
     aileron
+
+    # nix langauge server
+    nixd
 
     cachefilesd
 

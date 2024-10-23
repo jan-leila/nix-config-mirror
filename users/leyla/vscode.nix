@@ -36,10 +36,18 @@ in {
         "cSpell.userWords" = [
           "webdav"
         ];
+        "nix.serverPath" = "nixd";
+        "nix.enableLanguageServer" = true;
+        "nixpkgs" = {
+          "expr" = "import <nixpkgs> {}";
+        };
+        # "fomratting": {
+        #   "command": [ "alejandra" ];
+        # };
       };
 
       extensions = (
-        with extensions.open-vsx;
+        with open-vsx;
           [
             # vs code feel extensions
             ms-vscode.atom-keybindings
@@ -68,10 +76,10 @@ in {
             # misc extensions
             bungcip.better-toml
 
-            open-vsx."10nates".ollama-autocoder
+            # lib.mkIf open-vsx."10nates".ollama-autocoder
           ]
           ++ (
-            with extensions.vscode-marketplace; [
+            with vscode-marketplace; [
               # js extensions
               karyfoundation.nearley
             ]

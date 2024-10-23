@@ -1,9 +1,7 @@
 {
   lib,
-  config,
   osConfig,
   pkgs,
-  inputs,
   ...
 }: let
   cfg = osConfig.nixos.users.leyla;

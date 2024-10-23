@@ -46,10 +46,10 @@ in {
     );
 
     services = {
-      ollama = {
-        enable = cfg.hasGPU;
-        acceleration = "cuda";
-      };
+      # ollama = {
+      #   enable = cfg.hasGPU;
+      #   acceleration = "cuda";
+      # };
 
       # TODO: this should reference the home directory from the user config
       openssh.hostKeys = [
