@@ -61,6 +61,8 @@ in {
               dbeaver-bin
               bruno
               qFlipper
+              proxmark3
+              mfoc
 
               # system tools
               protonvpn-gui

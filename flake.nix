@@ -47,7 +47,6 @@
   };
 
   outputs = {
-    self,
     nixpkgs,
     disko,
     nixos-hardware,
@@ -60,22 +59,28 @@
       home-manager.backupFileExtension = "backup";
       home-manager.extraSpecialArgs = {inherit inputs;};
     };
-    forEachSystem = nixpkgs.lib.genAttrs [
+    systems = [
       "aarch64-darwin"
       "aarch64-linux"
       "x86_64-darwin"
       "x86_64-linux"
     ];
+    forEachSystem = nixpkgs.lib.genAttrs systems;
     forEachPkgs = lambda: forEachSystem (system: lambda nixpkgs.legacyPackages.${system});
 
     callPackage = nixpkgs.lib.callPackageWith (nixpkgs // {lib = lib;});
     lib = callPackage ./util {} // nixpkgs.lib;
   in {
+    packages = forEachPkgs (import ./pkgs);
+
+    formatter = forEachPkgs (system: system.alejandra);
+
     nixosConfigurations = {
       # Leyla Laptop
       horizon = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs lib;};
         modules = [
+          ./overlays
           home-manager.nixosModules.home-manager
           home-manager-config
           ./hosts/horizon/configuration.nix
@@ -86,6 +91,7 @@
       twilight = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs lib;};
         modules = [
+          ./overlays
           home-manager.nixosModules.home-manager
           home-manager-config
           ./hosts/twilight/configuration.nix
@@ -95,6 +101,7 @@
       defiant = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs lib;};
         modules = [
+          ./overlays
           disko.nixosModules.disko
           home-manager.nixosModules.home-manager
           home-manager-config

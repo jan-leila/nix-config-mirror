@@ -27,7 +27,7 @@ in {
       then {
         isNormalUser = true;
         extraGroups = (
-          ["networkmanager" "wheel"]
+          ["networkmanager" "wheel" "dialout"]
           ++ lib.lists.optional (!cfg.isTerminalUser) "adbusers"
         );
 

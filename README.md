@@ -31,6 +31,7 @@
 - Look into this for headscale https://carlosvaz.com/posts/setting-up-headscale-on-nixos/
 - Look into this for home assistant configuration https://nixos.wiki/wiki/Home_Assistant https://myme.no/posts/2021-11-25-nixos-home-assistant.html
 - This person seams to know what they are doing with home manager https://github.com/arvigeus/nixos-config/
+- https://nixos-and-flakes.thiscute.world/
 
 ## Configuration
 set up git configuration for local development: `git config core.hooksPath .hooks`
