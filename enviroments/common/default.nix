@@ -86,6 +86,12 @@
         group = "hass";
         isSystemUser = true;
       };
+
+      headscale = {
+        uid = 2005;
+        group = "headscale";
+        isSystemUser = true;
+      };
     };
 
     groups = {
@@ -132,6 +138,11 @@
       hass = {
         gid = lib.mkForce 2004;
         members = ["hass" "leyla"];
+      };
+
+      headscale = {
+        gid = 2005;
+        members = ["headscale"];
       };
     };
   };

@@ -4,7 +4,13 @@
   pkgs,
   inputs,
   ...
-}: {
+}: let
+  jellyfinPort = 8096;
+  nfsPort = 2049;
+  dnsPort = 53;
+  httpPort = 80;
+  httpsPort = 443;
+in {
   imports = [
     ../common
   ];
@@ -47,6 +53,11 @@
           description = "subdomain of base domain that headscale will be hosted at";
           default = "headscale";
         };
+        hostname = lib.mkOption {
+          type = lib.types.str;
+          description = "hosname that headscale will be hosted at";
+          default = "${config.apps.headscale.subdomain}.${config.apps.base_domain}";
+        };
       };
       jellyfin = {
         subdomain = lib.mkOption {
@@ -58,6 +69,43 @@
           type = lib.types.str;
           description = "hosname that jellyfin will be hosted at";
           default = "${config.apps.jellyfin.subdomain}.${config.apps.base_domain}";
+        };
+        directory = {
+          root = lib.mkOption {
+            type = lib.types.str;
+            description = "directory that jellyfin will be at";
+            default = "/home/jellyfin";
+          };
+          mediaDirectoryName = lib.mkOption {
+            type = lib.types.str;
+            description = "name of the directory to store the media in";
+            default = "media";
+          };
+          mediaDirectory = lib.mkOption {
+            type = lib.types.str;
+            description = "directory that jellyfin will store its media in";
+            default = "${config.apps.jellyfin.directory.root}/${config.apps.jellyfin.directory.mediaDirectoryName}";
+          };
+          dataDirectoryName = lib.mkOption {
+            type = lib.types.str;
+            description = "name of the directory to store the config in";
+            default = "data";
+          };
+          dataDirectory = lib.mkOption {
+            type = lib.types.str;
+            description = "directory that jellyfin will store its config in";
+            default = "${config.apps.jellyfin.directory.root}/${config.apps.jellyfin.directory.dataDirectoryName}";
+          };
+          cacheDirectoryName = lib.mkOption {
+            type = lib.types.str;
+            description = "name of the directory to store the cache in";
+            default = "cache";
+          };
+          cacheDirectory = lib.mkOption {
+            type = lib.types.str;
+            description = "directory that jellyfin will store its cache in";
+            default = "${config.apps.jellyfin.directory.root}/${config.apps.jellyfin.directory.cacheDirectoryName}";
+          };
         };
       };
       forgejo = {
@@ -151,10 +199,10 @@
 
     systemd = {
       tmpfiles.rules = [
-        "d /home/jellyfin 755 jellyfin jellyfin -"
-        "d /home/jellyfin/media 775 jellyfin jellyfin_media -" # is /home/docker/jellyfin/media on existing server
-        "d /home/jellyfin/config 750 jellyfin jellyfin -" # is /home/docker/jellyfin/config on existing server
-        "d /home/jellyfin/cache 755 jellyfin jellyfin_media -" # is /home/docker/jellyfin/cache on existing server
+        "d ${config.apps.jellyfin.directory.root} 755 jellyfin jellyfin -"
+        "d ${config.apps.jellyfin.directory.mediaDirectory} 2775 jellyfin jellyfin_media -" # is /home/docker/jellyfin/media on existing server
+        "d ${config.apps.jellyfin.directory.dataDirectory} 2770 jellyfin jellyfin -" # is /home/docker/jellyfin/config on existing server
+        "d ${config.apps.jellyfin.directory.cacheDirectory} 2750 jellyfin jellyfin -" # is /home/docker/jellyfin/cache on existing server
         "d /home/forgejo 750 forgejo forgejo -"
         "d /home/forgejo/data 750 forgejo forgejo -" # is /home/docker/forgejo on existing server
         "d /home/pihole 750 pihole pihole -" # is /home/docker/pihole on old system
@@ -230,28 +278,57 @@
 
       postgresql = {
         enable = true;
-        ensureDatabases = ["forgejo"];
+        ensureDatabases = ["forgejo" "headscale"];
+        ensureUsers = [
+          {
+            name = "postgres";
+          }
+          {
+            name = "forgejo";
+          }
+          {
+            name = "headscale";
+          }
+        ];
         identMap = ''
           # ArbitraryMapName systemUser DBUser
-          superuser_map      root      postgres
+
+          # Administration Users
           superuser_map      postgres  postgres
+          superuser_map      root      postgres
+          superuser_map      leyla     postgres
+
+          # Client Users
           superuser_map      forgejo   forgejo
+          # superuser_map      headscale headscale
         '';
         # configuration here lets users access the db that matches their name and lets user postgres access everything
         authentication = pkgs.lib.mkOverride 10 ''
           # type database DBuser   auth-method  optional_ident_map
-          local sameuser  all     peer        map=superuser_map
+          local  all      postgres peer         map=superuser_map
+          local  sameuser all      peer         map=superuser_map
         '';
       };
 
       headscale = {
         enable = true;
+        user = "headscale";
+        group = "headscale";
         address = "0.0.0.0";
         port = 8080;
         settings = {
-          # server_url = "http://${config.apps.headscale.subdomain}.${config.apps.base_domain}";
-          dns.base_domain = config.apps.base_domain;
-          logtail.enabled = false;
+          server_url = "https://${config.apps.headscale.hostname}";
+          dns.base_domain = "clients.${config.apps.headscale.hostname}";
+          logtail.enabled = true;
+          # database = {
+          #   type = "postgres";
+          #   postgres = {
+          #     host = "localhost";
+          #     port = 5432;
+          #     user = "headscale";
+          #     name = "headscale";
+          #   };
+          # };
         };
       };
 
@@ -259,13 +336,19 @@
         enable = true;
         user = "jellyfin";
         group = "jellyfin";
-        dataDir = "/home/jellyfin/config";
-        cacheDir = "/home/jellyfin/cache";
+        dataDir = config.apps.jellyfin.directory.dataDirectory;
+        cacheDir = config.apps.jellyfin.directory.cacheDirectory;
       };
 
       forgejo = {
         enable = true;
-        database.type = "postgres";
+        database = {
+          type = "postgres";
+          host = "localhost";
+          port = 5432;
+          user = "forgejo";
+          name = "forgejo";
+        };
         lfs.enable = true;
         settings = {
           server = {
@@ -278,7 +361,7 @@
       };
 
       home-assistant = {
-        enable = true;
+        enable = false;
         configDir = "/home/hass";
         config.http = {
           server_port = 8082;
@@ -295,42 +378,41 @@
         settings = {
           server = {
             port = 8083;
-            base_url = config.apps.searx.hostname;
             secret_key = "@SEARXNG_SECRET@";
           };
         };
       };
 
       nginx = {
-        enable = false; # TODO: enable this when you want to test all the configs
+        enable = true;
         virtualHosts = {
           ${config.apps.headscale.hostname} = {
-            forceSSL = true;
-            enableACME = true;
+            # forceSSL = true;
+            # enableACME = true;
             locations."/" = {
               proxyPass = "http://localhost:${toString config.services.headscale.port}";
               proxyWebsockets = true;
             };
           };
           ${config.apps.jellyfin.hostname} = {
-            forceSSL = true;
-            enableACME = true;
-            locations."/".proxyPass = "http://localhost:8096";
+            # forceSSL = true;
+            # enableACME = true;
+            locations."/".proxyPass = "http://localhost:${toString jellyfinPort}";
           };
           ${config.apps.forgejo.hostname} = {
-            forceSSL = true;
-            enableACME = true;
+            # forceSSL = true;
+            # enableACME = true;
             locations."/".proxyPass = "http://localhost:${toString config.services.forgejo.settings.server.HTTP_PORT}";
           };
           ${config.apps.home-assistant.hostname} = {
-            forceSSL = true;
-            enableACME = true;
+            # forceSSL = true;
+            # enableACME = true;
             locations."/".proxyPass = "http://localhost:${toString config.services.home-assistant.config.http.server_port}";
           };
           ${config.apps.searx.hostname} = {
-            forceSSL = true;
-            enableACME = true;
-            locations."/".proxyPass = "http://localhost:${toString config.services.searx.settings.port}";
+            # forceSSL = true;
+            # enableACME = true;
+            locations."/".proxyPass = "http://localhost:${toString config.services.searx.settings.server.port}";
           };
         };
       };
@@ -341,8 +423,17 @@
       defaults.email = "jan-leila@protonmail.com";
     };
 
-    # TODO: remove 8081, 8082, 8083 when nginx is enabled
-    networking.firewall.allowedTCPPorts = [53 2049 3000 8081 8082 8083];
+    networking.firewall.allowedTCPPorts = [
+      httpPort
+      httpsPort
+      dnsPort
+      nfsPort
+      jellyfinPort
+      config.services.headscale.port
+      config.services.forgejo.settings.server.HTTP_PORT
+      # config.services.home-assistant.config.http.server_port
+      config.services.searx.settings.server.port
+    ];
 
     environment.systemPackages = [
       config.services.headscale.package
