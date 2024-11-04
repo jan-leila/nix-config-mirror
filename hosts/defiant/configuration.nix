@@ -1,6 +1,5 @@
 # server nas
 {
-  config,
   pkgs,
   inputs,
   ...
@@ -46,6 +45,9 @@
     };
     forgejo = {
       subdomain = "git";
+    };
+    nextcloud = {
+      subdomain = "drive";
     };
   };
 

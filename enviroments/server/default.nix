@@ -10,6 +10,7 @@
   dnsPort = 53;
   httpPort = 80;
   httpsPort = 443;
+  isDebug = false;
 in {
   imports = [
     ../common
@@ -46,6 +47,18 @@ in {
           type = lib.types.str;
           description = "ip address to use for pi-hole";
         };
+        directory = {
+          root = lib.mkOption {
+            type = lib.types.str;
+            description = "directory that piholes will be hosted at";
+            default = "/var/lib/pihole";
+          };
+          data = lib.mkOption {
+            type = lib.types.str;
+            description = "directory that piholes data will be hosted at";
+            default = "${config.apps.pihole.directory.root}/data";
+          };
+        };
       };
       headscale = {
         subdomain = lib.mkOption {
@@ -70,48 +83,16 @@ in {
           description = "hosname that jellyfin will be hosted at";
           default = "${config.apps.jellyfin.subdomain}.${config.apps.base_domain}";
         };
-        directory = {
-          root = lib.mkOption {
-            type = lib.types.str;
-            description = "directory that jellyfin will be at";
-            default = "/home/jellyfin";
-          };
-          mediaDirectoryName = lib.mkOption {
-            type = lib.types.str;
-            description = "name of the directory to store the media in";
-            default = "media";
-          };
-          mediaDirectory = lib.mkOption {
-            type = lib.types.str;
-            description = "directory that jellyfin will store its media in";
-            default = "${config.apps.jellyfin.directory.root}/${config.apps.jellyfin.directory.mediaDirectoryName}";
-          };
-          dataDirectoryName = lib.mkOption {
-            type = lib.types.str;
-            description = "name of the directory to store the config in";
-            default = "data";
-          };
-          dataDirectory = lib.mkOption {
-            type = lib.types.str;
-            description = "directory that jellyfin will store its config in";
-            default = "${config.apps.jellyfin.directory.root}/${config.apps.jellyfin.directory.dataDirectoryName}";
-          };
-          cacheDirectoryName = lib.mkOption {
-            type = lib.types.str;
-            description = "name of the directory to store the cache in";
-            default = "cache";
-          };
-          cacheDirectory = lib.mkOption {
-            type = lib.types.str;
-            description = "directory that jellyfin will store its cache in";
-            default = "${config.apps.jellyfin.directory.root}/${config.apps.jellyfin.directory.cacheDirectoryName}";
-          };
+        mediaDirectory = lib.mkOption {
+          type = lib.types.str;
+          description = "directory that jellyfin will be at";
+          default = "/home/jellyfin";
         };
       };
       forgejo = {
         subdomain = lib.mkOption {
           type = lib.types.str;
-          description = "subdomain of base domain that foregjo will be hosted at";
+          description = "subdomain of base domain that forgejo will be hosted at";
           default = "forgejo";
         };
         hostname = lib.mkOption {
@@ -144,6 +125,18 @@ in {
           default = "${config.apps.searx.subdomain}.${config.apps.base_domain}";
         };
       };
+      nextcloud = {
+        subdomain = lib.mkOption {
+          type = lib.types.str;
+          description = "subdomain of base domain that nextcloud will be hosted at";
+          default = "nextcloud";
+        };
+        hostname = lib.mkOption {
+          type = lib.types.str;
+          description = "hosname that nextcloud will be hosted at";
+          default = "${config.apps.nextcloud.subdomain}.${config.apps.base_domain}";
+        };
+      };
     };
   };
 
@@ -154,6 +147,10 @@ in {
       };
       "services/searx" = {
         sopsFile = "${inputs.secrets}/defiant-services.yaml";
+      };
+      "services/nextcloud_adminpass" = {
+        sopsFile = "${inputs.secrets}/defiant-services.yaml";
+        owner = config.users.users.nextcloud.name;
       };
     };
 
@@ -178,7 +175,7 @@ in {
           in {
             image = config.apps.pihole.image;
             volumes = [
-              "/home/pihole:/etc/pihole:rw" # TODO; set this based on configs and bond with tmpfiles.rules
+              "${config.apps.pihole.directory.data}:/etc/pihole:rw"
               "${config.sops.secrets."services/pi-hole".path}:${passwordFileLocation}"
             ];
             environment = {
@@ -197,16 +194,12 @@ in {
       };
     };
 
+    # TODO: dynamic users
     systemd = {
       tmpfiles.rules = [
-        "d ${config.apps.jellyfin.directory.root} 755 jellyfin jellyfin -"
-        "d ${config.apps.jellyfin.directory.mediaDirectory} 2775 jellyfin jellyfin_media -" # is /home/docker/jellyfin/media on existing server
-        "d ${config.apps.jellyfin.directory.dataDirectory} 2770 jellyfin jellyfin -" # is /home/docker/jellyfin/config on existing server
-        "d ${config.apps.jellyfin.directory.cacheDirectory} 2750 jellyfin jellyfin -" # is /home/docker/jellyfin/cache on existing server
-        "d /home/forgejo 750 forgejo forgejo -"
-        "d /home/forgejo/data 750 forgejo forgejo -" # is /home/docker/forgejo on existing server
-        "d /home/pihole 750 pihole pihole -" # is /home/docker/pihole on old system
-        "d /home/hass 750 hass hass -" # is /home/docker/hass on old system
+        "d ${config.apps.jellyfin.mediaDirectory} 2775 jellyfin jellyfin_media -" # is /home/docker/jellyfin/media on existing server
+        "d ${config.apps.pihole.directory.root} 755 pihole pihole -" # is /home/docker/pihole on old system
+        "d ${config.apps.pihole.directory.data} 755 pihole pihole -" # is /home/docker/pihole on old system
       ];
 
       services = {
@@ -240,6 +233,13 @@ in {
           '';
           partOf = ["podman-compose-root.target"];
           wantedBy = ["podman-compose-root.target"];
+        };
+        # nextcloud-setup = {
+        #   after = ["network.target"];
+        # };
+        headscale = {
+          after = ["postgresql.service"];
+          requires = ["postgresql.service"];
         };
       };
 
@@ -278,17 +278,23 @@ in {
 
       postgresql = {
         enable = true;
-        ensureDatabases = ["forgejo" "headscale"];
         ensureUsers = [
           {
             name = "postgres";
           }
           {
             name = "forgejo";
+            ensureDBOwnership = true;
           }
           {
             name = "headscale";
+            ensureDBOwnership = true;
           }
+        ];
+        ensureDatabases = [
+          "forgejo"
+          "headscale"
+          # "nextcloud"
         ];
         identMap = ''
           # ArbitraryMapName systemUser DBUser
@@ -300,13 +306,13 @@ in {
 
           # Client Users
           superuser_map      forgejo   forgejo
-          # superuser_map      headscale headscale
+          superuser_map      headscale headscale
         '';
         # configuration here lets users access the db that matches their name and lets user postgres access everything
         authentication = pkgs.lib.mkOverride 10 ''
-          # type database DBuser   auth-method  optional_ident_map
-          local  all      postgres peer         map=superuser_map
-          local  sameuser all      peer         map=superuser_map
+          # type database DBuser    origin-address auth-method   optional_ident_map
+          local  all      postgres                 peer          map=superuser_map
+          local  sameuser all                      peer          map=superuser_map
         '';
       };
 
@@ -320,34 +326,27 @@ in {
           server_url = "https://${config.apps.headscale.hostname}";
           dns.base_domain = "clients.${config.apps.headscale.hostname}";
           logtail.enabled = true;
-          # database = {
-          #   type = "postgres";
-          #   postgres = {
-          #     host = "localhost";
-          #     port = 5432;
-          #     user = "headscale";
-          #     name = "headscale";
-          #   };
-          # };
+          database = {
+            type = "postgres";
+            postgres = {
+              host = "/run/postgresql";
+              port = config.services.postgresql.settings.port;
+              user = "headscale";
+              name = "headscale";
+            };
+          };
         };
       };
 
       jellyfin = {
         enable = true;
-        user = "jellyfin";
-        group = "jellyfin";
-        dataDir = config.apps.jellyfin.directory.dataDirectory;
-        cacheDir = config.apps.jellyfin.directory.cacheDirectory;
       };
 
       forgejo = {
         enable = true;
         database = {
           type = "postgres";
-          host = "localhost";
-          port = 5432;
-          user = "forgejo";
-          name = "forgejo";
+          socket = "/run/postgresql";
         };
         lfs.enable = true;
         settings = {
@@ -355,14 +354,11 @@ in {
             DOMAIN = config.apps.forgejo.hostname;
             HTTP_PORT = 8081;
           };
-          service.DISABLE_REGISTRATION = true;
         };
-        stateDir = "/home/forgejo/data";
       };
 
       home-assistant = {
-        enable = false;
-        configDir = "/home/hass";
+        enable = true;
         config.http = {
           server_port = 8082;
           use_x_forwarded_for = true;
@@ -380,6 +376,16 @@ in {
             port = 8083;
             secret_key = "@SEARXNG_SECRET@";
           };
+        };
+      };
+
+      # nextcloud here is built using its auto setup mysql db because it was not playing nice with postgres
+      nextcloud = {
+        enable = true;
+        package = pkgs.nextcloud30;
+        hostName = config.apps.nextcloud.hostname;
+        config = {
+          adminpassFile = config.sops.secrets."services/nextcloud_adminpass".path;
         };
       };
 
@@ -423,17 +429,21 @@ in {
       defaults.email = "jan-leila@protonmail.com";
     };
 
-    networking.firewall.allowedTCPPorts = [
-      httpPort
-      httpsPort
-      dnsPort
-      nfsPort
-      jellyfinPort
-      config.services.headscale.port
-      config.services.forgejo.settings.server.HTTP_PORT
-      # config.services.home-assistant.config.http.server_port
-      config.services.searx.settings.server.port
-    ];
+    networking.firewall.allowedTCPPorts =
+      [
+        httpPort
+        httpsPort
+        dnsPort
+        nfsPort
+      ]
+      ++ (lib.optional isDebug [
+        jellyfinPort
+        config.services.headscale.port
+        config.services.forgejo.settings.server.HTTP_PORT
+        config.services.home-assistant.config.http.server_port
+        config.services.postgresql.settings.port
+        config.services.searx.settings.server.port
+      ]);
 
     environment.systemPackages = [
       config.services.headscale.package

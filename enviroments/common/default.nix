@@ -92,6 +92,12 @@
         group = "headscale";
         isSystemUser = true;
       };
+
+      nextcloud = {
+        uid = 2006;
+        group = "nextcloud";
+        isSystemUser = true;
+      };
     };
 
     groups = {
@@ -143,6 +149,11 @@
       headscale = {
         gid = 2005;
         members = ["headscale"];
+      };
+
+      nextcloud = {
+        gid = 2006;
+        members = ["nextcloud"];
       };
     };
   };

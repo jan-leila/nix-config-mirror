@@ -49,8 +49,6 @@ to update passwords run: `nix shell nixpkgs#sops -c sops secrets/user-passwords.
 ## New Features
 - offline access for nfs mounts (overlay with rsync might be a good option here? https://www.spinics.net/lists/linux-unionfs/msg07105.html note about nfs4 and overlay fs)
 - Flake templates
-- searxng
-- nextcloud ???
 - samba mounts
 - firefox declarative???
 - figure out steam vr things?
@@ -59,7 +57,6 @@ to update passwords run: `nix shell nixpkgs#sops -c sops secrets/user-passwords.
 - openssh known hosts
 - rotate sops encryption keys periodically (and somehow sync between devices?)
 - zfs email after scrubbing
-- headscale server (just needs to be tested)
 - mastodon server
 - tail scale clients
 - wake on LAN
