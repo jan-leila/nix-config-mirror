@@ -51,4 +51,4 @@ mkdir -p $temp$SOPS_AGE_KEY_DIRECTORY
 cp -r $SOPS_AGE_KEY_DIRECTORY/* $temp$SOPS_AGE_KEY_DIRECTORY
 
 # commit number in this is because the main branch of nixos-anywhere is broken right now
-nix run github:nix-community/nixos-anywhere/b3b6bfebba35d55fba485ceda588984dec74c54f -- --extra-files $temp --flake ".#$flake" ${user:-nixos}@$target
+nix run github:nix-community/nixos-anywhere -- --extra-files $temp --flake ".#$flake" ${user:-nixos}@$target
