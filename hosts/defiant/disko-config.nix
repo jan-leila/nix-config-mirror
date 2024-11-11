@@ -1,10 +1,9 @@
-{lib, ...}: let
+{...}: let
   bootDisk = devicePath: {
     type = "disk";
     device = devicePath;
     content = {
       type = "gpt";
-
       partitions = {
         boot = {
           size = "1M";
@@ -32,37 +31,37 @@
           size = "100%";
           content = {
             type = "zfs";
-            pool = "zroot";
+            pool = "rpool";
           };
         };
       };
     };
   };
-  cacheDisk = devicePath: swapSize: {
-    type = "disk";
-    device = devicePath;
-    content = {
-      type = "gpt";
-      partitions = {
-        encryptedSwap = {
-          size = swapSize;
-          content = {
-            type = "swap";
-            randomEncryption = true;
-            discardPolicy = "both";
-            resumeDevice = true;
-          };
-        };
-        zfs = {
-          size = "100%";
-          content = {
-            type = "zfs";
-            pool = "zroot";
-          };
-        };
-      };
-    };
-  };
+  # cacheDisk = devicePath: swapSize: {
+  #   type = "disk";
+  #   device = devicePath;
+  #   content = {
+  #     type = "gpt";
+  #     partitions = {
+  #       encryptedSwap = {
+  #         size = swapSize;
+  #         content = {
+  #           type = "swap";
+  #           randomEncryption = true;
+  #           discardPolicy = "both";
+  #           resumeDevice = true;
+  #         };
+  #       };
+  #       zfs = {
+  #         size = "100%";
+  #         content = {
+  #           type = "zfs";
+  #           pool = "rpool";
+  #         };
+  #       };
+  #     };
+  #   };
+  # };
 in {
   disko.devices = {
     disk = {
@@ -75,7 +74,7 @@ in {
       # ssd_2_tb_a = cacheDisk "64G" "/dev/disk/by-id/XXX";
     };
     zpool = {
-      zroot = {
+      rpool = {
         type = "zpool";
         mode = {
           topology = {
@@ -92,7 +91,7 @@ in {
               }
             ];
             cache = [];
-            # cache = [ "ssd_2_tb_a" ];
+            # cache = [ "ssd_2_tb_a" ];z
           };
         };
 
@@ -101,33 +100,39 @@ in {
         };
 
         rootFsOptions = {
-          encryption = "on";
-          keyformat = "hex";
-          keylocation = "prompt";
+          # encryption = "on";
+          # keyformat = "hex";
+          # keylocation = "prompt";
           compression = "lz4";
           xattr = "sa";
           acltype = "posixacl";
+          canmount = "off";
           "com.sun:auto-snapshot" = "false";
         };
 
-        mountpoint = "/";
-        postCreateHook = "zfs list -t snapshot -H -o name | grep -E '^zroot@blank$' || zfs snapshot zroot@blank";
-
         datasets = {
-          "nix" = {
+          root = {
+            type = "zfs_fs";
+            mountpoint = "/";
+            options.mountpoint = "legacy";
+            postCreateHook = "zfs snapshot rpool/root@blank";
+          };
+          home = {
+            type = "zfs_fs";
+            options.mountpoint = "legacy";
+            mountpoint = "/home";
+            postCreateHook = "zfs snapshot rpool/home@blank";
+          };
+          nix = {
             type = "zfs_fs";
             mountpoint = "/nix";
           };
-          "home" = {
+          persistent = {
             type = "zfs_fs";
-            mountpoint = "/mnt/home";
+            mountpoint = "/persistent";
             options = {
               "com.sun:auto-snapshot" = "true";
             };
-          };
-          "var" = {
-            type = "zfs_fs";
-            mountpoint = "/var";
           };
         };
       };

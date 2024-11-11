@@ -23,6 +23,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    impermanence = {
+      url = "github:nix-community/impermanence";
+    };
+
     # users home directories
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -49,6 +53,7 @@
   outputs = {
     nixpkgs,
     disko,
+    impermanence,
     nixos-hardware,
     home-manager,
     ...
@@ -102,6 +107,7 @@
         specialArgs = {inherit inputs lib;};
         modules = [
           ./overlays
+          impermanence.nixosModules.impermanence
           disko.nixosModules.disko
           home-manager.nixosModules.home-manager
           home-manager-config
