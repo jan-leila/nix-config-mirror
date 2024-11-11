@@ -49,9 +49,9 @@
       #media-session.enable = true;
     };
 
-    tailscale = {
-      enable = true;
-    };
+    # tailscale = {
+    #   enable = true;
+    # };
   };
 
   # Enable sound with pipewire.
