@@ -53,6 +53,7 @@
             XDG_MUSIC_DIR="$HOME/documents/music"
             XDG_PICTURES_DIR="$HOME/documents/photos"
             XDG_VIDEOS_DIR="$HOME/documents/videos"
+            XDG_PUBLICSHARE_DIR="$HOME/documents/public"
           '';
         };
       };
