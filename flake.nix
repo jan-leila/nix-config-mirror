@@ -48,6 +48,10 @@
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware/master";
     };
+
+    flake-compat = {
+      url = "https://flakehub.com/f/edolstra/flake-compat/1.tar.gz";
+    };
   };
 
   outputs = {
@@ -78,7 +82,19 @@
   in {
     packages = forEachPkgs (import ./pkgs);
 
-    formatter = forEachPkgs (system: system.alejandra);
+    formatter = forEachPkgs (pkgs: pkgs.alejandra);
+
+    devShells = forEachPkgs (pkgs: {
+      default = pkgs.mkShell {
+        packages = with pkgs; [git sops alejandra nixos-anywhere];
+
+        SOPS_AGE_KEY_DIRECTORY = import ./const/sops_age_key_directory.nix;
+
+        shellHook = ''
+          git config core.hooksPath .hooks
+        '';
+      };
+    });
 
     nixosConfigurations = {
       # Leyla Laptop

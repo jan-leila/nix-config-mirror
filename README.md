@@ -6,8 +6,8 @@
 |  `twilight` |      Desktop Computer      |      Leyla       |  Desktop  |
 |  `horizon`  |  13 inch Framework Laptop  |      Leyla       |  Laptop   |
 |  `defiant`  |         NAS Server         |      Leyla       |  Service  |
-|  `emergent` |      Desktop Computer      |       Eve        |  Laptop   |
-| `threshold` |           Laptop           |       Eve        |  Desktop  |
+|  `emergent` |      Desktop Computer      |       Eve        |  Desktop  |
+| `threshold` |           Laptop           |       Eve        |  Laptop   |
 
 # Tooling
 ## Lint
@@ -22,21 +22,19 @@
 ## New host setup
 `./install.sh --target 192.168.1.130 --flake hostname`
 
+## Updating Secrets
+`sops -c sops secrets/secrets_file_here.yaml`
+
 # Notes:
 
 ## Research topics
-- Look into this for rotating sops keys `https://technotim.live/posts/rotate-sops-encryption-keys/`
+- Look into this for auto rotating sops keys `https://technotim.live/posts/rotate-sops-encryption-keys/`
 - Look into this for openssh known configurations https://search.nixos.org/options?channel=unstable&from=0&size=15&sort=alpha_asc&type=packages&query=services.openssh
 - Look into this for flake templates https://nix.dev/manual/nix/2.22/command-ref/new-cli/nix3-flake-init
 - Look into this for headscale https://carlosvaz.com/posts/setting-up-headscale-on-nixos/
 - Look into this for home assistant configuration https://nixos.wiki/wiki/Home_Assistant https://myme.no/posts/2021-11-25-nixos-home-assistant.html
 - This person seams to know what they are doing with home manager https://github.com/arvigeus/nixos-config/
 - https://nixos-and-flakes.thiscute.world/
-
-## Configuration
-set up git configuration for local development: `git config core.hooksPath .hooks`
-
-to update passwords run: `nix shell nixpkgs#sops -c sops secrets/user-passwords.yaml` (NOTE: this depends on the SOPS_AGE_KEY_DIRECTORY environment variable being set)
 
 # Tasks:
 

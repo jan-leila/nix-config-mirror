@@ -196,7 +196,7 @@
     ];
 
     sessionVariables = rec {
-      SOPS_AGE_KEY_DIRECTORY = "/var/lib/sops-nix";
+      SOPS_AGE_KEY_DIRECTORY = import ../../const/sops_age_key_directory.nix;
       SOPS_AGE_KEY_FILE = "${SOPS_AGE_KEY_DIRECTORY}/key.txt";
     };
   };
