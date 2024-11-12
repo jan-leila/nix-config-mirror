@@ -50,7 +50,12 @@
     };
 
     flake-compat = {
-      url = "https://flakehub.com/f/edolstra/flake-compat/1.tar.gz";
+      url = "github:edolstra/flake-compat";
+    };
+
+    lix-module = {
+      url = "git+https://git.lix.systems/lix-project/nixos-module?ref=stable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -60,6 +65,7 @@
     impermanence,
     nixos-hardware,
     home-manager,
+    lix-module,
     ...
   } @ inputs: let
     home-manager-config = {
@@ -101,6 +107,7 @@
       horizon = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs lib;};
         modules = [
+          lix-module.nixosModules.default
           ./overlays
           home-manager.nixosModules.home-manager
           home-manager-config
@@ -112,6 +119,7 @@
       twilight = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs lib;};
         modules = [
+          lix-module.nixosModules.default
           ./overlays
           home-manager.nixosModules.home-manager
           home-manager-config
@@ -122,6 +130,7 @@
       defiant = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs lib;};
         modules = [
+          lix-module.nixosModules.default
           ./overlays
           impermanence.nixosModules.impermanence
           disko.nixosModules.disko
