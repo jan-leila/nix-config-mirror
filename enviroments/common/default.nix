@@ -178,13 +178,6 @@
   environment = {
     # List packages installed in system profile.
     systemPackages = with pkgs; [
-      qemu
-      (pkgs.writeShellScriptBin "qemu-system-x86_64-uefi" ''
-        qemu-system-x86_64 \
-          -bios ${OVMF.fd}/FV/OVMF.fd \
-          "$@"
-      '')
-
       wget
 
       # version control

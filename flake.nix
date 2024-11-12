@@ -23,9 +23,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    impermanence = {
-      url = "github:nix-community/impermanence";
-    };
+    # impermanence = {
+    #   url = "github:nix-community/impermanence";
+    # };
 
     # users home directories
     home-manager = {
@@ -62,7 +62,7 @@
   outputs = {
     nixpkgs,
     disko,
-    impermanence,
+    # impermanence,
     nixos-hardware,
     home-manager,
     lix-module,
@@ -132,7 +132,7 @@
         modules = [
           lix-module.nixosModules.default
           ./overlays
-          impermanence.nixosModules.impermanence
+          # impermanence.nixosModules.impermanence
           disko.nixosModules.disko
           home-manager.nixosModules.home-manager
           home-manager-config

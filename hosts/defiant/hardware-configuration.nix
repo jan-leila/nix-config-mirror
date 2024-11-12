@@ -2,7 +2,6 @@
 # and may be overwritten by future invocations.  Please make changes
 # to /etc/nixos/configuration.nix instead.
 {
-  pkgs,
   config,
   lib,
   modulesPath,
@@ -24,38 +23,38 @@
       #   zfs rollback -r rpool/root@blank
       #   zfs rollback -r rpool/home@blank
       # '';
-      systemd = {
-        enable = lib.mkDefault true;
-        services.rollback = {
-          description = "Rollback root filesystem to a pristine state on boot";
-          wantedBy = [
-            "zfs.target"
-            "initrd.target"
-          ];
-          after = [
-            "zfs-import-rpool.service"
-          ];
-          before = [
-            "sysroot.mount"
-            "fs.target"
-          ];
-          path = with pkgs; [
-            zfs
-          ];
-          unitConfig.DefaultDependencies = "no";
-          # serviceConfig = {
-          #   Type = "oneshot";
-          #   ExecStart =
-          #     "${config.boot.zfs.package}/sbin/zfs rollback -r rpool/home@blank";
-          # };
-          serviceConfig.Type = "oneshot";
-          script = ''
-            zfs list -t snapshot || echo
-            zfs rollback -r rpool/root@blank
-            zfs rollback -r rpool/home@blank
-          '';
-        };
-      };
+      # systemd = {
+      #   enable = lib.mkDefault true;
+      #   services.rollback = {
+      #     description = "Rollback root filesystem to a pristine state on boot";
+      #     wantedBy = [
+      #       "zfs.target"
+      #       "initrd.target"
+      #     ];
+      #     after = [
+      #       "zfs-import-rpool.service"
+      #     ];
+      #     before = [
+      #       "sysroot.mount"
+      #       "fs.target"
+      #     ];
+      #     path = with pkgs; [
+      #       zfs
+      #     ];
+      #     unitConfig.DefaultDependencies = "no";
+      #     # serviceConfig = {
+      #     #   Type = "oneshot";
+      #     #   ExecStart =
+      #     #     "${config.boot.zfs.package}/sbin/zfs rollback -r rpool/home@blank";
+      #     # };
+      #     serviceConfig.Type = "oneshot";
+      #     script = ''
+      #       zfs list -t snapshot || echo
+      #       zfs rollback -r rpool/root@blank
+      #       zfs rollback -r rpool/home@blank
+      #     '';
+      #   };
+      # };
     };
     kernelModules = ["kvm-amd"];
     kernelParams = ["quiet"];
@@ -68,19 +67,19 @@
 
   swapDevices = [];
 
-  fileSystems = {
-    "/" = {
-      neededForBoot = true;
-    };
+  # fileSystems = {
+  #   "/" = {
+  #     neededForBoot = true;
+  #   };
 
-    "/home" = {
-      neededForBoot = true;
-    };
+  #   "/home" = {
+  #     neededForBoot = true;
+  #   };
 
-    "/persistent" = {
-      neededForBoot = true;
-    };
-  };
+  #   "/persistent" = {
+  #     neededForBoot = true;
+  #   };
+  # };
 
   networking = {
     hostId = "c51763d6";
@@ -88,43 +87,43 @@
     useNetworkd = true;
   };
 
-  environment.persistence."/persistent" = {
-    enable = true;
-    hideMounts = true;
-    directories = [
-      # "/run/secrets"
+  # environment.persistence."/persistent" = {
+  #   enable = true;
+  #   hideMounts = true;
+  #   directories = [
+  #     # "/run/secrets"
 
-      "/etc/ssh"
+  #     "/etc/ssh"
 
-      "/var/log"
-      "/var/lib/nixos"
-      "/var/lib/systemd/coredump"
+  #     "/var/log"
+  #     "/var/lib/nixos"
+  #     "/var/lib/systemd/coredump"
 
-      # config.apps.pihole.directory.root
+  #     # config.apps.pihole.directory.root
 
-      # config.apps.jellyfin.mediaDirectory
-      # config.services.jellyfin.configDir
-      # config.services.jellyfin.cacheDir
-      # config.services.jellyfin.dataDir
+  #     # config.apps.jellyfin.mediaDirectory
+  #     # config.services.jellyfin.configDir
+  #     # config.services.jellyfin.cacheDir
+  #     # config.services.jellyfin.dataDir
 
-      # "/var/hass" # config.users.users.hass.home
-      # "/var/postgresql" # config.users.users.postgresql.home
-      # "/var/forgejo" # config.users.users.forgejo.home
-      # "/var/nextcloud" # config.users.users.nextcloud.home
-      # "/var/headscale" # config.users.users.headscale.home
-    ];
-    files = [
-      "/etc/machine-id"
-      # config.environment.sessionVariables.SOPS_AGE_KEY_FILE
-    ];
-    users.leyla = {
-      directories = [
-        "documents"
-        ".ssh"
-      ];
-      files = [];
-    };
-  };
+  #     # "/var/hass" # config.users.users.hass.home
+  #     # "/var/postgresql" # config.users.users.postgresql.home
+  #     # "/var/forgejo" # config.users.users.forgejo.home
+  #     # "/var/nextcloud" # config.users.users.nextcloud.home
+  #     # "/var/headscale" # config.users.users.headscale.home
+  #   ];
+  #   files = [
+  #     "/etc/machine-id"
+  #     # config.environment.sessionVariables.SOPS_AGE_KEY_FILE
+  #   ];
+  #   users.leyla = {
+  #     directories = [
+  #       "documents"
+  #       ".ssh"
+  #     ];
+  #     files = [];
+  #   };
+  # };
 
   # systemd.services = {
   #   # https://github.com/openzfs/zfs/issues/10891
