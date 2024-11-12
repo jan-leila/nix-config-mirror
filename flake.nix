@@ -92,7 +92,13 @@
 
     devShells = forEachPkgs (pkgs: {
       default = pkgs.mkShell {
-        packages = with pkgs; [git sops alejandra nixos-anywhere];
+        packages = with pkgs; [
+          git
+          sops
+          alejandra
+          nix-inspect
+          nixos-anywhere
+        ];
 
         SOPS_AGE_KEY_DIRECTORY = import ./const/sops_age_key_directory.nix;
 

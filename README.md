@@ -25,6 +25,9 @@
 ## Updating Secrets
 `sops -c sops secrets/secrets_file_here.yaml`
 
+## Inspecting a configuration
+`nix-inspect -p .`
+
 # Notes:
 
 ## Research topics
