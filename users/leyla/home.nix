@@ -95,6 +95,9 @@
         enable = true;
         enableBashIntegration = true;
         nix-direnv.enable = true;
+        config = {
+          hide_env_diff = true;
+        };
       };
       bash.enable = true;
 
