@@ -96,7 +96,8 @@
         enableBashIntegration = true;
         nix-direnv.enable = true;
         config = {
-          hide_env_diff = true;
+          global.hide_env_diff = true;
+          whitelist.exact = ["/home/leyla/documents/code/nix-config"];
         };
       };
       bash.enable = true;
