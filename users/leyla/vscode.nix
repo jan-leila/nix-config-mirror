@@ -73,6 +73,10 @@ in {
             stylelint.vscode-stylelint
             tauri-apps.tauri-vscode
 
+            # astro blog extensions
+            astro-build.astro-vscode
+            unifiedjs.vscode-mdx
+
             # misc extensions
             bungcip.better-toml
 
