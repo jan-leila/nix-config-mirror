@@ -52,7 +52,6 @@
 - Flake templates
 - default open file types
 - samba mounts
-- firefox declarative???
 - figure out steam vr things?
 - Open GL?
 - util functions
