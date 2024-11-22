@@ -1,12 +1,12 @@
 {
-  lib,
-  osConfig,
+  # lib,
+  # osConfig,
   # buildFirefoxXpiAddon,
-  pkgs,
-  inputs,
+  # pkgs,
+  # inputs,
   ...
 }: let
-  cfg = osConfig.nixos.users.leyla;
+  # cfg = osConfig.nixos.users.leyla;
 in {
   # programs.firefox = {
   #   enable = cfg.isDesktopUser;
