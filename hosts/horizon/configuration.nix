@@ -9,12 +9,12 @@
     leyla = {
       isDesktopUser = true;
     };
-    # ester = {
-    #   isDesktopUser = true;
-    # };
-    # eve = {
-    #   isDesktopUser = true;
-    # };
+    ester = {
+      isDesktopUser = true;
+    };
+    eve = {
+      isDesktopUser = true;
+    };
   };
 
   # enabled virtualisation for docker
