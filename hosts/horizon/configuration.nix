@@ -1,10 +1,6 @@
-# leyla laptop
 {inputs, ...}: {
   imports = [
-    inputs.home-manager.nixosModules.default
-    inputs.sops-nix.nixosModules.sops
-
-    ./hardware-configuration.nix
+    inputs.nixos-hardware.nixosModules.framework-11th-gen-intel
 
     ../../enviroments/client
   ];
@@ -13,12 +9,12 @@
     leyla = {
       isDesktopUser = true;
     };
-    ester = {
-      isDesktopUser = true;
-    };
-    eve = {
-      isDesktopUser = true;
-    };
+    # ester = {
+    #   isDesktopUser = true;
+    # };
+    # eve = {
+    #   isDesktopUser = true;
+    # };
   };
 
   # enabled virtualisation for docker

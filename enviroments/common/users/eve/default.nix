@@ -1,13 +1,12 @@
 {
   lib,
   config,
-  pkgs,
   inputs,
   ...
 }: let
-  cfg = config.nixos.users.ester;
+  cfg = config.nixos.users.eve;
 in {
-  options.nixos.users.ester = {
+  options.nixos.users.eve = {
     isDesktopUser = lib.mkEnableOption "install applications intended for desktop use";
   };
 
@@ -15,19 +14,19 @@ in {
     nixpkgs.config.allowUnfree = true;
 
     sops.secrets = lib.mkIf cfg.isDesktopUser {
-      "passwords/ester" = {
+      "passwords/eve" = {
         neededForUsers = true;
         sopsFile = "${inputs.secrets}/user-passwords.yaml";
       };
     };
 
-    users.users.ester = (
+    users.users.eve = (
       if cfg.isDesktopUser
       then {
         isNormalUser = true;
         extraGroups = ["networkmanager"];
 
-        hashedPasswordFile = config.sops.secrets."passwords/ester".path;
+        hashedPasswordFile = config.sops.secrets."passwords/eve".path;
       }
       else {
         isSystemUser = true;

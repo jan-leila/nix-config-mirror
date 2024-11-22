@@ -4,7 +4,7 @@
   ...
 }: {
   imports = [
-    ../../users
+    ./users
   ];
 
   nix = {

@@ -23,7 +23,7 @@ in {
       open-vsx = extensions.open-vsx;
       vscode-marketplace = extensions.vscode-marketplace;
     in {
-      enable = true;
+      enable = cfg.isDesktopUser;
 
       package = pkgs.vscodium;
 

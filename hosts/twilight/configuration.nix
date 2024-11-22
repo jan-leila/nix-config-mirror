@@ -1,16 +1,5 @@
-# leyla laptop
-{
-  config,
-  pkgs,
-  inputs,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [
-    inputs.home-manager.nixosModules.default
-    inputs.sops-nix.nixosModules.sops
-
-    ./hardware-configuration.nix
-
     ../../enviroments/client
   ];
   nixos.users = {

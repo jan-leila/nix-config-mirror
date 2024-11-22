@@ -34,7 +34,7 @@
     };
 
     # firefox-addons = {
-    #   url = "gitlab.com:rycee/nur-expressions?dir=pkgs/firefox-addons";
+    #   url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
     #   inputs.nixpkgs.follows = "nixpkgs";
     # };
 
@@ -59,32 +59,13 @@
     };
   };
 
-  outputs = {
-    nixpkgs,
-    disko,
-    # impermanence,
-    nixos-hardware,
-    home-manager,
-    lix-module,
-    ...
-  } @ inputs: let
-    home-manager-config = {
-      home-manager.useGlobalPkgs = true;
-      home-manager.useUserPackages = true;
-      home-manager.backupFileExtension = "backup";
-      home-manager.extraSpecialArgs = {inherit inputs;};
-    };
-    systems = [
-      "aarch64-darwin"
-      "aarch64-linux"
-      "x86_64-darwin"
-      "x86_64-linux"
-    ];
-    forEachSystem = nixpkgs.lib.genAttrs systems;
-    forEachPkgs = lambda: forEachSystem (system: lambda nixpkgs.legacyPackages.${system});
-
-    callPackage = nixpkgs.lib.callPackageWith (nixpkgs // {lib = lib;});
-    lib = callPackage ./util {} // nixpkgs.lib;
+  outputs = {...} @ inputs: let
+    util = import ./util {inherit inputs;};
+    forEachPkgs = util.forEachPkgs;
+    mkSystem = util.mkSystem;
+    # mkHome = util.mkHome;
+    # callPackage = nixpkgs.lib.callPackageWith (nixpkgs // {lib = lib;});
+    # lib = callPackage ./lib {} // nixpkgs.lib;
   in {
     packages = forEachPkgs (import ./pkgs);
 
@@ -108,44 +89,15 @@
       };
     });
 
+    # homeConfigurations = {
+    #   "leyla@horizon" = mkHome "leyla" "horizon"; # "x86_64-linux" ./homes/leyla;
+    # };
+
     nixosConfigurations = {
       # Leyla Laptop
-      horizon = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs lib;};
-        modules = [
-          lix-module.nixosModules.default
-          ./overlays
-          home-manager.nixosModules.home-manager
-          home-manager-config
-          ./hosts/horizon/configuration.nix
-          nixos-hardware.nixosModules.framework-11th-gen-intel
-        ];
-      };
-      # Leyla Desktop
-      twilight = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs lib;};
-        modules = [
-          lix-module.nixosModules.default
-          ./overlays
-          home-manager.nixosModules.home-manager
-          home-manager-config
-          ./hosts/twilight/configuration.nix
-        ];
-      };
-      # NAS Service
-      defiant = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs lib;};
-        modules = [
-          lix-module.nixosModules.default
-          ./overlays
-          # impermanence.nixosModules.impermanence
-          disko.nixosModules.disko
-          home-manager.nixosModules.home-manager
-          home-manager-config
-          ./hosts/defiant/disko-config.nix
-          ./hosts/defiant/configuration.nix
-        ];
-      };
+      horizon = mkSystem "horizon";
+      twilight = mkSystem "twilight";
+      defiant = mkSystem "defiant";
     };
   };
 }
