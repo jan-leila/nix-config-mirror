@@ -28,7 +28,6 @@ in {
               #foss platforms
               signal-desktop
               bitwarden
-              firefox
               ungoogled-chromium
               libreoffice
               inkscape

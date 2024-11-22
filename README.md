@@ -36,8 +36,8 @@
 - Look into this for flake templates https://nix.dev/manual/nix/2.22/command-ref/new-cli/nix3-flake-init
 - Look into this for headscale https://carlosvaz.com/posts/setting-up-headscale-on-nixos/
 - Look into this for home assistant configuration https://nixos.wiki/wiki/Home_Assistant https://myme.no/posts/2021-11-25-nixos-home-assistant.html
-- This person seams to know what they are doing with home manager https://github.com/arvigeus/nixos-config/
 - https://nixos-and-flakes.thiscute.world/
+- `homeConfigurations` https://github.com/diego-vicente/dotfiles/blob/6c47284868f9e99483da34257144bd03ae5edbbe/flake.nix
 
 # Tasks:
 
