@@ -143,11 +143,22 @@ in {
           "placements" = {
             "widget-overflow-fixed-list" = [];
             "unified-extensions-area" = [
+              "privacy_privacy_com-browser-action"
+              # bitwarden
+              "_446900e4-71c2-419f-a6a7-df9c091e268b_-browser-action"
               "ublock0_raymondhill_net-browser-action"
               "sponsorblocker_ajay_app-browser-action"
               "dearrow_ajay_app-browser-action"
-              "privacy_privacy_com-browser-action"
+              "jid1-mnnxcxisbpnsxq_jetpack-browser-action"
+              "_testpilot-containers-browser-action"
               "addon_simplelogin-browser-action"
+              "_74145f27-f039-47ce-a470-a662b129930a_-browser-action"
+              "jid1-bofifl9vbdl2zq_jetpack-browser-action"
+              "dfyoutube_example_com-browser-action"
+              "_b86e4813-687a-43e6-ab65-0bde4ab75758_-browser-action"
+              "_762f9885-5a13-4abd-9c77-433dcd38b8fd_-browser-action"
+              "_b11bea1f-a888-4332-8d8a-cec2be7d24b9_-browse-action"
+              "jid0-3guet1r69sqnsrca5p8kx9ezc3u_jetpack-browser-action"
             ];
             "nav-bar" = [
               "back-button"
@@ -181,6 +192,16 @@ in {
             "ublock0_raymondhill_net-browser-action"
             "addon_simplelogin-browser-action"
             "dearrow_ajay_app-browser-action"
+            "_446900e4-71c2-419f-a6a7-df9c091e268b_-browser-action"
+            "_74145f27-f039-47ce-a470-a662b129930a_-browser-action"
+            "jid1-bofifl9vbdl2zq_jetpack-browser-action"
+            "dfyoutube_example_com-browser-action"
+            "_testpilot-containers-browser-action"
+            "_b86e4813-687a-43e6-ab65-0bde4ab75758_-browser-action"
+            "jid1-mnnxcxisbpnsxq_jetpack-browser-action"
+            "_762f9885-5a13-4abd-9c77-433dcd38b8fd_-browser-action"
+            "_b11bea1f-a888-4332-8d8a-cec2be7d24b9_-browser-action"
+            "jid0-3guet1r69sqnsrca5p8kx9ezc3u_jetpack-browser-action"
           ];
         };
         "browser.newtabpage.activity-stream.feeds.topsites" = false;
@@ -196,12 +217,23 @@ in {
           # Twitter
           "T9nJot5PurhJSy8n038xGA=="
         ] (_: 1);
-        "signon.rememberSignons" = false;
         "identity.fxaccounts.enabled" = false;
 
         # Security
         "privacy.trackingprotection.enabled" = true;
         "dom.security.https_only_mode" = true;
+
+        "extensions.formautofill.addresses.enabled" = false;
+        "extensions.formautofill.creditCards.enabled" = false;
+        "signon.rememberSignons" = false;
+        "privacy.sanitize.sanitizeOnShutdown" = true;
+        "privacy.clearOnShutdown_v2.cache" = true;
+        "privacy.clearOnShutdown_v2.cookiesAndStorage" = true;
+        "privacy.clearOnShutdown_v2.historyFormDataAndDownloads" = true;
+        "urlclassifier.trackingSkipURLs" = "";
+        "urlclassifier.features.socialtracking.skipURLs" = "";
+        "dom.security.https_only_mode_pbm" = true;
+        "dom.security.https_only_mode_error_page_user_suggestions" = true;
 
         # Disable telemetry
         "app.shield.optoutstudies.enabled" = false;
