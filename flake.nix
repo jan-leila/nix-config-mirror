@@ -23,6 +23,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # delete your darlings
     # impermanence = {
     #   url = "github:nix-community/impermanence";
     # };
