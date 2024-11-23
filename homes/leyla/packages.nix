@@ -45,6 +45,7 @@ in {
               # wireshark
               # rpi-imager
               # fritzing
+              mfoc
 
               # proprietary platforms
               discord
@@ -61,7 +62,7 @@ in {
               bruno
               qFlipper
               proxmark3
-              mfoc
+              godot_4-mono
 
               # system tools
               protonvpn-gui
