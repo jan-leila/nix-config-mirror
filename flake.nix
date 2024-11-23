@@ -33,6 +33,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # firefox extensions
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -49,10 +50,12 @@
       url = "github:NixOS/nixos-hardware/master";
     };
 
+    # this is just here so that we have a lock on it for our dev shells
     flake-compat = {
       url = "github:edolstra/flake-compat";
     };
 
+    # lix in nice ig
     lix-module = {
       url = "git+https://git.lix.systems/lix-project/nixos-module?ref=stable";
       inputs.nixpkgs.follows = "nixpkgs";
