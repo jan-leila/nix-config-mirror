@@ -56,6 +56,9 @@ in {
 
       packages = lib.lists.optionals cfg.isDesktopUser (
         with pkgs; [
+          # helvetica font
+          aileron
+
           firefox
           bitwarden
           discord

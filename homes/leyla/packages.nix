@@ -25,6 +25,11 @@ in {
       ++ (
         lib.lists.optionals cfg.isDesktopUser (
           with pkgs; [
+            # helvetica font
+            aileron
+
+            gnomeExtensions.dash-to-dock
+
             #foss platforms
             signal-desktop
             bitwarden

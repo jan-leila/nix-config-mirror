@@ -12,11 +12,6 @@
   security.rtkit.enable = true;
 
   environment.systemPackages = with pkgs; [
-    # helvetica font
-    aileron
-
     cachefilesd
-
-    gnomeExtensions.dash-to-dock
   ];
 }
