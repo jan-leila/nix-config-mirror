@@ -1,21 +1,4 @@
 {...}: {
-  imports = [];
-
-  nix = {
-    settings = {
-      experimental-features = ["nix-command" "flakes"];
-    };
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 7d";
-    };
-    optimise = {
-      automatic = true;
-      dates = ["weekly"];
-    };
-  };
-
   # Enable networking
   networking.networkmanager.enable = true;
 
@@ -31,21 +14,5 @@
     LC_PAPER = "en_US.UTF-8";
     LC_TELEPHONE = "en_US.UTF-8";
     LC_TIME = "en_US.UTF-8";
-  };
-
-  services = {
-    automatic-timezoned = {
-      enable = true;
-    };
-
-    openssh = {
-      enable = true;
-      ports = [22];
-      settings = {
-        PasswordAuthentication = false;
-        UseDns = true;
-        X11Forwarding = false;
-      };
-    };
   };
 }

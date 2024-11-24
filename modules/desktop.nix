@@ -43,6 +43,10 @@
           # no need to redefine it in your config for now)
           #media-session.enable = true;
         };
+
+        automatic-timezoned = {
+          enable = true;
+        };
       };
 
       # Enable sound with pipewire.

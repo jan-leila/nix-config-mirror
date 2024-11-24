@@ -1,5 +1,6 @@
 {...}: {
   imports = [
+    ./system.nix
     ./hardware.nix
     ./users.nix
     ./desktop.nix
