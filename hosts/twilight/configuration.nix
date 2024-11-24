@@ -2,7 +2,7 @@
   imports = [
     ../../enviroments/client
 
-    ../../modules
+    ../../host-modules
   ];
 
   nixpkgs.config.allowUnfree = true;

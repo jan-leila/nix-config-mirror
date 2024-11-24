@@ -8,7 +8,7 @@
     inputs.disko.nixosModules.disko
     ../../enviroments/server
 
-    ../../modules
+    ../../host-modules
   ];
 
   nixpkgs.config.allowUnfree = true;

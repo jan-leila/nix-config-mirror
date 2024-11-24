@@ -3,7 +3,7 @@
     inputs.nixos-hardware.nixosModules.framework-11th-gen-intel
 
     ../../enviroments/client
-    ../../modules
+    ../../host-modules
   ];
 
   nixpkgs.config.allowUnfree = true;
