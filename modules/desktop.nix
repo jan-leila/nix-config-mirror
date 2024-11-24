@@ -35,4 +35,7 @@
 
   # Enable sound with pipewire.
   hardware.pulseaudio.enable = false;
+
+  # enable RealtimeKit for pulse audio
+  security.rtkit.enable = true;
 }
