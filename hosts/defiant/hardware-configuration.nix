@@ -9,7 +9,6 @@
 }: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    ../hardware-common.nix
   ];
 
   security.sudo.extraConfig = "Defaults lecture=never";

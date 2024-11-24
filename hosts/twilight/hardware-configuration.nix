@@ -10,7 +10,6 @@
 }: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    ../hardware-common.nix
   ];
 
   boot = {
@@ -81,10 +80,6 @@
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
   hardware = {
-    piperMouse.enable = true;
-    viaKeyboard.enable = true;
-    openRGB.enable = true;
-
     # Enable OpenGL
     graphics.enable = true;
 

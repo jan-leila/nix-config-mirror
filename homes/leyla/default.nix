@@ -12,7 +12,7 @@
     # manage.
     home = {
       username = "leyla";
-      homeDirectory = osConfig.users.users.leyla.home;
+      # homeDirectory = osConfig.users.users.leyla.home;
 
       # This value determines the Home Manager release that your configuration is
       # compatible with. This helps avoid breakage when a new Home Manager release

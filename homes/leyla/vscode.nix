@@ -4,9 +4,7 @@
   pkgs,
   inputs,
   ...
-}: let
-  cfg = osConfig.nixos.users.leyla;
-in {
+}: {
   nixpkgs = {
     overlays = [
       inputs.nix-vscode-extensions.overlays.default
@@ -14,7 +12,7 @@ in {
   };
 
   programs = {
-    bash.shellAliases = lib.mkIf cfg.isDesktopUser {
+    bash.shellAliases = {
       code = "codium";
     };
 
@@ -23,7 +21,7 @@ in {
       open-vsx = extensions.open-vsx;
       vscode-marketplace = extensions.vscode-marketplace;
     in {
-      enable = cfg.isDesktopUser;
+      enable = true;
 
       package = pkgs.vscodium;
 

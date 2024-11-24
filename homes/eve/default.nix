@@ -4,7 +4,7 @@
   osConfig,
   ...
 }: let
-  cfg = osConfig.nixos.users.eve;
+  cfg = osConfig.host.users.eve;
 in {
   config = {
     home = {
@@ -54,7 +54,7 @@ in {
         # EDITOR = "emacs";
       };
 
-      packages = lib.mkIf cfg.isDesktopUser (
+      packages = lib.lists.optionals cfg.isDesktopUser (
         with pkgs; [
           firefox
           bitwarden

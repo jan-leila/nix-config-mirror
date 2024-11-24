@@ -4,7 +4,8 @@
   pkgs,
   ...
 }: let
-  cfg = osConfig.nixos.users.leyla;
+  cfg = osConfig.host.users.leyla;
+  hardware = osConfig.host.hardware;
 in {
   imports = [
     ./vscode.nix
@@ -12,72 +13,69 @@ in {
   ];
 
   home = {
-    packages = lib.mkIf (cfg.isDesktopUser || cfg.isTerminalUser) (
-      lib.mkMerge [
-        (
+    packages =
+      lib.lists.optionals cfg.isTerminalUser (
+        with pkgs; [
+          # comand line tools
+          yt-dlp
+          ffmpeg
+          imagemagick
+        ]
+      )
+      ++ (
+        lib.lists.optionals cfg.isDesktopUser (
           with pkgs; [
-            # comand line tools
-            yt-dlp
-            ffmpeg
-            imagemagick
+            #foss platforms
+            signal-desktop
+            bitwarden
+            ungoogled-chromium
+            libreoffice
+            inkscape
+            gimp
+            krita
+            freecad
+            # cura
+            # kicad-small
+            makemkv
+            transmission_4-gtk
+            onionshare
+            easytag
+            # rhythmbox
+            (lib.mkIf hardware.graphicsAcceleration.enable obs-studio)
+            # wireshark
+            # rpi-imager
+            # fritzing
+            mfoc
+
+            # proprietary platforms
+            discord
+            obsidian
+            steam
+            (lib.mkIf hardware.graphicsAcceleration.enable davinci-resolve)
+
+            anki-bin
+
+            # development tools
+            androidStudioPackages.canary
+            jetbrains.idea-community
+            dbeaver-bin
+            bruno
+            qFlipper
+            proxmark3
+            godot_4-mono
+
+            # system tools
+            protonvpn-gui
+            openvpn
+            nextcloud-client
+            noisetorch
+
+            # hardware managment tools
+            (lib.mkIf hardware.piperMouse.enable piper)
+            (lib.mkIf hardware.openRGB.enable openrgb)
+            (lib.mkIf hardware.viaKeyboard.enable via)
           ]
         )
-        (
-          lib.mkIf (!cfg.isTerminalUser) (
-            with pkgs; [
-              #foss platforms
-              signal-desktop
-              bitwarden
-              ungoogled-chromium
-              libreoffice
-              inkscape
-              gimp
-              krita
-              freecad
-              # cura
-              # kicad-small
-              makemkv
-              transmission_4-gtk
-              onionshare
-              easytag
-              # rhythmbox
-              (lib.mkIf cfg.hasGPU obs-studio)
-              # wireshark
-              # rpi-imager
-              # fritzing
-              mfoc
-
-              # proprietary platforms
-              discord
-              obsidian
-              steam
-              (lib.mkIf cfg.hasGPU davinci-resolve)
-
-              anki-bin
-
-              # development tools
-              androidStudioPackages.canary
-              jetbrains.idea-community
-              dbeaver-bin
-              bruno
-              qFlipper
-              proxmark3
-              godot_4-mono
-
-              # system tools
-              protonvpn-gui
-              openvpn
-              nextcloud-client
-              noisetorch
-
-              # hardware managment tools
-              (lib.mkIf osConfig.hardware.piperMouse.enable piper)
-              (lib.mkIf osConfig.hardware.openRGB.enable openrgb)
-              (lib.mkIf osConfig.hardware.viaKeyboard.enable via)
-            ]
-          )
-        )
-      ]
-    );
+      );
   };
 }

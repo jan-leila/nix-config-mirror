@@ -3,29 +3,32 @@
     inputs.nixos-hardware.nixosModules.framework-11th-gen-intel
 
     ../../enviroments/client
+    ../../modules/hardware.nix
+    ../../modules/users.nix
   ];
 
-  nixos.users = {
-    leyla = {
-      isDesktopUser = true;
-    };
-    ester = {
-      isDesktopUser = true;
-    };
-    eve = {
-      isDesktopUser = true;
+  nixpkgs.config.allowUnfree = true;
+
+  host = {
+    users = {
+      leyla = {
+        isDesktopUser = true;
+        isTerminalUser = true;
+      };
+      ester.isDesktopUser = true;
+      eve.isDesktopUser = true;
     };
   };
 
   # enabled virtualisation for docker
-  virtualisation.docker = {
-    enable = true;
-    rootless = {
-      enable = true;
-      setSocketVariable = true;
-    };
-  };
-  users.extraGroups.docker.members = ["leyla"];
+  # virtualisation.docker = {
+  #   enable = true;
+  #   rootless = {
+  #     enable = true;
+  #     setSocketVariable = true;
+  #   };
+  # };
+  # users.extraGroups.docker.members = ["leyla"];
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;

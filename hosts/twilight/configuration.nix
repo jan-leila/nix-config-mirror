@@ -1,17 +1,24 @@
 {pkgs, ...}: {
   imports = [
     ../../enviroments/client
+
+    ../../modules/hardware.nix
+    ../../modules/users.nix
   ];
-  nixos.users = {
-    leyla = {
-      isDesktopUser = true;
-      hasGPU = true;
+
+  nixpkgs.config.allowUnfree = true;
+
+  host = {
+    users = {
+      leyla.isDesktopUser = true;
+      ester.isDesktopUser = true;
+      eve.isDesktopUser = true;
     };
-    ester = {
-      isDesktopUser = true;
-    };
-    eve = {
-      isDesktopUser = true;
+    hardware = {
+      piperMouse.enable = true;
+      viaKeyboard.enable = true;
+      openRGB.enable = true;
+      graphicsAcceleration.enable = true;
     };
   };
 

@@ -5,11 +5,9 @@
   pkgs,
   inputs,
   ...
-}: let
-  cfg = osConfig.nixos.users.leyla;
-in {
+}: {
   programs.firefox = {
-    enable = cfg.isDesktopUser;
+    enable = true;
     profiles.leyla = {
       settings = {
         "browser.search.defaultenginename" = "Searx";

@@ -7,11 +7,21 @@
   imports = [
     inputs.disko.nixosModules.disko
     ../../enviroments/server
+
+    ../../modules/hardware.nix
+    ../../modules/users.nix
   ];
 
-  nixos.users = {
-    leyla = {
-      isTerminalUser = true;
+  nixpkgs.config.allowUnfree = true;
+
+  host = {
+    users = {
+      leyla = {
+        isTerminalUser = true;
+        isDesktopUser = true;
+      };
+      ester.isNormalUser = false;
+      eve.isNormalUser = false;
     };
   };
 

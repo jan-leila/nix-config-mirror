@@ -17,12 +17,12 @@
   forEachSystem = nixpkgs.lib.genAttrs systems;
   pkgsFor = system: nixpkgs.legacyPackages.${system};
 
-  home-manager-config = {
+  home-manager-config = nixpkgs: {
     home-manager.useGlobalPkgs = true;
     home-manager.useUserPackages = true;
     home-manager.backupFileExtension = "backup";
     home-manager.extraSpecialArgs = {inherit inputs;};
-    home-manager.users = import ../homes;
+    home-manager.users = import ../homes nixpkgs;
   };
 in {
   forEachPkgs = lambda: forEachSystem (system: lambda (pkgsFor system));
