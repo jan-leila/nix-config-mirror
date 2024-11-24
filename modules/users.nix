@@ -11,7 +11,7 @@
   hostUsers = host.hostUsers;
   principleUsers = host.principleUsers;
   terminalUsers = host.terminalUsers;
-  normalUsers = host.normalUsers;
+  # normalUsers = host.normalUsers;
 
   uids = {
     leyla = 1000;
