@@ -10,6 +10,8 @@
 
     ../../modules/hardware.nix
     ../../modules/users.nix
+    ../../modules/desktop.nix
+    ../../modules/nix-development.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
