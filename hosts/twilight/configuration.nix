@@ -2,10 +2,7 @@
   imports = [
     ../../enviroments/client
 
-    ../../modules/hardware.nix
-    ../../modules/users.nix
-    ../../modules/desktop.nix
-    ../../modules/nix-development.nix
+    ../../modules
   ];
 
   nixpkgs.config.allowUnfree = true;

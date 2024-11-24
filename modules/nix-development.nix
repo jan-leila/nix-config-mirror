@@ -1,14 +1,25 @@
 {
-  inputs,
+  lib,
+  config,
   pkgs,
+  inputs,
   ...
 }: {
-  nix = {
-    nixPath = ["nixpkgs=${inputs.nixpkgs}"];
-  };
+  options.host.nix-development.enable = lib.mkEnableOption "should desktop configuration be enabled";
 
-  environment.systemPackages = with pkgs; [
-    # nix langauge server
-    nixd
+  config = lib.mkMerge [
+    {
+      host.nix-development.enable = lib.mkDefault true;
+    }
+    (lib.mkIf config.host.nix-development.enable {
+      nix = {
+        nixPath = ["nixpkgs=${inputs.nixpkgs}"];
+      };
+
+      environment.systemPackages = with pkgs; [
+        # nix langauge server
+        nixd
+      ];
+    })
   ];
 }
