@@ -4,7 +4,6 @@
   nix = {
     settings = {
       experimental-features = ["nix-command" "flakes"];
-      trusted-users = ["leyla"];
     };
     gc = {
       automatic = true;
@@ -44,40 +43,9 @@
       ports = [22];
       settings = {
         PasswordAuthentication = false;
-        AllowUsers = ["leyla"]; # Allows all users by default. Can be [ "user1" "user2" ]
         UseDns = true;
         X11Forwarding = false;
       };
-    };
-  };
-
-  environment = {
-    # List packages installed in system profile.
-    systemPackages = with pkgs; [
-      wget
-
-      # version control
-      git
-
-      # system debuging tools
-      iputils
-      dnsutils
-    ];
-
-    sessionVariables = rec {
-      SOPS_AGE_KEY_DIRECTORY = import ../../const/sops_age_key_directory.nix;
-      SOPS_AGE_KEY_FILE = "${SOPS_AGE_KEY_DIRECTORY}/key.txt";
-    };
-  };
-
-  sops = {
-    defaultSopsFormat = "yaml";
-    gnupg.sshKeyPaths = [];
-
-    age = {
-      keyFile = "/var/lib/sops-nix/key.txt";
-      sshKeyPaths = [];
-      # generateKey = true;
     };
   };
 }

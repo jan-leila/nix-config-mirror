@@ -10,7 +10,11 @@
 
   host = {
     users = {
-      leyla.isDesktopUser = true;
+      leyla = {
+        isDesktopUser = true;
+        isTerminalUser = true;
+        isPrincipleUser = true;
+      };
       ester.isDesktopUser = true;
       eve.isDesktopUser = true;
     };

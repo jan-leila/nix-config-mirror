@@ -4,6 +4,15 @@
   inputs,
   ...
 }: let
+  SOPS_AGE_KEY_DIRECTORY = import ../const/sops_age_key_directory.nix;
+
+  host = config.host;
+
+  hostUsers = host.hostUsers;
+  principleUsers = host.principleUsers;
+  terminalUsers = host.terminalUsers;
+  normalUsers = host.normalUsers;
+
   uids = {
     leyla = 1000;
     ester = 1001;
@@ -35,51 +44,129 @@
   ester = users.ester.name;
   eve = users.eve.name;
 in {
-  options.host.users = lib.mkOption {
-    type = lib.types.attrsOf (lib.types.submodule ({config, ...}: {
-      options = {
-        isDesktopUser = lib.mkOption {
-          type = lib.types.bool;
-          default = false;
-          description = ''
-            User should install their desktop applications
-          '';
-          defaultText = lib.literalExpression "config.host.users.\${name}.isDesktopUser";
+  options.host = {
+    users = lib.mkOption {
+      type = lib.types.attrsOf (lib.types.submodule ({
+        config,
+        name,
+        ...
+      }: {
+        options = {
+          name = lib.mkOption {
+            type = lib.types.string;
+            default = name;
+            description = ''
+              What should this users name on the system be
+            '';
+            defaultText = lib.literalExpression "config.host.users.\${name}.name";
+          };
+          isPrincipleUser = lib.mkOption {
+            type = lib.types.bool;
+            default = false;
+            description = ''
+              User should be configured as root and have ssh access
+            '';
+            defaultText = lib.literalExpression "config.host.users.\${name}.isPrincipleUser";
+          };
+          isDesktopUser = lib.mkOption {
+            type = lib.types.bool;
+            default = false;
+            description = ''
+              User should install their desktop applications
+            '';
+            defaultText = lib.literalExpression "config.host.users.\${name}.isDesktopUser";
+          };
+          isTerminalUser = lib.mkOption {
+            type = lib.types.bool;
+            default = false;
+            description = ''
+              User should install their terminal applications
+            '';
+            defaultText = lib.literalExpression "config.host.users.\${name}.isTerminalUser";
+          };
+          isNormalUser = lib.mkOption {
+            type = lib.types.bool;
+            default = config.isDesktopUser || config.isTerminalUser;
+            description = ''
+              User should install their applications
+            '';
+            defaultText = lib.literalExpression "config.host.users.\${name}.isNormalUser";
+          };
         };
-        isTerminalUser = lib.mkOption {
-          type = lib.types.bool;
-          default = false;
-          description = ''
-            User should install their terminal applications
-          '';
-          defaultText = lib.literalExpression "config.host.users.\${name}.isTerminalUser";
-        };
-        isNormalUser = lib.mkOption {
-          type = lib.types.bool;
-          default = config.isDesktopUser || config.isTerminalUser;
-          description = ''
-            User should install their applications
-          '';
-          defaultText = lib.literalExpression "config.host.users.\${name}.isNormalUser";
-        };
-      };
-    }));
+      }));
+    };
+    hostUsers = lib.mkOption {
+      default = lib.attrsets.mapAttrsToList (_: user: user) host.users;
+    };
+    principleUsers = lib.mkOption {
+      default = lib.lists.filter (user: user.isPrincipleUser) hostUsers;
+    };
+    normalUsers = lib.mkOption {
+      default = lib.lists.filter (user: user.isTerminalUser) hostUsers;
+    };
+    terminalUsers = lib.mkOption {
+      default = lib.lists.filter (user: user.isNormalUser) hostUsers;
+    };
   };
 
   config = {
+    assertions =
+      (
+        builtins.map (user: {
+          assertion = !(user.isPrincipleUser && !user.isNormalUser);
+          message = ''
+            Non normal user ${user.name} can not be a principle user.
+          '';
+        })
+        hostUsers
+      )
+      ++ [
+        {
+          assertion = (builtins.length principleUsers) > 0;
+          message = ''
+            At least one user must be a principle user.
+          '';
+        }
+      ];
+
+    # principle users are by definition trusted
+    nix.settings.trusted-users = builtins.map (user: user.name) principleUsers;
+
+    # we should only be able to ssh into principle users of a computer who are also set up for terminal access
+    services.openssh.settings.AllowUsers = builtins.map (user: user.name) (lib.lists.intersectLists terminalUsers principleUsers);
+
+    # we need to set up env variables to nix can find keys to decrypt passwords on rebuild
+    environment = {
+      sessionVariables = {
+        SOPS_AGE_KEY_DIRECTORY = SOPS_AGE_KEY_DIRECTORY;
+        SOPS_AGE_KEY_FILE = "${SOPS_AGE_KEY_DIRECTORY}/key.txt";
+      };
+    };
+
     # set up user passwords
-    sops.secrets = {
-      "passwords/leyla" = {
-        neededForUsers = true;
-        sopsFile = "${inputs.secrets}/user-passwords.yaml";
+    sops = {
+      defaultSopsFormat = "yaml";
+      gnupg.sshKeyPaths = [];
+
+      age = {
+        keyFile = "/var/lib/sops-nix/key.txt";
+        sshKeyPaths = [];
+        # generateKey = true;
       };
-      "passwords/ester" = {
-        neededForUsers = true;
-        sopsFile = "${inputs.secrets}/user-passwords.yaml";
-      };
-      "passwords/eve" = {
-        neededForUsers = true;
-        sopsFile = "${inputs.secrets}/user-passwords.yaml";
+
+      secrets = {
+        "passwords/leyla" = {
+          neededForUsers = true;
+          sopsFile = "${inputs.secrets}/user-passwords.yaml";
+        };
+        "passwords/ester" = {
+          neededForUsers = true;
+          sopsFile = "${inputs.secrets}/user-passwords.yaml";
+        };
+        "passwords/eve" = {
+          neededForUsers = true;
+          sopsFile = "${inputs.secrets}/user-passwords.yaml";
+        };
       };
     };
 
@@ -88,33 +175,37 @@ in {
       users = {
         leyla = {
           uid = lib.mkForce uids.leyla;
+          name = lib.mkForce host.users.leyla.name;
           description = "Leyla";
           extraGroups =
-            (lib.lists.optionals config.host.users.leyla.isNormalUser ["networkmanager" "wheel" "dialout"])
-            ++ (lib.lists.optionals config.host.users.leyla.isDesktopUser ["adbusers"]);
+            (lib.lists.optionals host.users.leyla.isNormalUser ["networkmanager"])
+            ++ (lib.lists.optionals host.users.leyla.isPrincipleUser ["wheel" "dialout"])
+            ++ (lib.lists.optionals host.users.leyla.isDesktopUser ["adbusers"]);
           hashedPasswordFile = config.sops.secrets."passwords/leyla".path;
-          isNormalUser = config.host.users.leyla.isNormalUser;
-          isSystemUser = !config.host.users.leyla.isNormalUser;
+          isNormalUser = host.users.leyla.isNormalUser;
+          isSystemUser = !host.users.leyla.isNormalUser;
           group = config.users.users.leyla.name;
         };
 
         ester = {
           uid = lib.mkForce uids.ester;
+          name = lib.mkForce host.users.ester.name;
           description = "Ester";
-          extraGroups = lib.optionals config.host.users.ester.isNormalUser ["networkmanager"];
+          extraGroups = lib.optionals host.users.ester.isNormalUser ["networkmanager"];
           hashedPasswordFile = config.sops.secrets."passwords/ester".path;
-          isNormalUser = config.host.users.ester.isNormalUser;
-          isSystemUser = !config.host.users.ester.isNormalUser;
+          isNormalUser = host.users.ester.isNormalUser;
+          isSystemUser = !host.users.ester.isNormalUser;
           group = config.users.users.ester.name;
         };
 
         eve = {
           uid = lib.mkForce uids.eve;
+          name = lib.mkForce host.users.eve.name;
           description = "Eve";
-          extraGroups = lib.optionals config.host.users.eve.isNormalUser ["networkmanager"];
+          extraGroups = lib.optionals host.users.eve.isNormalUser ["networkmanager"];
           hashedPasswordFile = config.sops.secrets."passwords/eve".path;
-          isNormalUser = config.host.users.eve.isNormalUser;
-          isSystemUser = !config.host.users.eve.isNormalUser;
+          isNormalUser = host.users.eve.isNormalUser;
+          isSystemUser = !host.users.eve.isNormalUser;
           group = config.users.users.eve.name;
         };
 

@@ -17,8 +17,9 @@
   host = {
     users = {
       leyla = {
-        isTerminalUser = true;
         isDesktopUser = true;
+        isTerminalUser = true;
+        isPrincipleUser = true;
       };
       ester.isNormalUser = false;
       eve.isNormalUser = false;
