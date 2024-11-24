@@ -1,10 +1,7 @@
-{
-  pkgs,
-  osConfig,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [
     ./packages.nix
+    ../../home-modules
   ];
 
   config = {

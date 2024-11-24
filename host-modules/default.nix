@@ -5,5 +5,6 @@
     ./users.nix
     ./desktop.nix
     ./nix-development.nix
+    ./home-manager
   ];
 }

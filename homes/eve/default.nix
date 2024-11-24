@@ -6,6 +6,10 @@
 }: let
   cfg = osConfig.host.users.eve;
 in {
+  imports = [
+    ../../home-modules
+  ];
+
   config = {
     home = {
       username = "eve";

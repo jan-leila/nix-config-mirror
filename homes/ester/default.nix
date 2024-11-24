@@ -6,6 +6,10 @@
 }: let
   cfg = osConfig.host.users.ester;
 in {
+  imports = [
+    ../../home-modules
+  ];
+
   config = {
     home = {
       username = "ester";
