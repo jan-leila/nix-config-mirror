@@ -47,7 +47,7 @@
 - get rid of environments folder
 ## New Features
 - offline access for nfs mounts (overlay with rsync might be a good option here? https://www.spinics.net/lists/linux-unionfs/msg07105.html note about nfs4 and overlay fs)
-- Flake templates
+- Flake templates - we need to add these to some kind of local registry??? `nix flake show templates` - https://nix.dev/manual/nix/2.18/command-ref/new-cli/nix3-flake-init
 - samba mounts
 - figure out steam vr things?
 - Open GL?
