@@ -1,7 +1,5 @@
 {pkgs, ...}: {
-  imports = [
-    ../common
-  ];
+  imports = [];
 
   environment.systemPackages = with pkgs; [
     cachefilesd

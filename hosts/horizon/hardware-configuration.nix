@@ -87,6 +87,7 @@
   ];
 
   networking = {
+    networkmanager.enable = true;
     useDHCP = lib.mkDefault true;
     hostName = "horizon"; # Define your hostname.
   };

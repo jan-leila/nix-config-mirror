@@ -12,9 +12,7 @@
   httpsPort = 443;
   isDebug = false;
 in {
-  imports = [
-    ../common
-  ];
+  imports = [];
 
   options = {
     apps = {
