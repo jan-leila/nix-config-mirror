@@ -72,10 +72,10 @@
     forEachPkgs = util.forEachPkgs;
     mkSystem = util.mkSystem;
     mkHome = util.mkHome;
-    # callPackage = nixpkgs.lib.callPackageWith (nixpkgs // {lib = lib;});
-    # lib = callPackage ./lib {} // nixpkgs.lib;
   in {
     formatter = forEachPkgs (pkgs: pkgs.alejandra);
+
+    # templates = import ./templates;
 
     devShells = forEachPkgs (pkgs: {
       default = pkgs.mkShell {
@@ -106,12 +106,7 @@
       self.nixosConfigurations
     );
 
-    # homeConfigurations = {
-    #   "leyla@horizon" = mkHome "leyla" "horizon"; # "x86_64-linux" ./homes/leyla;
-    # };
-
     nixosConfigurations = {
-      # Leyla Laptop
       horizon = mkSystem "horizon";
       twilight = mkSystem "twilight";
       defiant = mkSystem "defiant";
