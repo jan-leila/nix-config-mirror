@@ -25,7 +25,7 @@
     home-manager.useGlobalPkgs = true;
     home-manager.useUserPackages = true;
     home-manager.backupFileExtension = "backup";
-    home-manager.extraSpecialArgs = {inherit inputs;};
+    home-manager.extraSpecialArgs = {inherit inputs outputs util;};
     home-manager.users = import ../homes nixpkgs;
     home-manager.sharedModules = home-manager-shared-modules;
   };
@@ -40,7 +40,7 @@ in {
     ];
 
   mkSystem = host:
-    inputs.nixpkgs.lib.nixosSystem {
+    nixpkgs.lib.nixosSystem {
       specialArgs = {inherit inputs outputs util;};
       modules = [
         lix-module.nixosModules.default
