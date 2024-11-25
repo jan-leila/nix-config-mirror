@@ -6,7 +6,7 @@
 }: {
   imports = [
     inputs.disko.nixosModules.disko
-    ../../enviroments/server
+    ./services.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
