@@ -6,6 +6,7 @@
   lix-module = inputs.lix-module;
   nixpkgs = inputs.nixpkgs;
   home-manager = inputs.home-manager;
+  nix-darwin = inputs.nix-darwin;
   sops-nix = inputs.sops-nix;
 
   systems = [
@@ -17,18 +18,34 @@
   forEachSystem = nixpkgs.lib.genAttrs systems;
   pkgsFor = system: nixpkgs.legacyPackages.${system};
 
-  home-manager-shared-modules = [
-    ../modules
-    ../home-modules
+  common-modules = [
+    lix-module.nixosModules.default
+    ../modules/common-modules
   ];
+
+  home-manager-modules =
+    common-modules
+    ++ [
+      ../modules/home-manager-modules
+    ];
+
   home-manager-config = nixpkgs: {
     home-manager.useGlobalPkgs = true;
     home-manager.useUserPackages = true;
     home-manager.backupFileExtension = "backup";
     home-manager.extraSpecialArgs = {inherit inputs outputs util;};
-    home-manager.users = import ../homes nixpkgs;
-    home-manager.sharedModules = home-manager-shared-modules;
+    home-manager.users = import ../configurations/home-manager nixpkgs;
+    home-manager.sharedModules = home-manager-modules;
   };
+
+  system-modules =
+    common-modules
+    ++ [
+      ../modules/system-modules
+      sops-nix.nixosModules.sops
+      home-manager.nixosModules.home-manager
+      home-manager-config
+    ];
 in {
   forEachPkgs = lambda: forEachSystem (system: lambda (pkgsFor system));
 
@@ -39,18 +56,26 @@ in {
       (lib.mkUnless condition no)
     ];
 
-  mkSystem = host:
+  mkNixosSystem = host:
     nixpkgs.lib.nixosSystem {
       specialArgs = {inherit inputs outputs util;};
-      modules = [
-        lix-module.nixosModules.default
-        sops-nix.nixosModules.sops
-        home-manager.nixosModules.home-manager
-        home-manager-config
-        ../modules
-        ../host-modules
-        ../hosts/${host}
-      ];
+      modules =
+        system-modules
+        ++ [
+          ../modules/nixos-modules
+          ../configurations/nixos/${host}
+        ];
+    };
+
+  mkDarwinSystem = host:
+    nix-darwin.lib.darwinSystem {
+      specialArgs = {inherit inputs outputs util;};
+      modules =
+        system-modules
+        ++ [
+          ../modules/darwin-modules
+          ../configurations/darwin/${host}
+        ];
     };
 
   mkHome = user: host: system: osConfig:
@@ -60,9 +85,9 @@ in {
         inherit inputs util outputs osConfig;
       };
       modules =
-        home-manager-shared-modules
+        home-manager-modules
         ++ [
-          ../homes/${user}
+          ../configurations/home-manager/${user}
         ];
     };
 }

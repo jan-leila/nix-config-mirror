@@ -4,7 +4,7 @@
   inputs,
   ...
 }: let
-  SOPS_AGE_KEY_DIRECTORY = import ../const/sops_age_key_directory.nix;
+  SOPS_AGE_KEY_DIRECTORY = import ../../const/sops_age_key_directory.nix;
 
   host = config.host;
 

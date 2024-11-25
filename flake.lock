@@ -198,6 +198,26 @@
         "url": "https://git.lix.systems/lix-project/nixos-module"
       }
     },
+    "nix-darwin": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1732420287,
+        "narHash": "sha256-CzvYF4x6jUh/+NEEIFrIY5t1W/N3IA2bNZJiMXu9GTo=",
+        "owner": "LnL7",
+        "repo": "nix-darwin",
+        "rev": "3c52583b99666a349a6219dc1f0dd07d75c82d6a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "LnL7",
+        "repo": "nix-darwin",
+        "type": "github"
+      }
+    },
     "nix-vscode-extensions": {
       "inputs": {
         "flake-compat": "flake-compat_2",
@@ -259,6 +279,7 @@
         "flake-compat": "flake-compat",
         "home-manager": "home-manager",
         "lix-module": "lix-module",
+        "nix-darwin": "nix-darwin",
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",

@@ -11,7 +11,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # self hosted repo of secrets file to further protect files in case of future encryption vunrabilities
+    # self hosted repo of secrets file to further protect files in case of future encryption vulnerabilities
     secrets = {
       url = "git+https://git.jan-leila.com/jan-leila/nix-config-secrets?ref=main";
       flake = false;
@@ -27,6 +27,11 @@
     # impermanence = {
     #   url = "github:nix-community/impermanence";
     # };
+
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # users home directories
     home-manager = {
@@ -70,7 +75,8 @@
   } @ inputs: let
     util = import ./util {inherit inputs;};
     forEachPkgs = util.forEachPkgs;
-    mkSystem = util.mkSystem;
+    mkNixosSystem = util.mkNixosSystem;
+    mkDarwinSystem = util.mkDarwinSystem;
     mkHome = util.mkHome;
   in {
     formatter = forEachPkgs (pkgs: pkgs.alejandra);
@@ -95,6 +101,16 @@
       };
     });
 
+    nixosConfigurations = {
+      horizon = mkNixosSystem "horizon";
+      twilight = mkNixosSystem "twilight";
+      defiant = mkNixosSystem "defiant";
+    };
+
+    darwinConfigurations = {
+      hesperium = mkDarwinSystem "hesperium";
+    };
+
     homeConfigurations = nixpkgs.lib.attrsets.mergeAttrsList (
       nixpkgs.lib.attrsets.mapAttrsToList (hostname: system: (
         nixpkgs.lib.attrsets.mapAttrs' (user: _: {
@@ -105,11 +121,5 @@
       ))
       self.nixosConfigurations
     );
-
-    nixosConfigurations = {
-      horizon = mkSystem "horizon";
-      twilight = mkSystem "twilight";
-      defiant = mkSystem "defiant";
-    };
   };
 }
