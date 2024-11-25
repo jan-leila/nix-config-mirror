@@ -15,11 +15,6 @@
       nix = {
         nixPath = ["nixpkgs=${inputs.nixpkgs}"];
       };
-
-      environment.systemPackages = with pkgs; [
-        # nix langauge server
-        nixd
-      ];
     })
   ];
 }
