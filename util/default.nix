@@ -54,7 +54,7 @@ in {
         inherit inputs util outputs osConfig;
       };
       modules = [
-        # outputs.homeManagerModules.default
+        ../overlays
         ../homes/${user}
       ];
     };
