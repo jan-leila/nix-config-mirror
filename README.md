@@ -10,9 +10,6 @@
 | `threshold` |           Laptop           |       Eve        |  Laptop   |
 
 # Tooling
-## Lint
-`./lint.sh`
-
 ## Rebuilding
 `./rebuild.sh`
 

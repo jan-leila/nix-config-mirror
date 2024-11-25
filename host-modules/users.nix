@@ -53,7 +53,7 @@ in {
       }: {
         options = {
           name = lib.mkOption {
-            type = lib.types.string;
+            type = lib.types.str;
             default = name;
             description = ''
               What should this users name on the system be

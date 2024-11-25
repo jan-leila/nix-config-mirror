@@ -4,6 +4,7 @@
   ...
 }: {
   imports = [
+    ./i18n.nix
     ./packages.nix
   ];
 
