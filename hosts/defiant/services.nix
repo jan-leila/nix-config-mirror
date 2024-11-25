@@ -48,12 +48,12 @@ in {
         directory = {
           root = lib.mkOption {
             type = lib.types.str;
-            description = "directory that piholes will be hosted at";
+            description = "directory that pihole will be hosted at";
             default = "/var/lib/pihole";
           };
           data = lib.mkOption {
             type = lib.types.str;
-            description = "directory that piholes data will be hosted at";
+            description = "directory that pihole data will be hosted at";
             default = "${config.apps.pihole.directory.root}/data";
           };
         };
@@ -66,7 +66,7 @@ in {
         };
         hostname = lib.mkOption {
           type = lib.types.str;
-          description = "hosname that headscale will be hosted at";
+          description = "hostname that headscale will be hosted at";
           default = "${config.apps.headscale.subdomain}.${config.apps.base_domain}";
         };
       };
@@ -78,7 +78,7 @@ in {
         };
         hostname = lib.mkOption {
           type = lib.types.str;
-          description = "hosname that jellyfin will be hosted at";
+          description = "hostname that jellyfin will be hosted at";
           default = "${config.apps.jellyfin.subdomain}.${config.apps.base_domain}";
         };
         mediaDirectory = lib.mkOption {
@@ -95,7 +95,7 @@ in {
         };
         hostname = lib.mkOption {
           type = lib.types.str;
-          description = "hosname that forgejo will be hosted at";
+          description = "hostname that forgejo will be hosted at";
           default = "${config.apps.forgejo.subdomain}.${config.apps.base_domain}";
         };
       };
@@ -107,7 +107,7 @@ in {
         };
         hostname = lib.mkOption {
           type = lib.types.str;
-          description = "hosname that home-assistant will be hosted at";
+          description = "hostname that home-assistant will be hosted at";
           default = "${config.apps.home-assistant.subdomain}.${config.apps.base_domain}";
         };
       };
@@ -119,7 +119,7 @@ in {
         };
         hostname = lib.mkOption {
           type = lib.types.str;
-          description = "hosname that searx will be hosted at";
+          description = "hostname that searx will be hosted at";
           default = "${config.apps.searx.subdomain}.${config.apps.base_domain}";
         };
       };
@@ -131,7 +131,7 @@ in {
         };
         hostname = lib.mkOption {
           type = lib.types.str;
-          description = "hosname that nextcloud will be hosted at";
+          description = "hostname that nextcloud will be hosted at";
           default = "${config.apps.nextcloud.subdomain}.${config.apps.base_domain}";
         };
       };

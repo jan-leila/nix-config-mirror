@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: let
-  userConifg = osConfig.host.users.leyla;
+  userConfig = osConfig.host.users.leyla;
   hardware = osConfig.host.hardware;
 in {
   imports = [
@@ -14,16 +14,16 @@ in {
 
   home = {
     packages =
-      lib.lists.optionals userConifg.isTerminalUser (
+      lib.lists.optionals userConfig.isTerminalUser (
         with pkgs; [
-          # comand line tools
+          # command line tools
           yt-dlp
           ffmpeg
           imagemagick
         ]
       )
       ++ (
-        lib.lists.optionals userConifg.isDesktopUser (
+        lib.lists.optionals userConfig.isDesktopUser (
           with pkgs; [
             # helvetica font
             aileron

@@ -17,7 +17,7 @@
     initrd = {
       availableKernelModules = ["xhci_pci" "aacraid" "ahci" "usbhid" "usb_storage" "sd_mod"];
       kernelModules = [];
-      # TODO: figure out some kind of snapshotting before rolebacks
+      # TODO: figure out some kind of snapshotting before rollbacks
       # postDeviceCommands = lib.mkAfter ''
       #   zfs rollback -r rpool/root@blank
       #   zfs rollback -r rpool/home@blank
@@ -127,7 +127,7 @@
   # systemd.services = {
   #   # https://github.com/openzfs/zfs/issues/10891
   #   systemd-udev-settle.enable = false;
-  #   # Snapshots are not accessable on boot for some reason this should fix it
+  #   # Snapshots are not accessible on boot for some reason this should fix it
   #   # https://github.com/NixOS/nixpkgs/issues/257505
   #   zfs-mount = {
   #     serviceConfig = {
