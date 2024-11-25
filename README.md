@@ -37,7 +37,6 @@
 - Look into this for headscale https://carlosvaz.com/posts/setting-up-headscale-on-nixos/
 - Look into this for home assistant configuration https://nixos.wiki/wiki/Home_Assistant https://myme.no/posts/2021-11-25-nixos-home-assistant.html
 - https://nixos-and-flakes.thiscute.world/
-- `homeConfigurations` https://github.com/diego-vicente/dotfiles/blob/6c47284868f9e99483da34257144bd03ae5edbbe/flake.nix
 
 # Tasks:
 
@@ -45,17 +44,13 @@
 - join config for systemd.tmpfiles.rules and service directory bindings
 - monitor configuration in `~/.config/monitors.xml` should be sym linked to `/run/gdm/.config/monitors.xml` (https://www.reddit.com/r/NixOS/comments/u09cz9/home_manager_create_my_own_symlinks_automatically/)
 - move applications in server environment into their own flakes
-- get rid of disko config and import it in hardware-configuration.nix
-- why does users.users.<name>.home conflict with home-manager.users.<name>.home.homeDirectory
 - get rid of environments folder
 ## New Features
 - offline access for nfs mounts (overlay with rsync might be a good option here? https://www.spinics.net/lists/linux-unionfs/msg07105.html note about nfs4 and overlay fs)
 - Flake templates
-- default open file types
 - samba mounts
 - figure out steam vr things?
 - Open GL?
-- util functions
 - openssh known hosts
 - rotate sops encryption keys periodically (and somehow sync between devices?)
 - zfs email after scrubbing
