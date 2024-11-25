@@ -75,8 +75,6 @@
     # callPackage = nixpkgs.lib.callPackageWith (nixpkgs // {lib = lib;});
     # lib = callPackage ./lib {} // nixpkgs.lib;
   in {
-    packages = forEachPkgs (import ./pkgs);
-
     formatter = forEachPkgs (pkgs: pkgs.alejandra);
 
     devShells = forEachPkgs (pkgs: {

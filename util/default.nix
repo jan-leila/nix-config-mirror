@@ -17,12 +17,17 @@
   forEachSystem = nixpkgs.lib.genAttrs systems;
   pkgsFor = system: nixpkgs.legacyPackages.${system};
 
+  home-manager-shared-modules = [
+    ../modules
+    ../home-modules
+  ];
   home-manager-config = nixpkgs: {
     home-manager.useGlobalPkgs = true;
     home-manager.useUserPackages = true;
     home-manager.backupFileExtension = "backup";
     home-manager.extraSpecialArgs = {inherit inputs;};
     home-manager.users = import ../homes nixpkgs;
+    home-manager.sharedModules = home-manager-shared-modules;
   };
 in {
   forEachPkgs = lambda: forEachSystem (system: lambda (pkgsFor system));
@@ -42,7 +47,8 @@ in {
         sops-nix.nixosModules.sops
         home-manager.nixosModules.home-manager
         home-manager-config
-        ../overlays
+        ../modules
+        ../host-modules
         ../hosts/${host}
       ];
     };
@@ -53,9 +59,10 @@ in {
       extraSpecialArgs = {
         inherit inputs util outputs osConfig;
       };
-      modules = [
-        ../overlays
-        ../homes/${user}
-      ];
+      modules =
+        home-manager-shared-modules
+        ++ [
+          ../homes/${user}
+        ];
     };
 }

@@ -5,7 +5,6 @@
 }: {
   imports = [
     ./packages.nix
-    ../../home-modules
   ];
 
   config = {

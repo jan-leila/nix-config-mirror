@@ -6,9 +6,7 @@
 }: let
   userConfig = osConfig.host.users.eve;
 in {
-  imports = [
-    ../../home-modules
-  ];
+  imports = [];
 
   config = {
     home = {
