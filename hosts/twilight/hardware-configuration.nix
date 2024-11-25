@@ -66,6 +66,10 @@
     };
   };
 
+  environment.systemPackages = with pkgs; [
+    cachefilesd
+  ];
+
   swapDevices = [];
 
   networking = {

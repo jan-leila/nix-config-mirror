@@ -1,8 +1,4 @@
 {pkgs, ...}: {
-  imports = [
-    ../../enviroments/client
-  ];
-
   nixpkgs.config.allowUnfree = true;
 
   host = {

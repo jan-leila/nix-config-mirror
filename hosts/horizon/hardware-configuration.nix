@@ -4,6 +4,7 @@
 {
   config,
   lib,
+  pkgs,
   modulesPath,
   ...
 }: {
@@ -79,6 +80,10 @@
       options = ["x-systemd.automount" "noauto" "x-systemd.idle-timeout=600"];
     };
   };
+
+  environment.systemPackages = with pkgs; [
+    cachefilesd
+  ];
 
   services.cachefilesd.enable = true;
 
