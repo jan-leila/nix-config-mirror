@@ -1,6 +1,4 @@
 {
-  lib,
-  osConfig,
   pkgs,
   inputs,
   ...
@@ -77,8 +75,6 @@
 
             # misc extensions
             bungcip.better-toml
-
-            # lib.mkIf open-vsx."10nates".ollama-autocoder
           ]
           ++ (
             with vscode-marketplace; [

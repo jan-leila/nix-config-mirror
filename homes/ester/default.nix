@@ -4,7 +4,7 @@
   osConfig,
   ...
 }: let
-  cfg = osConfig.host.users.ester;
+  userConfig = osConfig.host.users.ester;
 in {
   imports = [
     ../../home-modules
@@ -12,7 +12,7 @@ in {
 
   config = {
     home = {
-      username = "ester";
+      username = userConfig.name;
       homeDirectory = osConfig.users.users.ester.home;
 
       # This value determines the Home Manager release that your configuration is
@@ -58,7 +58,7 @@ in {
         # EDITOR = "emacs";
       };
 
-      packages = lib.lists.optionals cfg.isDesktopUser (
+      packages = lib.lists.optionals userConfig.isDesktopUser (
         with pkgs; [
           # helvetica font
           aileron

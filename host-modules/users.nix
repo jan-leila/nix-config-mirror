@@ -88,7 +88,7 @@ in {
             type = lib.types.bool;
             default = config.isDesktopUser || config.isTerminalUser;
             description = ''
-              User should install their applications
+              User should install their applications and can log in
             '';
             defaultText = lib.literalExpression "config.host.users.\${name}.isNormalUser";
           };

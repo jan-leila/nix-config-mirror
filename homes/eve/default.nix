@@ -4,7 +4,7 @@
   osConfig,
   ...
 }: let
-  cfg = osConfig.host.users.eve;
+  userConfig = osConfig.host.users.eve;
 in {
   imports = [
     ../../home-modules
@@ -12,7 +12,7 @@ in {
 
   config = {
     home = {
-      username = "eve";
+      username = userConfig.name;
       homeDirectory = osConfig.users.users.eve.home;
 
       # This value determines the Home Manager release that your configuration is
@@ -58,7 +58,7 @@ in {
         # EDITOR = "emacs";
       };
 
-      packages = lib.lists.optionals cfg.isDesktopUser (
+      packages = lib.lists.optionals userConfig.isDesktopUser (
         with pkgs; [
           firefox
           bitwarden

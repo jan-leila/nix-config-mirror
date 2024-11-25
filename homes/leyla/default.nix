@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  osConfig,
+  ...
+}: {
   imports = [
     ./packages.nix
     ../../home-modules
@@ -8,8 +12,8 @@
     # Home Manager needs a bit of information about you and the paths it should
     # manage.
     home = {
-      username = "leyla";
-      # homeDirectory = osConfig.users.users.leyla.home;
+      username = osConfig.host.users.leyla.name;
+      homeDirectory = osConfig.users.users.leyla.home;
 
       # This value determines the Home Manager release that your configuration is
       # compatible with. This helps avoid breakage when a new Home Manager release

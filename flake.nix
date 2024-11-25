@@ -63,11 +63,15 @@
     };
   };
 
-  outputs = {...} @ inputs: let
+  outputs = {
+    self,
+    nixpkgs,
+    ...
+  } @ inputs: let
     util = import ./util {inherit inputs;};
     forEachPkgs = util.forEachPkgs;
     mkSystem = util.mkSystem;
-    # mkHome = util.mkHome;
+    mkHome = util.mkHome;
     # callPackage = nixpkgs.lib.callPackageWith (nixpkgs // {lib = lib;});
     # lib = callPackage ./lib {} // nixpkgs.lib;
   in {
@@ -92,6 +96,17 @@
         '';
       };
     });
+
+    homeConfigurations = nixpkgs.lib.attrsets.mergeAttrsList (
+      nixpkgs.lib.attrsets.mapAttrsToList (hostname: system: (
+        nixpkgs.lib.attrsets.mapAttrs' (user: _: {
+          name = "${user}@${hostname}";
+          value = mkHome user hostname system.pkgs.hostPlatform.system system.config;
+        })
+        system.config.home-manager.users
+      ))
+      self.nixosConfigurations
+    );
 
     # homeConfigurations = {
     #   "leyla@horizon" = mkHome "leyla" "horizon"; # "x86_64-linux" ./homes/leyla;

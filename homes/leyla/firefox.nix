@@ -1,7 +1,5 @@
 {
   lib,
-  osConfig,
-  # buildFirefoxXpiAddon,
   pkgs,
   inputs,
   ...

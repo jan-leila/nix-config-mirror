@@ -47,15 +47,15 @@ in {
       ];
     };
 
-  # mkHome = user: host:
-  #   home-manager.lib.homeManagerConfiguration {
-  #     # pkgs = pkgsFor system;
-  #     extraSpecialArgs = {
-  #       inherit inputs util outputs;
-  #     };
-  #     modules = [
-  #       # config
-  #       outputs.homeManagerModules.default
-  #     ];
-  #   };
+  mkHome = user: host: system: osConfig:
+    home-manager.lib.homeManagerConfiguration {
+      pkgs = pkgsFor system;
+      extraSpecialArgs = {
+        inherit inputs util outputs osConfig;
+      };
+      modules = [
+        # outputs.homeManagerModules.default
+        ../homes/${user}
+      ];
+    };
 }
