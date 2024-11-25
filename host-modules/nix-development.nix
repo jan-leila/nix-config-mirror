@@ -1,5 +1,6 @@
 {
   lib,
+  pkgs,
   config,
   inputs,
   ...
@@ -14,6 +15,12 @@
       nix = {
         nixPath = ["nixpkgs=${inputs.nixpkgs}"];
       };
+      environment.systemPackages = with pkgs; [
+        # nix language server
+        nil
+        # nix formatter
+        alejandra
+      ];
     })
   ];
 }

@@ -1,8 +1,12 @@
 {
+  lib,
   pkgs,
   inputs,
+  osConfig,
   ...
-}: {
+}: let
+  nix-development-enabled = osConfig.host.nix-development.enable;
+in {
   nixpkgs = {
     overlays = [
       inputs.nix-vscode-extensions.overlays.default
@@ -27,19 +31,28 @@
       enableUpdateCheck = false;
       enableExtensionUpdateCheck = false;
 
-      userSettings = {
-        "workbench.colorTheme" = "Atom One Dark";
-        "cSpell.userWords" = [
-          "webdav"
-        ];
-        "nix.enableLanguageServer" = true;
-        "nixpkgs" = {
-          "expr" = "import <nixpkgs> {}";
-        };
-        # "fomratting": {
-        #   "command": [ "alejandra" ];
-        # };
-      };
+      userSettings = lib.mkMerge [
+        {
+          "workbench.colorTheme" = "Atom One Dark";
+          "cSpell.userWords" = [
+            "webdav"
+          ];
+        }
+        (lib.mkIf nix-development-enabled {
+          "nix.enableLanguageServer" = true;
+          "nix.serverPath" = "nil";
+          "[nix]" = {
+            "editor.defaultFormatter" = "kamadorueda.alejandra";
+            "editor.formatOnPaste" = true;
+            "editor.formatOnSave" = true;
+            "editor.formatOnType" = true;
+          };
+          "alejandra.program" = "alejandra";
+          "nixpkgs" = {
+            "expr" = "import <nixpkgs> {}";
+          };
+        })
+      ];
 
       extensions = (
         with open-vsx;
@@ -51,10 +64,6 @@
             streetsidesoftware.code-spell-checker-german
             streetsidesoftware.code-spell-checker-italian
             jeanp413.open-remote-ssh
-
-            # nix extensions
-            pinage404.nix-extension-pack
-            jnoortheen.nix-ide
 
             # html extensions
             formulahendry.auto-rename-tag
@@ -75,6 +84,12 @@
             # misc extensions
             bungcip.better-toml
           ]
+          ++ (lib.lists.optionals nix-development-enabled [
+            # nix extensions
+            pinage404.nix-extension-pack
+            jnoortheen.nix-ide
+            kamadorueda.alejandra
+          ])
           ++ (
             with vscode-marketplace; [
               # js extensions
