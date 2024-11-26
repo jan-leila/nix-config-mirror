@@ -2,5 +2,8 @@
 {...}: {
   imports = [
     ./home-manager
+    ./system.nix
+    ./nix-development.nix
+    ./users.nix
   ];
 }

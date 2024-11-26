@@ -6,7 +6,7 @@
     ./hardware.nix
     ./users.nix
     ./desktop.nix
-    ./nix-development.nix
+    ./ssh.nix
     ./i18n.nix
   ];
 }

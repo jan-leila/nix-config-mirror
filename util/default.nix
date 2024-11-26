@@ -26,6 +26,7 @@
   home-manager-modules =
     common-modules
     ++ [
+      sops-nix.homeManagerModules.sops
       ../modules/home-manager-modules
     ];
 
@@ -41,10 +42,8 @@
   system-modules =
     common-modules
     ++ [
-      ../modules/system-modules
-      sops-nix.nixosModules.sops
-      home-manager.nixosModules.home-manager
       home-manager-config
+      ../modules/system-modules
     ];
 in {
   forEachPkgs = lambda: forEachSystem (system: lambda (pkgsFor system));
@@ -62,6 +61,8 @@ in {
       modules =
         system-modules
         ++ [
+          sops-nix.nixosModules.sops
+          home-manager.nixosModules.home-manager
           ../modules/nixos-modules
           ../configurations/nixos/${host}
         ];
@@ -73,6 +74,8 @@ in {
       modules =
         system-modules
         ++ [
+          sops-nix.darwinModules.sops
+          home-manager.darwinModules.home-manager
           ../modules/darwin-modules
           ../configurations/darwin/${host}
         ];
