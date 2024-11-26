@@ -5,7 +5,8 @@
 | :---------: | :------------------------: | :--------------: | :-------: |
 |  `twilight` |      Desktop Computer      |      Leyla       |  Desktop  |
 |  `horizon`  |  13 inch Framework Laptop  |      Leyla       |  Laptop   |
-|  `defiant`  |         NAS Server         |      Leyla       |  Service  |
+|  `defiant`  |         NAS Server         |      Leyla       |   Server  |
+| `hesperium` |             Mac            |      ?????       |    ???    |
 |  `emergent` |      Desktop Computer      |       Eve        |  Desktop  |
 | `threshold` |           Laptop           |       Eve        |  Laptop   |
 
