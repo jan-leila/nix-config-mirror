@@ -75,9 +75,21 @@
   } @ inputs: let
     util = import ./util {inherit inputs;};
     forEachPkgs = util.forEachPkgs;
+
     mkNixosSystem = util.mkNixosSystem;
     mkDarwinSystem = util.mkDarwinSystem;
     mkHome = util.mkHome;
+
+    systemsHomes = nixpkgs.lib.attrsets.mergeAttrsList (
+      nixpkgs.lib.attrsets.mapAttrsToList (hostname: system: (
+        nixpkgs.lib.attrsets.mapAttrs' (user: _: {
+          name = "${user}@${hostname}";
+          value = mkHome user hostname system.pkgs.hostPlatform.system system.config;
+        })
+        system.config.home-manager.users
+      ))
+      (inputs.self.nixosConfigurations // inputs.self.darwinConfigurations)
+    );
   in {
     formatter = forEachPkgs (pkgs: pkgs.alejandra);
 
@@ -111,15 +123,11 @@
       hesperium = mkDarwinSystem "hesperium";
     };
 
-    homeConfigurations = nixpkgs.lib.attrsets.mergeAttrsList (
-      nixpkgs.lib.attrsets.mapAttrsToList (hostname: system: (
-        nixpkgs.lib.attrsets.mapAttrs' (user: _: {
-          name = "${user}@${hostname}";
-          value = mkHome user hostname system.pkgs.hostPlatform.system system.config;
-        })
-        system.config.home-manager.users
-      ))
-      self.nixosConfigurations
-    );
+    homeConfigurations =
+      systemsHomes
+      // {
+        # stand alone configurations here:
+        # name = mkHome "name"
+      };
   };
 }
