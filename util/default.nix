@@ -55,6 +55,16 @@ in {
       (lib.mkUnless condition no)
     ];
 
+  mkNixosInstaller = host: userKeys:
+    nixpkgs.lib.nixosSystem {
+      modules = [
+        {
+          # TODO: authorized keys for all users
+        }
+        ../configurations/nixos/${host}
+      ];
+    };
+
   mkNixosSystem = host:
     nixpkgs.lib.nixosSystem {
       specialArgs = {inherit inputs outputs util;};

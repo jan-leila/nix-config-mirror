@@ -76,9 +76,29 @@
     util = import ./util {inherit inputs;};
     forEachPkgs = util.forEachPkgs;
 
+    mkNixosInstaller = util.mkNixosInstaller;
     mkNixosSystem = util.mkNixosSystem;
     mkDarwinSystem = util.mkDarwinSystem;
     mkHome = util.mkHome;
+
+    installerSystems = {
+      basic = mkNixosInstaller "basic" [];
+    };
+
+    nixosSystems = {
+      horizon = mkNixosSystem "horizon";
+      twilight = mkNixosSystem "twilight";
+      defiant = mkNixosSystem "defiant";
+    };
+
+    darwinSystems = {
+      hesperium = mkDarwinSystem "hesperium";
+    };
+
+    homeSystems = {
+      # stand alone home manager configurations here:
+      # name = mkHome "name"
+    };
 
     systemsHomes = nixpkgs.lib.attrsets.mergeAttrsList (
       nixpkgs.lib.attrsets.mapAttrsToList (hostname: system: (
@@ -88,8 +108,12 @@
         })
         system.config.home-manager.users
       ))
-      (inputs.self.nixosConfigurations // inputs.self.darwinConfigurations)
+      (nixosSystems // darwinSystems)
     );
+
+    homeConfigurations =
+      systemsHomes
+      // homeSystems;
   in {
     formatter = forEachPkgs (pkgs: pkgs.alejandra);
 
@@ -113,21 +137,12 @@
       };
     });
 
-    nixosConfigurations = {
-      horizon = mkNixosSystem "horizon";
-      twilight = mkNixosSystem "twilight";
-      defiant = mkNixosSystem "defiant";
-    };
+    installerConfigurations = installerSystems;
 
-    darwinConfigurations = {
-      hesperium = mkDarwinSystem "hesperium";
-    };
+    nixosConfigurations = nixosSystems;
 
-    homeConfigurations =
-      systemsHomes
-      // {
-        # stand alone configurations here:
-        # name = mkHome "name"
-      };
+    darwinConfigurations = darwinSystems;
+
+    homeConfigurations = homeConfigurations;
   };
 }
