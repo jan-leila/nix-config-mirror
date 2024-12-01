@@ -35,6 +35,7 @@
 - Look into this for headscale https://carlosvaz.com/posts/setting-up-headscale-on-nixos/
 - Look into this for home assistant configuration https://nixos.wiki/wiki/Home_Assistant https://myme.no/posts/2021-11-25-nixos-home-assistant.html
 - https://nixos-and-flakes.thiscute.world/
+- this guy might have a working zfs disko impermanence system - https://github.com/djacu/nixos-config/blob/main/hosts/adalon/disko-config.nix
 
 # Tasks:
 
@@ -55,3 +56,4 @@
 - tail scale clients
 - wake on LAN
 - ISO target that contains authorized keys for nixos-anywhere https://github.com/diegofariasm/yggdrasil/blob/4acc43ebc7bcbf2e41376d14268e382007e94d78/hosts/bootstrap/default.nix
+- Immich
