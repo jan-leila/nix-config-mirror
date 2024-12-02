@@ -39,6 +39,7 @@ if [ -z ${flake} ]; then
 	exit 1;
 fi
 
+# TODO: we might not need to copy the key over here anymore?
 temp=$(mktemp -d)
 # Function to cleanup temporary directory on exit
 cleanup() {
