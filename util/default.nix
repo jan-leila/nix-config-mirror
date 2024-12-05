@@ -3,7 +3,6 @@
   outputs = inputs.self.outputs;
 
   lib = inputs.lib;
-  lix-module = inputs.lix-module;
   nixpkgs = inputs.nixpkgs;
   home-manager = inputs.home-manager;
   nix-darwin = inputs.nix-darwin;
@@ -19,7 +18,6 @@
   pkgsFor = system: nixpkgs.legacyPackages.${system};
 
   common-modules = [
-    lix-module.nixosModules.default
     ../modules/common-modules
   ];
 

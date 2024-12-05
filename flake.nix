@@ -60,12 +60,6 @@
     flake-compat = {
       url = "github:edolstra/flake-compat";
     };
-
-    # lix in nice ig
-    lix-module = {
-      url = "git+https://git.lix.systems/lix-project/nixos-module?ref=stable";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = {
