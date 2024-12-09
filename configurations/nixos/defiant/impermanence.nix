@@ -1,8 +1,4 @@
-{
-  lib,
-  config,
-  ...
-}: {
+{lib, ...}: {
   boot.initrd.postResumeCommands = lib.mkAfter ''
     zfs rollback -r rpool/local/system/root@blank
     zfs rollback -r rpool/local/home/leyla@blank
@@ -51,6 +47,7 @@
   fileSystems."/home/leyla".neededForBoot = true;
   fileSystems."/persist/system/root".neededForBoot = true;
   fileSystems."/persist/home/leyla".neededForBoot = true;
+  fileSystems.${import ../../../const/sops_age_key_directory.nix}.neededForBoot = true;
 
   environment.persistence."/persist/system/root" = {
     enable = true;
@@ -79,7 +76,6 @@
     ];
     files = [
       "/etc/machine-id"
-      config.environment.sessionVariables.SOPS_AGE_KEY_FILE
     ];
   };
 

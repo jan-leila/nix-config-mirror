@@ -48,6 +48,9 @@ in {
       hd_18_tb_a = zfsDisk "/dev/disk/by-id/ata-ST18000NE000-3G6101_ZVTCXVEB";
       hd_18_tb_b = zfsDisk "/dev/disk/by-id/ata-ST18000NE000-3G6101_ZVTCXWSC";
       hd_18_tb_c = zfsDisk "/dev/disk/by-id/ata-ST18000NE000-3G6101_ZVTD10EH";
+      hd_18_tb_d = zfsDisk "/dev/disk/by-id/ata-ST18000NT001-3NF101_ZVTE0S3Q";
+      hd_18_tb_e = zfsDisk "/dev/disk/by-id/ata-ST18000NT001-3NF101_ZVTEF27J";
+      hd_18_tb_f = zfsDisk "/dev/disk/by-id/ata-ST18000NT001-3NF101_ZVTEZACV";
 
       ssd_4_tb_a = cacheDisk "/dev/disk/by-id/nvme-Samsung_SSD_990_PRO_4TB_S7KGNU0X907881F";
     };
@@ -59,12 +62,14 @@ in {
             type = "topology";
             vdev = [
               {
-                # should this only mirror for this inital config with 3 drives we will used raidz2 for future configs???
-                mode = "mirror";
+                mode = "raidz2";
                 members = [
                   "hd_18_tb_a"
                   "hd_18_tb_b"
                   "hd_18_tb_c"
+                  "hd_18_tb_d"
+                  "hd_18_tb_e"
+                  "hd_18_tb_f"
                 ];
               }
             ];
@@ -107,6 +112,15 @@ in {
           "local/system/nix" = {
             type = "zfs_fs";
             mountpoint = "/nix";
+            options = {
+              atime = "off";
+              relatime = "off";
+              canmount = "on";
+            };
+          };
+          "local/system/sops" = {
+            type = "zfs_fs";
+            mountpoint = import ../../../const/sops_age_key_directory.nix;
             options = {
               atime = "off";
               relatime = "off";
