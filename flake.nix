@@ -24,9 +24,9 @@
     };
 
     # delete your darlings
-    # impermanence = {
-    #   url = "github:nix-community/impermanence";
-    # };
+    impermanence = {
+      url = "github:nix-community/impermanence";
+    };
 
     nix-darwin = {
       url = "github:LnL7/nix-darwin";
@@ -65,6 +65,9 @@
   outputs = {
     self,
     nixpkgs,
+    sops-nix,
+    home-manager,
+    impermanence,
     ...
   } @ inputs: let
     util = import ./util {inherit inputs;};

@@ -7,6 +7,7 @@
   home-manager = inputs.home-manager;
   nix-darwin = inputs.nix-darwin;
   sops-nix = inputs.sops-nix;
+  impermanence = inputs.impermanence;
 
   systems = [
     "aarch64-darwin"
@@ -25,6 +26,7 @@
     common-modules
     ++ [
       sops-nix.homeManagerModules.sops
+      impermanence.homeManagerModules.impermanence
       ../modules/home-manager-modules
     ];
 
@@ -70,6 +72,7 @@ in {
         system-modules
         ++ [
           sops-nix.nixosModules.sops
+          impermanence.nixosModules.impermanence
           home-manager.nixosModules.home-manager
           ../modules/nixos-modules
           ../configurations/nixos/${host}

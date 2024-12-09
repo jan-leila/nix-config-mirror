@@ -6,6 +6,7 @@
   imports = [
     ./i18n.nix
     ./packages.nix
+    ./impermanence.nix
   ];
 
   config = {

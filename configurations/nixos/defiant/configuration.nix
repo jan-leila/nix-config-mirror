@@ -6,7 +6,7 @@
 }: {
   imports = [
     inputs.disko.nixosModules.disko
-    ./services.nix
+    # ./services.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
@@ -23,37 +23,30 @@
     };
   };
 
-  boot.loader.grub = {
-    enable = true;
-    zfsSupport = true;
-    efiSupport = true;
-    efiInstallAsRemovable = true;
-  };
-
-  apps = {
-    base_domain = "jan-leila.com";
-    macvlan = {
-      subnet = "192.168.1.0/24";
-      gateway = "192.168.1.1";
-      networkInterface = "bond0";
-    };
-    pihole = {
-      image = "pihole/pihole:2024.07.0";
-      ip = "192.168.1.201";
-    };
-    headscale = {
-      subdomain = "vpn";
-    };
-    jellyfin = {
-      subdomain = "media";
-    };
-    forgejo = {
-      subdomain = "git";
-    };
-    nextcloud = {
-      subdomain = "drive";
-    };
-  };
+  # apps = {
+  #   base_domain = "jan-leila.com";
+  #   macvlan = {
+  #     subnet = "192.168.1.0/24";
+  #     gateway = "192.168.1.1";
+  #     networkInterface = "bond0";
+  #   };
+  #   pihole = {
+  #     image = "pihole/pihole:2024.07.0";
+  #     ip = "192.168.1.201";
+  #   };
+  #   headscale = {
+  #     subdomain = "vpn";
+  #   };
+  #   jellyfin = {
+  #     subdomain = "media";
+  #   };
+  #   forgejo = {
+  #     subdomain = "git";
+  #   };
+  #   nextcloud = {
+  #     subdomain = "drive";
+  #   };
+  # };
 
   services = {
     zfs = {
