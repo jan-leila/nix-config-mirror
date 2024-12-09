@@ -1,4 +1,8 @@
-{inputs, ...}: {
+{
+  inputs,
+  pkgs,
+  ...
+}: {
   imports = [
     inputs.nixos-hardware.nixosModules.framework-11th-gen-intel
   ];
@@ -16,6 +20,12 @@
       eve.isDesktopUser = true;
     };
   };
+
+  environment.systemPackages = [
+    (pkgs.callPackage
+      ./webtoon-dl.nix
+      {})
+  ];
 
   # enabled virtualisation for docker
   # virtualisation.docker = {
