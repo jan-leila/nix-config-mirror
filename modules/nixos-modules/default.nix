@@ -8,5 +8,7 @@
     ./desktop.nix
     ./ssh.nix
     ./i18n.nix
+    ./impermanence.nix
+    ./disko.nix
   ];
 }

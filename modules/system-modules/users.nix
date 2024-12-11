@@ -67,10 +67,13 @@ in {
       default = lib.lists.filter (user: user.isPrincipleUser) hostUsers;
     };
     normalUsers = lib.mkOption {
-      default = lib.lists.filter (user: user.isTerminalUser) hostUsers;
+      default = lib.lists.filter (user: user.isNormalUser) hostUsers;
+    };
+    desktopUsers = lib.mkOption {
+      default = lib.lists.filter (user: user.isDesktopUser) hostUsers;
     };
     terminalUsers = lib.mkOption {
-      default = lib.lists.filter (user: user.isNormalUser) hostUsers;
+      default = lib.lists.filter (user: user.isTerminalUser) hostUsers;
     };
   };
 

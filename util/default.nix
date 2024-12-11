@@ -7,6 +7,7 @@
   home-manager = inputs.home-manager;
   nix-darwin = inputs.nix-darwin;
   sops-nix = inputs.sops-nix;
+  disko = inputs.disko;
   impermanence = inputs.impermanence;
 
   systems = [
@@ -74,6 +75,7 @@ in {
           sops-nix.nixosModules.sops
           impermanence.nixosModules.impermanence
           home-manager.nixosModules.home-manager
+          disko.nixosModules.disko
           ../modules/nixos-modules
           ../configurations/nixos/${host}
         ];

@@ -1,11 +1,6 @@
 # server nas
-{
-  inputs,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [
-    inputs.disko.nixosModules.disko
     # ./services.nix
   ];
 
@@ -21,6 +16,33 @@
       ester.isNormalUser = false;
       eve.isNormalUser = false;
     };
+    impermanence.enable = true;
+    storage = {
+      enable = true;
+      encryption = true;
+      pool = {
+        drives = [
+          "ata-ST18000NE000-3G6101_ZVTCXVEB"
+          "ata-ST18000NE000-3G6101_ZVTCXWSC"
+          "ata-ST18000NE000-3G6101_ZVTD10EH"
+          "ata-ST18000NT001-3NF101_ZVTE0S3Q"
+          "ata-ST18000NT001-3NF101_ZVTEF27J"
+          "ata-ST18000NT001-3NF101_ZVTEZACV"
+        ];
+        cache = [
+          "nvme-Samsung_SSD_990_PRO_4TB_S7KGNU0X907881F"
+        ];
+        # extraDatasets = {
+        #   "persist/system/var/lib/jellyfin/media" = {
+        #     type = "zfs_fs";
+        #     mountpoint = "/persist/system/var/lib/jellyfin/media";
+        #   };
+        # };
+      };
+    };
+  };
+  networking = {
+    hostId = "c51763d6";
   };
 
   # apps = {
