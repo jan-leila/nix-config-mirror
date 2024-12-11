@@ -13,8 +13,6 @@
         isTerminalUser = true;
         isPrincipleUser = true;
       };
-      ester.isNormalUser = false;
-      eve.isNormalUser = false;
     };
     impermanence.enable = true;
     storage = {

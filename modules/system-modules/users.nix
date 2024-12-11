@@ -78,6 +78,24 @@ in {
   };
 
   config = {
+    host.users = {
+      leyla = {
+        isPrincipleUser = lib.mkDefault false;
+        isDesktopUser = lib.mkDefault false;
+        isTerminalUser = lib.mkDefault false;
+      };
+      ester = {
+        isPrincipleUser = lib.mkDefault false;
+        isDesktopUser = lib.mkDefault false;
+        isTerminalUser = lib.mkDefault false;
+      };
+      eve = {
+        isPrincipleUser = lib.mkDefault false;
+        isDesktopUser = lib.mkDefault false;
+        isTerminalUser = lib.mkDefault false;
+      };
+    };
+
     assertions =
       (
         builtins.map (user: {
