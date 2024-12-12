@@ -255,9 +255,7 @@ in {
     }
     (lib.mkIf config.host.impermanence.enable {
       boot.initrd.postResumeCommands = lib.mkAfter (
-        lib.strings.concatStrings (builtins.map (user: ''
-            zfs rollback -r rpool/local/home/${user.name}@blank
-          '')
+        lib.strings.concatLines (builtins.map (user: "zfs rollback -r rpool/local/home/${user.name}@blank")
           normalUsers)
       );
 

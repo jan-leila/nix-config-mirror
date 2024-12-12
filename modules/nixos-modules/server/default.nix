@@ -1,0 +1,5 @@
+{...}: {
+  imports = [
+    ./network_storage
+  ];
+}

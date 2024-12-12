@@ -38,6 +38,35 @@
         # };
       };
     };
+    network_storage = {
+      enable = true;
+      directories = [
+        {
+          folder = "leyla";
+          user = "leyla";
+          group = "leyla";
+        }
+        {
+          folder = "eve";
+          user = "eve";
+          group = "eve";
+        }
+        {
+          folder = "ester";
+          user = "ester";
+          group = "ester";
+        }
+        {
+          folder = "users";
+          user = "users";
+          group = "users";
+        }
+      ];
+      nfs = {
+        enable = true;
+        directories = ["leyla" "eve"];
+      };
+    };
   };
   networking = {
     hostId = "c51763d6";
