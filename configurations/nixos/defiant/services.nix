@@ -6,7 +6,6 @@
   ...
 }: let
   jellyfinPort = 8096;
-  nfsPort = 2049;
   dnsPort = 53;
   httpPort = 80;
   httpsPort = 443;
@@ -264,16 +263,6 @@ in {
       # DNS stub needs to be disabled so pi hole can bind
       # resolved.extraConfig = "DNSStubListener=no";
 
-      nfs.server = {
-        enable = true;
-        exports = ''
-          /home/leyla 192.168.1.0/22(rw,sync,no_subtree_check,crossmnt)
-          /home/eve   192.168.1.0/22(rw,sync,no_subtree_check,crossmnt)
-          /home/ester 192.168.1.0/22(rw,sync,no_subtree_check,crossmnt)
-          /home/users 192.168.1.0/22(rw,sync,no_subtree_check,crossmnt)
-        '';
-      };
-
       postgresql = {
         enable = true;
         ensureUsers = [
@@ -432,7 +421,6 @@ in {
         httpPort
         httpsPort
         dnsPort
-        nfsPort
       ]
       ++ (lib.optional isDebug [
         jellyfinPort

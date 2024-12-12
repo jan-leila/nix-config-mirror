@@ -6,6 +6,11 @@
   options = {
     host.network_storage.nfs = {
       enable = lib.mkEnableOption "is this server going to export network storage as nfs shares";
+      port = lib.mkOption {
+        type = lib.types.int;
+        default = 2049;
+        description = "port that nfs will run on";
+      };
       directories = lib.mkOption {
         type = lib.types.listOf (
           lib.types.enum (
@@ -44,6 +49,9 @@
             )
           );
         };
+        networking.firewall.allowedTCPPorts = [
+          config.host.network_storage.nfs.port
+        ];
       }
     )
   ];
