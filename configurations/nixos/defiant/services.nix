@@ -69,23 +69,6 @@ in {
           default = "${config.apps.headscale.subdomain}.${config.apps.base_domain}";
         };
       };
-      jellyfin = {
-        subdomain = lib.mkOption {
-          type = lib.types.str;
-          description = "subdomain of base domain that jellyfin will be hosted at";
-          default = "jellyfin";
-        };
-        hostname = lib.mkOption {
-          type = lib.types.str;
-          description = "hostname that jellyfin will be hosted at";
-          default = "${config.apps.jellyfin.subdomain}.${config.apps.base_domain}";
-        };
-        mediaDirectory = lib.mkOption {
-          type = lib.types.str;
-          description = "directory that jellyfin will be at";
-          default = "/home/jellyfin";
-        };
-      };
       forgejo = {
         subdomain = lib.mkOption {
           type = lib.types.str;
@@ -194,7 +177,6 @@ in {
     # TODO: dynamic users
     systemd = {
       tmpfiles.rules = [
-        "d ${config.apps.jellyfin.mediaDirectory} 2775 jellyfin jellyfin_media -" # is /home/docker/jellyfin/media on existing server
         "d ${config.apps.pihole.directory.root} 755 pihole pihole -" # is /home/docker/pihole on old system
         "d ${config.apps.pihole.directory.data} 755 pihole pihole -" # is /home/docker/pihole on old system
       ];
@@ -325,10 +307,6 @@ in {
         };
       };
 
-      jellyfin = {
-        enable = true;
-      };
-
       forgejo = {
         enable = true;
         database = {
@@ -387,11 +365,6 @@ in {
               proxyWebsockets = true;
             };
           };
-          ${config.apps.jellyfin.hostname} = {
-            # forceSSL = true;
-            # enableACME = true;
-            locations."/".proxyPass = "http://localhost:${toString jellyfinPort}";
-          };
           ${config.apps.forgejo.hostname} = {
             # forceSSL = true;
             # enableACME = true;
@@ -433,9 +406,6 @@ in {
 
     environment.systemPackages = [
       config.services.headscale.package
-      pkgs.jellyfin
-      pkgs.jellyfin-web
-      pkgs.jellyfin-ffmpeg
     ];
   };
 }
