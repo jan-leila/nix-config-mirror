@@ -32,6 +32,7 @@
     };
   };
 
+  # TODO: impermanence for ACME keys
   config = {
     services.nginx = {
       enable = config.host.reverse_proxy.enable;
