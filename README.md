@@ -9,6 +9,7 @@
 | `hesperium` |             Mac            |      ?????       |    ???    |
 |  `emergent` |      Desktop Computer      |       Eve        |  Desktop  |
 | `threshold` |           Laptop           |       Eve        |  Laptop   |
+|  `wolfram`  |         Steam Deck         |      House       |  Handheld |
 
 # Tooling
 ## Rebuilding
