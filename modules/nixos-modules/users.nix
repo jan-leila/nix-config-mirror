@@ -259,7 +259,20 @@ in {
           normalUsers)
       );
 
-      fileSystems.${SOPS_AGE_KEY_DIRECTORY}.neededForBoot = true;
+      fileSystems = lib.mkMerge [
+        {
+          ${SOPS_AGE_KEY_DIRECTORY}.neededForBoot = true;
+        }
+        (
+          builtins.listToAttrs (
+            builtins.map (user:
+              lib.attrsets.nameValuePair "/persist/home/${user.name}" {
+                neededForBoot = true;
+              })
+            normalUsers
+          )
+        )
+      ];
 
       environment.persistence."/persist/system/root" = {
         enable = true;
@@ -269,45 +282,44 @@ in {
         ];
       };
 
-      host.storage.pool.extraDatasets = lib.mkMerge [
-        {
-          # sops age key needs to be available to pre persist for user generation
-          "local/system/sops" = {
-            type = "zfs_fs";
-            mountpoint = SOPS_AGE_KEY_DIRECTORY;
-            options = {
-              atime = "off";
-              relatime = "off";
-              canmount = "on";
+      host.storage.pool.extraDatasets = lib.mkMerge (
+        [
+          {
+            # sops age key needs to be available to pre persist for user generation
+            "local/system/sops" = {
+              type = "zfs_fs";
+              mountpoint = SOPS_AGE_KEY_DIRECTORY;
+              options = {
+                atime = "off";
+                relatime = "off";
+                canmount = "on";
+              };
             };
-          };
-        }
-        (
-          lib.mkMerge
-          (
-            builtins.map (user: {
-              "local/home/${user.name}" = {
-                type = "zfs_fs";
-                mountpoint = "/home/${user.name}";
-                options = {
-                  canmount = "on";
-                };
-                postCreateHook = ''
-                  zfs snapshot rpool/local/home/${user.name}@blank
-                '';
+          }
+        ]
+        ++ (
+          builtins.map (user: {
+            "local/home/${user.name}" = {
+              type = "zfs_fs";
+              mountpoint = "/home/${user.name}";
+              options = {
+                canmount = "on";
               };
-              "persist/home/${user.name}" = {
-                type = "zfs_fs";
-                mountpoint = "/persist/home/${user.name}";
-                options = {
-                  "com.sun:auto-snapshot" = "true";
-                };
+              postCreateHook = ''
+                zfs snapshot rpool/local/home/${user.name}@blank
+              '';
+            };
+            "persist/home/${user.name}" = {
+              type = "zfs_fs";
+              mountpoint = "/persist/home/${user.name}";
+              options = {
+                "com.sun:auto-snapshot" = "true";
               };
-            })
-            normalUsers
-          )
+            };
+          })
+          normalUsers
         )
-      ];
+      );
     })
   ];
 }
