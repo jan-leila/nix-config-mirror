@@ -51,20 +51,20 @@ in {
           ];
         };
 
-        host.storage.pool.extraDatasets = [
-          {
-            # sops age key needs to be available to pre persist for user generation
-            "persist/system/jellyfin" = {
-              type = "zfs_fs";
-              mountpoint = "/persist/system/jellyfin";
-              options = {
-                atime = "off";
-                relatime = "off";
-                canmount = "on";
-              };
+        fileSystems."/persist/system/jellyfin".neededForBoot = true;
+
+        host.storage.pool.extraDatasets = {
+          # sops age key needs to be available to pre persist for user generation
+          "persist/system/jellyfin" = {
+            type = "zfs_fs";
+            mountpoint = "/persist/system/jellyfin";
+            options = {
+              atime = "off";
+              relatime = "off";
+              canmount = "on";
             };
-          }
-        ];
+          };
+        };
       })
     ]
   );

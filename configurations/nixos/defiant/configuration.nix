@@ -67,6 +67,14 @@
         directories = ["leyla" "eve"];
       };
     };
+    reverse_proxy = {
+      enable = true;
+      hostname = "jan-leila.com";
+    };
+    jellyfin = {
+      enable = true;
+      subdomain = "media";
+    };
   };
   networking = {
     hostId = "c51763d6";
