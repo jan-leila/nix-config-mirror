@@ -5,6 +5,8 @@
   ...
 }: let
   jellyfinPort = 8096;
+  jellyfin_data_directory = "/var/lib/jellyfin";
+  jellyfin_cache_directory = "/var/cache/jellyfin";
 in {
   options.host.jellyfin = {
     enable = lib.mkEnableOption "should jellyfin be enabled on this computer";
@@ -29,14 +31,23 @@ in {
         ];
       }
       (lib.mkIf config.host.impermanence.enable {
-        # TODO: add an assertion here that directories matches jellyfin directories
+        assertions = [
+          {
+            assertion = config.services.jellyfin.dataDir == jellyfin_data_directory;
+            description = "jellyfin data directory does not match persistence";
+          }
+          {
+            assertion = config.services.jellyfin.cacheDir == jellyfin_cache_directory;
+            description = "jellyfin cache directory does not match persistence";
+          }
+        ];
 
         environment.persistence."/persist/system/jellyfin" = {
           enable = true;
           hideMounts = true;
           directories = [
-            "/var/lib/jellyfin"
-            "/var/cache/jellyfin"
+            jellyfin_data_directory
+            jellyfin_cache_directory
           ];
         };
 
