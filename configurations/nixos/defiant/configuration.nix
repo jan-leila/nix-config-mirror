@@ -100,6 +100,7 @@
   # };
 
   services = {
+    # TODO: move zfs scrubbing into module
     zfs = {
       autoScrub.enable = true;
       autoSnapshot.enable = true;
