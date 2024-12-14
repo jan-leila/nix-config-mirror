@@ -30,12 +30,6 @@
         cache = [
           "nvme-Samsung_SSD_990_PRO_4TB_S7KGNU0X907881F"
         ];
-        # extraDatasets = {
-        #   "persist/system/var/lib/jellyfin/media" = {
-        #     type = "zfs_fs";
-        #     mountpoint = "/persist/system/var/lib/jellyfin/media";
-        #   };
-        # };
       };
     };
     network_storage = {
