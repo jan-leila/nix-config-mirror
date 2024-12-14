@@ -5,7 +5,6 @@
 }: {
   options.host.impermanence.enable = lib.mkEnableOption "are we going to use impermanence on this device";
 
-  # TODO: validate that config.host.storage.enable is enabled
   config = lib.mkMerge [
     {
       assertions = [
@@ -19,6 +18,13 @@
     }
     (
       lib.mkIf config.host.impermanence.enable {
+        assertions = [
+          {
+            assertion = config.host.impermanence.enable && config.host.storage.enable;
+            message = "Impermanence can not be used without managed host storage.";
+          }
+        ];
+
         boot.initrd.postResumeCommands = lib.mkAfter ''
                     zfs rollback -r rpool/local/system/root@blank
           1        '';
