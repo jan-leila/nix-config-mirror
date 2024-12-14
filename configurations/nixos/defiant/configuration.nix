@@ -68,8 +68,8 @@
       };
     };
     reverse_proxy = {
-      enable = true;
-      hostname = "jan-leila.com";
+      enable = false;
+      hostname = "volpe.social";
     };
     jellyfin = {
       enable = true;
