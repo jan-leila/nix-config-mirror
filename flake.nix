@@ -13,7 +13,7 @@
 
     # self hosted repo of secrets file to further protect files in case of future encryption vulnerabilities
     secrets = {
-      url = "git+https://git.jan-leila.com/jan-leila/nix-config-secrets?ref=main";
+      url = "git+ssh://git@git.jan-leila.com/jan-leila/nix-config-secrets.git";
       flake = false;
     };
 
