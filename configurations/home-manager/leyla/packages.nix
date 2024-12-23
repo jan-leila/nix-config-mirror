@@ -61,8 +61,8 @@ in {
             anki-bin
 
             # development tools
-            androidStudioPackages.canary
-            jetbrains.idea-community
+            # androidStudioPackages.canary
+            # jetbrains.idea-community
             dbeaver-bin
             bruno
             qFlipper
