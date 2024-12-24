@@ -51,6 +51,7 @@ in {
             # rpi-imager
             # fritzing
             mfoc
+            tor
 
             # proprietary platforms
             discord
