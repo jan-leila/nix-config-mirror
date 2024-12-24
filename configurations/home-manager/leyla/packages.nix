@@ -51,7 +51,7 @@ in {
             # rpi-imager
             # fritzing
             mfoc
-            tor
+            tor-browser
 
             # proprietary platforms
             discord
