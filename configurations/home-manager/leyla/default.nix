@@ -105,6 +105,10 @@
         };
       };
       bash.enable = true;
+
+      openssh.authorizedKeys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJHeItmt8TRW43uNcOC+eIurYC7Eunc0V3LGocQqLaYj leyla@horizon"
+      ];
     };
 
     dconf = {
