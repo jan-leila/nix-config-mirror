@@ -1,5 +1,9 @@
-{...}: {
-  home.persistence."/persistent/home/leyla" = {
+{
+  lib,
+  osConfig,
+  ...
+}: {
+  home.persistence."/persist/home/leyla" = lib.mkIf osConfig.host.impermanence.enable {
     directories = [
       "desktop"
       "downloads"
