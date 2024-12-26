@@ -272,6 +272,15 @@ in {
             normalUsers
           )
         )
+        (
+          builtins.listToAttrs (
+            builtins.map (user:
+              lib.attrsets.nameValuePair "/home/${user.name}" {
+                neededForBoot = true;
+              })
+            normalUsers
+          )
+        )
       ];
 
       environment.persistence."/persist/system/root" = {

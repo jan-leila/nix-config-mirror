@@ -21,7 +21,7 @@ in {
         type = lib.types.listOf (lib.types.submodule ({config, ...}: {
           options = {
             folder = lib.mkOption {
-              type = lib.types.string;
+              type = lib.types.str;
               description = "what is the name of this export directory";
             };
             bind = lib.mkOption {
@@ -30,12 +30,12 @@ in {
               default = null;
             };
             user = lib.mkOption {
-              type = lib.types.string;
+              type = lib.types.str;
               description = "what user owns this directory";
               default = "nouser";
             };
             group = lib.mkOption {
-              type = lib.types.string;
+              type = lib.types.str;
               description = "what group owns this directory";
               default = "nogroup";
             };
@@ -57,11 +57,11 @@ in {
       # create any folders that we need to have for our exports
       systemd.tmpfiles.rules =
         [
-          "d ${config.host.network_storage.export_directory} 2775 root root -"
+          "d ${config.host.network_storage.export_directory} 2770 root root -"
         ]
         ++ (
           builtins.map (
-            directory: "d ${directory._directory} 2775 ${directory.user} ${directory.group}"
+            directory: "d ${directory._directory} 2770 ${directory.user} ${directory.group}"
           )
           config.host.network_storage.directories
         );

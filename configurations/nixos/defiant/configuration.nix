@@ -52,13 +52,13 @@
         }
         {
           folder = "users";
-          user = "users";
+          user = "root";
           group = "users";
         }
       ];
       nfs = {
         enable = true;
-        directories = ["leyla" "eve"];
+        directories = ["leyla" "eve" "ester"];
       };
     };
     reverse_proxy = {

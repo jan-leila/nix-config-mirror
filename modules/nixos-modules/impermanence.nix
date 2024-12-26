@@ -26,12 +26,13 @@
         ];
 
         boot.initrd.postResumeCommands = lib.mkAfter ''
-                    zfs rollback -r rpool/local/system/root@blank
-          1        '';
+          zfs rollback -r rpool/local/system/root@blank
+        '';
 
         fileSystems = {
           "/".neededForBoot = true;
           "/persist/system/root".neededForBoot = true;
+          "/persist/system/var/log".neededForBoot = true;
         };
 
         host.storage.pool.extraDatasets = {
@@ -81,13 +82,18 @@
           };
         };
 
+        environment.persistence."/persist/system/var/log" = {
+          enable = true;
+          hideMounts = true;
+          directories = [
+            "/var/log"
+          ];
+        };
+
         environment.persistence."/persist/system/root" = {
           enable = true;
           hideMounts = true;
           directories = [
-            "/etc/ssh"
-
-            "/var/log"
             "/var/lib/nixos"
             "/var/lib/systemd/coredump"
 

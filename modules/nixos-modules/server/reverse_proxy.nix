@@ -6,7 +6,7 @@
   options.host.reverse_proxy = {
     enable = lib.mkEnableOption "turn on the reverse proxy";
     hostname = lib.mkOption {
-      type = lib.types.string;
+      type = lib.types.str;
       description = "what host name are we going to be proxying from";
     };
     forceSSL = lib.mkOption {
@@ -23,7 +23,7 @@
       type = lib.types.attrsOf (lib.types.submodule ({...}: {
         options = {
           target = lib.mkOption {
-            type = lib.types.string;
+            type = lib.types.str;
             description = "where should this host point to";
           };
           websockets = lib.mkEnableOption "should websockets be proxied";
