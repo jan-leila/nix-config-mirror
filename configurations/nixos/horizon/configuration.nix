@@ -27,6 +27,8 @@
       {})
   ];
 
+  programs.adb.enable = true;
+
   # enabled virtualisation for docker
   # virtualisation.docker = {
   #   enable = true;
