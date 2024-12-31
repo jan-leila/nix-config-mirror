@@ -8,6 +8,7 @@
     ./desktop.nix
     ./ssh.nix
     ./i18n.nix
+    ./sync.nix
     ./impermanence.nix
     ./disko.nix
     ./server

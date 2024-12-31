@@ -10,6 +10,8 @@
 |  `emergent` |      Desktop Computer      |       Eve        |  Desktop  |
 | `threshold` |           Laptop           |       Eve        |  Laptop   |
 |  `wolfram`  |         Steam Deck         |      House       |  Handheld |
+|   `ceder`   | A5 Tablet (not using nix)  |      Leyla       |   Tablet  |
+|   `skate`   | A4 Tablet (not using nix)  |      Leyla       |   Tablet  |
 
 # Tooling
 ## Rebuilding
@@ -58,4 +60,3 @@
 - wake on LAN
 - ISO target that contains authorized keys for nixos-anywhere https://github.com/diegofariasm/yggdrasil/blob/4acc43ebc7bcbf2e41376d14268e382007e94d78/hosts/bootstrap/default.nix
 - Immich
-- Syncthing declarative set up for devices https://nixos.wiki/wiki/Syncthing

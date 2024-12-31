@@ -19,6 +19,16 @@
       ester.isDesktopUser = true;
       eve.isDesktopUser = true;
     };
+    sync = {
+      enable = true;
+      folders = {
+        leyla = {
+          documents.enable = true;
+          calendar.enable = true;
+          notes.enable = true;
+        };
+      };
+    };
   };
 
   environment.systemPackages = [

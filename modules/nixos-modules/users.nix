@@ -22,6 +22,7 @@
     hass = 2004;
     headscale = 2005;
     nextcloud = 2006;
+    syncthing = 2007;
   };
 
   gids = {
@@ -36,6 +37,7 @@
     hass = 2004;
     headscale = 2005;
     nextcloud = 2006;
+    syncthing = 2007;
   };
 
   users = config.users.users;
@@ -160,6 +162,12 @@ in {
             isSystemUser = true;
             group = config.users.users.nextcloud.name;
           };
+
+          syncthing = {
+            uid = lib.mkForce uids.syncthing;
+            isSystemUser = true;
+            group = config.users.users.syncthing.name;
+          };
         };
 
         groups = {
@@ -248,6 +256,16 @@ in {
             members = [
               users.nextcloud.name
               # leyla
+            ];
+          };
+
+          syncthing = {
+            gid = lib.mkForce gids.syncthing;
+            members = [
+              users.syncthing.name
+              leyla
+              ester
+              eve
             ];
           };
         };
