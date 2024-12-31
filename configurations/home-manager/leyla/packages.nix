@@ -59,7 +59,7 @@ in {
             steam
             (lib.mkIf hardware.graphicsAcceleration.enable davinci-resolve)
 
-            anki-bin
+            anki
 
             # development tools
             # androidStudioPackages.canary
