@@ -11,7 +11,8 @@
 | `threshold` |           Laptop           |       Eve        |  Laptop   |
 |  `wolfram`  |         Steam Deck         |      House       |  Handheld |
 |   `ceder`   | A5 Tablet (not using nix)  |      Leyla       |   Tablet  |
-|   `skate`   | A4 Tablet (not using nix)  |      Leyla       |   Tablet  |
+|   `skate`   | A6 Tablet (not using nix)  |      Leyla       |   Tablet  |
+|   `shale`   | A6 Tablet (not using nix)  |       Eve        |   Tablet  |
 
 # Tooling
 ## Rebuilding
