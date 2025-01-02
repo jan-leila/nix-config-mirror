@@ -44,7 +44,6 @@
 # Tasks:
 
 ## Tech Debt
-- join config for systemd.tmpfiles.rules and service directory bindings
 - monitor configuration in `~/.config/monitors.xml` should be sym linked to `/run/gdm/.config/monitors.xml` (https://www.reddit.com/r/NixOS/comments/u09cz9/home_manager_create_my_own_symlinks_automatically/)
 - move applications in `defiant/services.nix` into their own modules
 ## New Features
@@ -56,8 +55,7 @@
 - openssh known hosts
 - rotate sops encryption keys periodically (and somehow sync between devices?)
 - zfs email after scrubbing
-- mastodon server
 - tail scale clients
-- wake on LAN
+- wake on LAN for updates
 - ISO target that contains authorized keys for nixos-anywhere https://github.com/diegofariasm/yggdrasil/blob/4acc43ebc7bcbf2e41376d14268e382007e94d78/hosts/bootstrap/default.nix
 - Immich
