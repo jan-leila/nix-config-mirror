@@ -28,7 +28,7 @@
 `sops -c sops secrets/secrets_file_here.yaml`
 
 ## Inspecting a configuration
-`./inspect.sh`
+`nix-inspect -p .`
 
 # Notes:
 
