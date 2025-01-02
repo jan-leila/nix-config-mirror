@@ -2,7 +2,8 @@
   imports = [
     ./network_storage
     ./reverse_proxy.nix
-    ./jellyfin.nix
     ./postgres.nix
+    ./jellyfin.nix
+    ./forgejo.nix
   ];
 }

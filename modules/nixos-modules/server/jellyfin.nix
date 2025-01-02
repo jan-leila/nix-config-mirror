@@ -34,11 +34,11 @@ in {
         assertions = [
           {
             assertion = config.services.jellyfin.dataDir == jellyfin_data_directory;
-            description = "jellyfin data directory does not match persistence";
+            message = "jellyfin data directory does not match persistence";
           }
           {
             assertion = config.services.jellyfin.cacheDir == jellyfin_cache_directory;
-            description = "jellyfin cache directory does not match persistence";
+            message = "jellyfin cache directory does not match persistence";
           }
         ];
 

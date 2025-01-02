@@ -17,20 +17,33 @@ in {
   config =
     lib.mkIf config.host.forgejo.enable
     {
-      enable = true;
-      database = {
-        type = "postgres";
-        socket = "/run/postgresql";
-      };
-      lfs.enable = true;
-      settings = {
-        server = {
-          DOMAIN = "${config.host.forgejo.subdomain}.${config.host.reverse_proxy.hostname}";
-          HTTP_PORT = forgejoPort;
+      host = {
+        reverse_proxy.subdomains.${config.host.forgejo.subdomain} = {
+          target = "http://localhost:${toString forgejoPort}";
+        };
+        postgres = {
+          enable = true;
+          extraUsers = {
+            forgejo = {
+              isClient = true;
+            };
+          };
         };
       };
-      host.reverse_proxy.subdomains.${config.host.jellyfin.subdomain} = {
-        target = "http://localhost:${toString forgejoPort}";
+
+      services.forgejo = {
+        enable = true;
+        database = {
+          type = "postgres";
+          socket = "/run/postgresql";
+        };
+        lfs.enable = true;
+        settings = {
+          server = {
+            DOMAIN = "${config.host.forgejo.subdomain}.${config.host.reverse_proxy.hostname}";
+            HTTP_PORT = forgejoPort;
+          };
+        };
       };
     };
 }

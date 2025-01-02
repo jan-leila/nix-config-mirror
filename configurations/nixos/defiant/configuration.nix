@@ -69,6 +69,10 @@
       enable = true;
       subdomain = "media";
     };
+    forgejo = {
+      enable = true;
+      subdomain = "git";
+    };
   };
   networking = {
     hostId = "c51763d6";
