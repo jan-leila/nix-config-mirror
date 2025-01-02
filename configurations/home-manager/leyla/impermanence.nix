@@ -10,11 +10,14 @@
         "downloads"
         "documents"
         ".ssh"
-        ".config/gnome-initial-setup-done"
         {
           directory = ".local/share/Steam";
           method = "symlink";
         }
+      ];
+      files = [
+        ".config/gnome-initial-setup-done" # gnome welcome message
+        ".local/share/recently-used.xbel" # gnome recently viewed files
       ];
     };
   };
