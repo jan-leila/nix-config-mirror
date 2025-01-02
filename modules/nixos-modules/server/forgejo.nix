@@ -4,6 +4,7 @@
   ...
 }: let
   forgejoPort = 8081;
+  stateDir = "/var/lib/forgejo";
 in {
   options.host.forgejo = {
     enable = lib.mkEnableOption "should forgejo be enabled on this computer";
@@ -14,8 +15,7 @@ in {
     };
   };
 
-  config =
-    lib.mkIf config.host.forgejo.enable
+  config = lib.mkIf config.host.forgejo.enable (lib.mkMerge [
     {
       host = {
         reverse_proxy.subdomains.${config.host.forgejo.subdomain} = {
@@ -45,5 +45,21 @@ in {
           };
         };
       };
-    };
+    }
+    (lib.mkIf config.host.impermanence.enable {
+      assertions = [
+        {
+          assertion = config.services.forgejo.stateDir == stateDir;
+          message = "forgejo state directory does not match persistence";
+        }
+      ];
+      environment.persistence."/persist/system/root" = {
+        enable = true;
+        hideMounts = true;
+        directories = [
+          stateDir
+        ];
+      };
+    })
+  ]);
 }
