@@ -277,6 +277,14 @@ in {
           normalUsers)
       );
 
+      systemd = {
+        tmpfiles.rules =
+          builtins.map (
+            user: "d /persist/home/${user.name} 700 ${user.name} ${user.name} -"
+          )
+          normalUsers;
+      };
+
       fileSystems = lib.mkMerge [
         {
           ${SOPS_AGE_KEY_DIRECTORY}.neededForBoot = true;

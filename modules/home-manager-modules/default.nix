@@ -4,6 +4,5 @@
     ./flipperzero.nix
     ./i18n.nix
     ./openssh.nix
-    ./impermanence.nix
   ];
 }

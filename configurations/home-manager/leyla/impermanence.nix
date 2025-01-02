@@ -3,23 +3,19 @@
   osConfig,
   ...
 }: {
-  home.persistence."/persist/home/leyla" = lib.mkIf osConfig.host.impermanence.enable {
-    directories = [
-      "desktop"
-      "downloads"
-      "documents"
-      ".ssh"
-      ".nixops"
-      ".local/share/keyrings"
-      ".local/share/direnv"
-      {
-        directory = ".local/share/Steam";
-        method = "symlink";
-      }
-    ];
-    # files = [
-    #   ".screenrc"
-    # ];
-    allowOther = true;
+  config = lib.mkIf osConfig.host.impermanence.enable {
+    home.persistence."/persist/home/leyla" = {
+      directories = [
+        "desktop"
+        "downloads"
+        "documents"
+        ".ssh"
+        ".config/gnome-initial-setup-done"
+        {
+          directory = ".local/share/Steam";
+          method = "symlink";
+        }
+      ];
+    };
   };
 }
