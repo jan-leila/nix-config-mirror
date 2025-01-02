@@ -67,18 +67,22 @@
           "persist" = {
             type = "zfs_fs";
             options.canmount = "off";
+            options = {
+              "com.sun:auto-snapshot" = "true";
+            };
           };
           # this is where root data actually lives
           "persist/system/root" = {
             type = "zfs_fs";
             mountpoint = "/persist/system/root";
-            options = {
-              "com.sun:auto-snapshot" = "true";
-            };
           };
           "persist/system/var/log" = {
             type = "zfs_fs";
             mountpoint = "/persist/system/var/log";
+            # logs should be append only so we shouldn't need to snapshot them
+            options = {
+              "com.sun:auto-snapshot" = "false";
+            };
           };
         };
 

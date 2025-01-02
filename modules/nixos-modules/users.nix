@@ -347,9 +347,6 @@ in {
             "persist/home/${user.name}" = {
               type = "zfs_fs";
               mountpoint = "/persist/home/${user.name}";
-              options = {
-                "com.sun:auto-snapshot" = "true";
-              };
             };
           })
           normalUsers

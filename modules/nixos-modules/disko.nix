@@ -50,6 +50,11 @@ in {
   };
 
   config = lib.mkIf config.host.storage.enable {
+    services.zfs = {
+      autoScrub.enable = true;
+      autoSnapshot.enable = true;
+    };
+
     disko.devices = {
       disk = (
         builtins.listToAttrs (
