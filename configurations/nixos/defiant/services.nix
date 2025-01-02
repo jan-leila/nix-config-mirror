@@ -69,18 +69,6 @@ in {
           default = "${config.apps.headscale.subdomain}.${config.apps.base_domain}";
         };
       };
-      forgejo = {
-        subdomain = lib.mkOption {
-          type = lib.types.str;
-          description = "subdomain of base domain that forgejo will be hosted at";
-          default = "forgejo";
-        };
-        hostname = lib.mkOption {
-          type = lib.types.str;
-          description = "hostname that forgejo will be hosted at";
-          default = "${config.apps.forgejo.subdomain}.${config.apps.base_domain}";
-        };
-      };
       home-assistant = {
         subdomain = lib.mkOption {
           type = lib.types.str;
@@ -244,47 +232,6 @@ in {
     services = {
       # DNS stub needs to be disabled so pi hole can bind
       # resolved.extraConfig = "DNSStubListener=no";
-
-      postgresql = {
-        enable = true;
-        ensureUsers = [
-          {
-            name = "postgres";
-          }
-          {
-            name = "forgejo";
-            ensureDBOwnership = true;
-          }
-          {
-            name = "headscale";
-            ensureDBOwnership = true;
-          }
-        ];
-        ensureDatabases = [
-          "forgejo"
-          "headscale"
-          # "nextcloud"
-        ];
-        identMap = ''
-          # ArbitraryMapName systemUser DBUser
-
-          # Administration Users
-          superuser_map      postgres  postgres
-          superuser_map      root      postgres
-          superuser_map      leyla     postgres
-
-          # Client Users
-          superuser_map      forgejo   forgejo
-          superuser_map      headscale headscale
-        '';
-        # configuration here lets users access the db that matches their name and lets user postgres access everything
-        authentication = pkgs.lib.mkOverride 10 ''
-          # type database DBuser    origin-address auth-method   optional_ident_map
-          local  all      postgres                 peer          map=superuser_map
-          local  sameuser all                      peer          map=superuser_map
-        '';
-      };
-
       headscale = {
         enable = true;
         user = "headscale";
@@ -303,21 +250,6 @@ in {
               user = "headscale";
               name = "headscale";
             };
-          };
-        };
-      };
-
-      forgejo = {
-        enable = true;
-        database = {
-          type = "postgres";
-          socket = "/run/postgresql";
-        };
-        lfs.enable = true;
-        settings = {
-          server = {
-            DOMAIN = config.apps.forgejo.hostname;
-            HTTP_PORT = 8081;
           };
         };
       };
