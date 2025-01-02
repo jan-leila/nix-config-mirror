@@ -13,6 +13,7 @@
 |   `ceder`   | A5 Tablet (not using nix)  |      Leyla       |   Tablet  |
 |   `skate`   | A6 Tablet (not using nix)  |      Leyla       |   Tablet  |
 |   `shale`   | A6 Tablet (not using nix)  |       Eve        |   Tablet  |
+|   `coven`   |  Pixel 8 (not using nix)   |      Leyla       |  Android  |
 
 # Tooling
 ## Rebuilding
