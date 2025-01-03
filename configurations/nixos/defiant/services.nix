@@ -4,13 +4,7 @@
   pkgs,
   inputs,
   ...
-}: let
-  jellyfinPort = 8096;
-  dnsPort = 53;
-  httpPort = 80;
-  httpsPort = 443;
-  isDebug = false;
-in {
+}: {
   imports = [];
 
   options = {
@@ -28,18 +22,6 @@ in {
           type = lib.types.str;
           description = "hostname that headscale will be hosted at";
           default = "${config.apps.headscale.subdomain}.${config.apps.base_domain}";
-        };
-      };
-      home-assistant = {
-        subdomain = lib.mkOption {
-          type = lib.types.str;
-          description = "subdomain of base domain that home-assistant will be hosted at";
-          default = "home-assistant";
-        };
-        hostname = lib.mkOption {
-          type = lib.types.str;
-          description = "hostname that home-assistant will be hosted at";
-          default = "${config.apps.home-assistant.subdomain}.${config.apps.base_domain}";
         };
       };
       nextcloud = {
@@ -134,20 +116,6 @@ in {
         };
       };
     };
-
-    networking.firewall.allowedTCPPorts =
-      [
-        httpPort
-        httpsPort
-        dnsPort
-      ]
-      ++ (lib.optional isDebug [
-        jellyfinPort
-        config.services.headscale.port
-        config.services.forgejo.settings.server.HTTP_PORT
-        config.services.home-assistant.config.http.server_port
-        config.services.postgresql.settings.port
-      ]);
 
     environment.systemPackages = [
       config.services.headscale.package

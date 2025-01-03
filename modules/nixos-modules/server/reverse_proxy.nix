@@ -4,6 +4,8 @@
   ...
 }: let
   dataDir = "/var/lib/acme";
+  httpPort = 80;
+  httpsPort = 443;
 in {
   options.host.reverse_proxy = {
     enable = lib.mkEnableOption "turn on the reverse proxy";
@@ -54,6 +56,11 @@ in {
           })
         config.host.reverse_proxy.subdomains;
       };
+
+      networking.firewall.allowedTCPPorts = [
+        httpPort
+        httpsPort
+      ];
     }
     (lib.mkIf config.host.impermanence.enable {
       # TODO: figure out how to write an assertion for this

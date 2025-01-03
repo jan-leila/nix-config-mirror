@@ -3,7 +3,9 @@
   config,
   inputs,
   ...
-}: {
+}: let
+  dnsPort = 53;
+in {
   options.host.pihole = {
     enable = lib.mkEnableOption "should home-assistant be enabled on this computer";
     directory = lib.mkOption {
@@ -80,6 +82,9 @@
           };
         };
       };
+      networking.firewall.allowedTCPPorts = [
+        dnsPort
+      ];
     }
     (lib.mkIf config.host.impermanence.enable {
       environment.persistence."/persist/system/root" = {
