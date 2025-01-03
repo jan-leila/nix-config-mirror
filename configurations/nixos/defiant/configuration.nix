@@ -81,6 +81,17 @@
       enable = true;
       subdomain = "home";
     };
+    pihole = {
+      enable = true;
+      ip = "192.168.1.201";
+    };
+    podman = {
+      macvlan = {
+        subnet = "192.168.1.0/24";
+        gateway = "192.168.1.1";
+        networkInterface = "bond0";
+      };
+    };
   };
   networking = {
     hostId = "c51763d6";

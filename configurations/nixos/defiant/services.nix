@@ -18,45 +18,6 @@ in {
       base_domain = lib.mkOption {
         type = lib.types.str;
       };
-      macvlan = {
-        subnet = lib.mkOption {
-          type = lib.types.str;
-          description = "Subnet for macvlan address range";
-        };
-        gateway = lib.mkOption {
-          type = lib.types.str;
-          description = "Gateway for macvlan";
-          # TODO: see if we can default this to systemd network gateway
-        };
-        networkInterface = lib.mkOption {
-          type = lib.types.str;
-          description = "Parent network interface for macvlan";
-          # TODO: see if we can default this some interface?
-        };
-      };
-      pihole = {
-        image = lib.mkOption {
-          type = lib.types.str;
-          description = "container image to use for pi-hole";
-        };
-        # TODO: check against subnet for macvlan
-        ip = lib.mkOption {
-          type = lib.types.str;
-          description = "ip address to use for pi-hole";
-        };
-        directory = {
-          root = lib.mkOption {
-            type = lib.types.str;
-            description = "directory that pihole will be hosted at";
-            default = "/var/lib/pihole";
-          };
-          data = lib.mkOption {
-            type = lib.types.str;
-            description = "directory that pihole data will be hosted at";
-            default = "${config.apps.pihole.directory.root}/data";
-          };
-        };
-      };
       headscale = {
         subdomain = lib.mkOption {
           type = lib.types.str;
@@ -98,94 +59,14 @@ in {
 
   config = {
     sops.secrets = {
-      "services/pi-hole" = {
-        sopsFile = "${inputs.secrets}/defiant-services.yaml";
-      };
       "services/nextcloud_adminpass" = {
         sopsFile = "${inputs.secrets}/defiant-services.yaml";
         owner = config.users.users.nextcloud.name;
       };
     };
 
-    virtualisation = {
-      # Runtime
-      podman = {
-        enable = true;
-        autoPrune.enable = true;
-        dockerCompat = true;
-        defaultNetwork.settings = {
-          # Required for container networking to be able to use names.
-          dns_enabled = true;
-        };
-      };
-
-      oci-containers = {
-        backend = "podman";
-
-        containers = {
-          pihole = let
-            passwordFileLocation = "/var/lib/pihole/webpassword.txt";
-          in {
-            image = config.apps.pihole.image;
-            volumes = [
-              "${config.apps.pihole.directory.data}:/etc/pihole:rw"
-              "${config.sops.secrets."services/pi-hole".path}:${passwordFileLocation}"
-            ];
-            environment = {
-              TZ = "America/Chicago";
-              WEBPASSWORD_FILE = passwordFileLocation;
-              PIHOLE_UID = toString config.users.users.pihole.uid;
-              PIHOLE_GID = toString config.users.groups.pihole.gid;
-            };
-            log-driver = "journald";
-            extraOptions = [
-              "--ip=${config.apps.pihole.ip}"
-              "--network=macvlan"
-            ];
-          };
-        };
-      };
-    };
-
-    # TODO: dynamic users
     systemd = {
-      tmpfiles.rules = [
-        "d ${config.apps.pihole.directory.root} 755 pihole pihole -" # is /home/docker/pihole on old system
-        "d ${config.apps.pihole.directory.data} 755 pihole pihole -" # is /home/docker/pihole on old system
-      ];
-
       services = {
-        "podman-pihole" = {
-          serviceConfig = {
-            Restart = lib.mkOverride 500 "always";
-          };
-          after = [
-            "podman-network-macvlan.service"
-          ];
-          requires = [
-            "podman-network-macvlan.service"
-          ];
-          partOf = [
-            "podman-compose-root.target"
-          ];
-          wantedBy = [
-            "podman-compose-root.target"
-          ];
-        };
-
-        "podman-network-macvlan" = {
-          path = [pkgs.podman];
-          serviceConfig = {
-            Type = "oneshot";
-            RemainAfterExit = true;
-            ExecStop = "podman network rm -f macvlan";
-          };
-          script = ''
-            podman network inspect macvlan || podman network create --driver macvlan --subnet ${config.apps.macvlan.subnet} --gateway ${config.apps.macvlan.gateway} --opt parent=${config.apps.macvlan.networkInterface} macvlan
-          '';
-          partOf = ["podman-compose-root.target"];
-          wantedBy = ["podman-compose-root.target"];
-        };
         # nextcloud-setup = {
         #   after = ["network.target"];
         # };
@@ -201,16 +82,6 @@ in {
         suspend.enable = false;
         hibernate.enable = false;
         hybrid-sleep.enable = false;
-
-        # Root service
-        # When started, this will automatically create all resources and start
-        # the containers. When stopped, this will teardown all resources.
-        "podman-compose-root" = {
-          unitConfig = {
-            Description = "Root target for podman targets.";
-          };
-          wantedBy = ["multi-user.target"];
-        };
       };
     };
 
