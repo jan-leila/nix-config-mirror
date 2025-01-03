@@ -73,6 +73,10 @@
       enable = true;
       subdomain = "git";
     };
+    searx = {
+      enable = true;
+      subdomain = "search";
+    };
   };
   networking = {
     hostId = "c51763d6";

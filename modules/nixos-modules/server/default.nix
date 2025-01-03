@@ -5,5 +5,6 @@
     ./postgres.nix
     ./jellyfin.nix
     ./forgejo.nix
+    ./searx.nix
   ];
 }

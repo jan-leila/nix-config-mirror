@@ -81,18 +81,6 @@ in {
           default = "${config.apps.home-assistant.subdomain}.${config.apps.base_domain}";
         };
       };
-      searx = {
-        subdomain = lib.mkOption {
-          type = lib.types.str;
-          description = "subdomain of base domain that searx will be hosted at";
-          default = "search";
-        };
-        hostname = lib.mkOption {
-          type = lib.types.str;
-          description = "hostname that searx will be hosted at";
-          default = "${config.apps.searx.subdomain}.${config.apps.base_domain}";
-        };
-      };
       nextcloud = {
         subdomain = lib.mkOption {
           type = lib.types.str;
@@ -111,9 +99,6 @@ in {
   config = {
     sops.secrets = {
       "services/pi-hole" = {
-        sopsFile = "${inputs.secrets}/defiant-services.yaml";
-      };
-      "services/searx" = {
         sopsFile = "${inputs.secrets}/defiant-services.yaml";
       };
       "services/nextcloud_adminpass" = {
@@ -265,17 +250,6 @@ in {
         };
       };
 
-      searx = {
-        enable = true;
-        environmentFile = config.sops.secrets."services/searx".path;
-        settings = {
-          server = {
-            port = 8083;
-            secret_key = "@SEARXNG_SECRET@";
-          };
-        };
-      };
-
       # nextcloud here is built using its auto setup mysql db because it was not playing nice with postgres
       nextcloud = {
         enable = true;
@@ -307,11 +281,6 @@ in {
             # enableACME = true;
             locations."/".proxyPass = "http://localhost:${toString config.services.home-assistant.config.http.server_port}";
           };
-          ${config.apps.searx.hostname} = {
-            # forceSSL = true;
-            # enableACME = true;
-            locations."/".proxyPass = "http://localhost:${toString config.services.searx.settings.server.port}";
-          };
         };
       };
     };
@@ -333,7 +302,6 @@ in {
         config.services.forgejo.settings.server.HTTP_PORT
         config.services.home-assistant.config.http.server_port
         config.services.postgresql.settings.port
-        config.services.searx.settings.server.port
       ]);
 
     environment.systemPackages = [
