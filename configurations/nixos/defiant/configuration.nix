@@ -1,9 +1,5 @@
 # server nas
 {pkgs, ...}: {
-  imports = [
-    # ./services.nix
-  ];
-
   nixpkgs.config.allowUnfree = true;
 
   host = {
@@ -65,6 +61,13 @@
       enable = false;
       hostname = "volpe.social";
     };
+    postgres = {
+      extraUsers = {
+        leyla = {
+          isAdmin = true;
+        };
+      };
+    };
     jellyfin = {
       enable = true;
       subdomain = "media";
@@ -96,39 +99,10 @@
       enable = true;
       subdomain = "drive";
     };
-    headscale = {
-      enable = true;
-      subdomain = "vpn";
-    };
   };
   networking = {
     hostId = "c51763d6";
   };
-
-  # apps = {
-  #   base_domain = "jan-leila.com";
-  #   macvlan = {
-  #     subnet = "192.168.1.0/24";
-  #     gateway = "192.168.1.1";
-  #     networkInterface = "bond0";
-  #   };
-  #   pihole = {
-  #     image = "pihole/pihole:2024.07.0";
-  #     ip = "192.168.1.201";
-  #   };
-  #   headscale = {
-  #     subdomain = "vpn";
-  #   };
-  #   jellyfin = {
-  #     subdomain = "media";
-  #   };
-  #   forgejo = {
-  #     subdomain = "git";
-  #   };
-  #   nextcloud = {
-  #     subdomain = "drive";
-  #   };
-  # };
 
   services = {
     # TODO: move zfs scrubbing into module

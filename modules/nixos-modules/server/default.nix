@@ -10,6 +10,5 @@
     ./home-assistant.nix
     ./pihole.nix
     ./nextcloud.nix
-    ./headscale.nix
   ];
 }
