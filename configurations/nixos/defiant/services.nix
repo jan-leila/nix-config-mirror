@@ -135,11 +135,6 @@ in {
       };
     };
 
-    security.acme = {
-      acceptTerms = true;
-      defaults.email = "jan-leila@protonmail.com";
-    };
-
     networking.firewall.allowedTCPPorts =
       [
         httpPort
