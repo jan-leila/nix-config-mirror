@@ -309,14 +309,6 @@ in {
         )
       ];
 
-      environment.persistence."/persist/system/root" = {
-        enable = true;
-        hideMounts = true;
-        directories = [
-          "/run/secrets"
-        ];
-      };
-
       host.storage.pool.extraDatasets = lib.mkMerge (
         [
           {
