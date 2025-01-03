@@ -58,8 +58,8 @@
       };
     };
     reverse_proxy = {
-      enable = false;
-      hostname = "volpe.social";
+      enable = true;
+      hostname = "jan-leila.com";
     };
     postgres = {
       extraUsers = {

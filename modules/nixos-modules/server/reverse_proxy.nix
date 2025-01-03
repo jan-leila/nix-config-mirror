@@ -16,7 +16,7 @@ in {
     forceSSL = lib.mkOption {
       type = lib.types.bool;
       description = "force connections to use https";
-      default = true;
+      default = config.host.reverse_proxy.enableACME;
     };
     enableACME = lib.mkOption {
       type = lib.types.bool;
