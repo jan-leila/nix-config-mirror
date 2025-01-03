@@ -92,6 +92,14 @@
         networkInterface = "bond0";
       };
     };
+    nextcloud = {
+      enable = true;
+      subdomain = "drive";
+    };
+    headscale = {
+      enable = true;
+      subdomain = "vpn";
+    };
   };
   networking = {
     hostId = "c51763d6";
