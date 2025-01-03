@@ -68,7 +68,6 @@ in {
             bruno
             qFlipper
             proxmark3
-            godot_4-mono
 
             # system tools
             protonvpn-gui
