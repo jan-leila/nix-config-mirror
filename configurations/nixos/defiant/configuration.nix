@@ -77,6 +77,10 @@
       enable = true;
       subdomain = "search";
     };
+    home-assistant = {
+      enable = true;
+      subdomain = "home";
+    };
   };
   networking = {
     hostId = "c51763d6";

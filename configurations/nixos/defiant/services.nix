@@ -239,17 +239,6 @@ in {
         };
       };
 
-      home-assistant = {
-        enable = true;
-        config.http = {
-          server_port = 8082;
-          use_x_forwarded_for = true;
-          trusted_proxies = ["127.0.0.1"];
-          ip_ban_enabled = true;
-          login_attempts_threshold = 10;
-        };
-      };
-
       # nextcloud here is built using its auto setup mysql db because it was not playing nice with postgres
       nextcloud = {
         enable = true;
@@ -270,16 +259,6 @@ in {
               proxyPass = "http://localhost:${toString config.services.headscale.port}";
               proxyWebsockets = true;
             };
-          };
-          ${config.apps.forgejo.hostname} = {
-            # forceSSL = true;
-            # enableACME = true;
-            locations."/".proxyPass = "http://localhost:${toString config.services.forgejo.settings.server.HTTP_PORT}";
-          };
-          ${config.apps.home-assistant.hostname} = {
-            # forceSSL = true;
-            # enableACME = true;
-            locations."/".proxyPass = "http://localhost:${toString config.services.home-assistant.config.http.server_port}";
           };
         };
       };

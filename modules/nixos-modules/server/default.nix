@@ -6,5 +6,6 @@
     ./jellyfin.nix
     ./forgejo.nix
     ./searx.nix
+    ./home-assistant.nix
   ];
 }
