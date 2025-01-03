@@ -1,8 +1,6 @@
 {
   lib,
   config,
-  pkgs,
-  inputs,
   ...
 }: {
   imports = [];
@@ -40,30 +38,12 @@
   };
 
   config = {
-    sops.secrets = {
-      "services/nextcloud_adminpass" = {
-        sopsFile = "${inputs.secrets}/defiant-services.yaml";
-        owner = config.users.users.nextcloud.name;
-      };
-    };
-
     systemd = {
       services = {
-        # nextcloud-setup = {
-        #   after = ["network.target"];
-        # };
         headscale = {
           after = ["postgresql.service"];
           requires = ["postgresql.service"];
         };
-      };
-
-      # disable computer sleeping
-      targets = {
-        sleep.enable = false;
-        suspend.enable = false;
-        hibernate.enable = false;
-        hybrid-sleep.enable = false;
       };
     };
 
@@ -89,16 +69,6 @@
               name = "headscale";
             };
           };
-        };
-      };
-
-      # nextcloud here is built using its auto setup mysql db because it was not playing nice with postgres
-      nextcloud = {
-        enable = true;
-        package = pkgs.nextcloud30;
-        hostName = config.apps.nextcloud.hostname;
-        config = {
-          adminpassFile = config.sops.secrets."services/nextcloud_adminpass".path;
         };
       };
 

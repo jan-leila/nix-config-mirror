@@ -9,5 +9,6 @@
     ./searx.nix
     ./home-assistant.nix
     ./pihole.nix
+    ./nextcloud.nix
   ];
 }
