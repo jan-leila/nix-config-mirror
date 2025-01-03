@@ -43,7 +43,11 @@ in {
         enable = true;
         hideMounts = true;
         directories = [
-          configDir
+          {
+            directory = configDir;
+            user = "hass";
+            group = "hass";
+          }
         ];
       };
     })

@@ -83,7 +83,11 @@ in {
         enable = true;
         hideMounts = true;
         directories = [
-          dataDir
+          {
+            directory = dataDir;
+            user = "postgres";
+            group = "postgres";
+          }
         ];
       };
     })

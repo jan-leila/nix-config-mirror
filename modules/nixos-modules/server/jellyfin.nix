@@ -46,8 +46,16 @@ in {
           enable = true;
           hideMounts = true;
           directories = [
-            jellyfin_data_directory
-            jellyfin_cache_directory
+            {
+              directory = jellyfin_data_directory;
+              user = "jellyfin";
+              group = "jellyfin";
+            }
+            {
+              directory = jellyfin_cache_directory;
+              user = "jellyfin";
+              group = "jellyfin";
+            }
           ];
         };
 

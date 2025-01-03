@@ -57,7 +57,11 @@ in {
         enable = true;
         hideMounts = true;
         directories = [
-          stateDir
+          {
+            directory = stateDir;
+            user = "forgejo";
+            group = "forgejo";
+          }
         ];
       };
     })
