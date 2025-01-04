@@ -9,7 +9,6 @@
         "desktop"
         "downloads"
         "documents"
-        ".ssh"
         {
           directory = ".local/share/Steam";
           method = "symlink";
