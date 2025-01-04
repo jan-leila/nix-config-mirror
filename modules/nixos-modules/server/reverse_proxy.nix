@@ -33,6 +33,7 @@ in {
           websockets = lib.mkEnableOption "should websockets be proxied";
         };
       }));
+      default = {};
     };
   };
 
