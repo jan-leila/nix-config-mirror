@@ -39,16 +39,6 @@
 
   programs.adb.enable = true;
 
-  # enabled virtualisation for docker
-  # virtualisation.docker = {
-  #   enable = true;
-  #   rootless = {
-  #     enable = true;
-  #     setSocketVariable = true;
-  #   };
-  # };
-  # users.extraGroups.docker.members = ["leyla"];
-
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
