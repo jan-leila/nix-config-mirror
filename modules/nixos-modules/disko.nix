@@ -90,7 +90,8 @@ in {
                   partitions = {
                     # We are having to boot off of the nvm cache drive because I cant figure out how to boot via the HBA
                     ESP = {
-                      size = "64M";
+                      # 2G here because its not much relative to how much storage we have for caching
+                      size = "2G";
                       type = "EF00";
                       content = {
                         type = "filesystem";
