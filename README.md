@@ -1,6 +1,8 @@
 # nix-config
 
+https://git.jan-leila.com/jan-leila/nix-config
 
+nix multi user, multi system, configuration with `sops` secret management, `home-manager`, and `nixos-anywhere` setup via `disko` with `zfs` + `impermanence`
 
 # Hosts
 
