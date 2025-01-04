@@ -14,11 +14,6 @@
       type = lib.types.listOf lib.types.attrs;
       default = [
         {
-          type = "rsa";
-          bits = 4096;
-          path = ".ssh/${config.home.username}_${osConfig.networking.hostName}_rsa";
-        }
-        {
           type = "ed25519";
           path = ".ssh/${config.home.username}_${osConfig.networking.hostName}_ed25519";
         }
