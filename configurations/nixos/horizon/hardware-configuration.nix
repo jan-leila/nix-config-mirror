@@ -39,25 +39,25 @@
     };
 
     "/mnt/leyla_home" = {
-      device = "defiant:/home/leyla";
+      device = "defiant:/exports/leyla";
       fsType = "nfs";
       options = ["x-systemd.automount" "user" "noatime" "nofail" "soft" "x-systemd.idle-timeout=600" "fsc"];
     };
 
     "/mnt/eve_home" = {
-      device = "defiant:/home/eve";
+      device = "defiant:/exports/eve";
       fsType = "nfs";
       options = ["x-systemd.automount" "user" "nofail" "soft" "x-systemd.idle-timeout=600" "fsc"];
     };
 
     "/mnt/ester_home" = {
-      device = "defiant:/home/ester";
+      device = "defiant:/exports/ester";
       fsType = "nfs";
       options = ["x-systemd.automount" "user" "nofail" "soft" "x-systemd.idle-timeout=600" "fsc"];
     };
 
     "/mnt/users_home" = {
-      device = "defiant:/home/users";
+      device = "defiant:/exports/users";
       fsType = "nfs";
       options = ["x-systemd.automount" "user" "nofail" "soft" "x-systemd.idle-timeout=600" "fsc"];
     };
