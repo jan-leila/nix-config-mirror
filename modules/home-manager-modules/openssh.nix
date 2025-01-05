@@ -12,23 +12,18 @@
     };
     hostKeys = lib.mkOption {
       type = lib.types.listOf lib.types.attrs;
-      default = [
-        {
-          type = "ed25519";
-          path = ".ssh/${config.home.username}_${osConfig.networking.hostName}_ed25519";
-        }
-      ];
+      default = [];
       example = [
         {
           type = "rsa";
           bits = 4096;
-          path = ".ssh/${config.home.username}_${osConfig.networking.hostName}_rsa";
+          path = "${config.home.username}_${osConfig.networking.hostName}_rsa";
           rounds = 100;
           openSSHFormat = true;
         }
         {
           type = "ed25519";
-          path = ".ssh/${config.home.username}_${osConfig.networking.hostName}_ed25519";
+          path = "${config.home.username}_${osConfig.networking.hostName}_ed25519";
           rounds = 100;
           comment = "key comment";
         }
@@ -43,53 +38,54 @@
   };
 
   config = lib.mkMerge [
-    {
-      systemd.user.services."${config.home.username}-ssh-keygen" = {
-        Unit = {
-          description = "Generate SSH keys for user";
+    (
+      lib.mkIf ((builtins.length config.programs.openssh.hostKeys) != 0) {
+        services.ssh-agent.enable = true;
+        programs.ssh = {
+          enable = true;
+          addKeysToAgent = "yes";
         };
-        Install = {
-          wantedBy = ["sshd.target" "multi-user.target" "default.target"];
-        };
-        Service = {
-          ExecStart = "${
-            pkgs.writeShellScript "ssh-keygen"
-            ''
-              # Make sure we don't write to stdout, since in case of
-              # socket activation, it goes to the remote side (#19589).
-              exec >&2
 
-              ${lib.flip lib.concatMapStrings config.programs.openssh.hostKeys (k: let
-                path = "${config.home.homeDirectory}/${k.path}";
-              in ''
-                if ! [ -s "${path}" ]; then
-                    if ! [ -h "${path}" ]; then
-                        rm -f "${path}"
+        systemd.user.services = builtins.listToAttrs (
+          builtins.map (hostKey:
+            lib.attrsets.nameValuePair "ssh-gen-keys-${hostKey.path}" {
+              Install = {
+                WantedBy = ["default.target"];
+              };
+              Service = let
+                path = "${config.home.homeDirectory}/.ssh/${hostKey.path}";
+              in {
+                Restart = "always";
+                Type = "simple";
+                ExecStart = "${
+                  pkgs.writeShellScript "ssh-gen-keys" ''
+                    if ! [ -s "${path}" ]; then
+                        if ! [ -h "${path}" ]; then
+                            rm -f "${path}"
+                        fi
+                        mkdir -p "$(dirname '${path}')"
+                        chmod 0755 "$(dirname '${path}')"
+                        ${pkgs.openssh}/bin/ssh-keygen \
+                          -t "${hostKey.type}" \
+                          ${lib.optionalString (hostKey ? bits) "-b ${toString hostKey.bits}"} \
+                          ${lib.optionalString (hostKey ? rounds) "-a ${toString hostKey.rounds}"} \
+                          ${lib.optionalString (hostKey ? comment) "-C '${hostKey.comment}'"} \
+                          ${lib.optionalString (hostKey ? openSSHFormat && hostKey.openSSHFormat) "-o"} \
+                          -f "${path}" \
+                          -N ""
                     fi
-                    mkdir -p "$(dirname '${path}')"
-                    chmod 0755 "$(dirname '${path}')"
-                    ssh-keygen \
-                      -t "${k.type}" \
-                      ${lib.optionalString (k ? bits) "-b ${toString k.bits}"} \
-                      ${lib.optionalString (k ? rounds) "-a ${toString k.rounds}"} \
-                      ${lib.optionalString (k ? comment) "-C '${k.comment}'"} \
-                      ${lib.optionalString (k ? openSSHFormat && k.openSSHFormat) "-o"} \
-                      -f "${path}" \
-                      -N ""
-                fi
-              '')}
-            ''
-          }";
-          KillMode = "process";
-          Restart = "always";
-          Type = "simple";
-        };
-      };
-    }
+                  ''
+                }";
+              };
+            })
+          config.programs.openssh.hostKeys
+        );
+      }
+    )
     (lib.mkIf osConfig.host.impermanence.enable {
       home.persistence."/persist${config.home.homeDirectory}" = {
         files = lib.lists.flatten (
-          builtins.map (hostKey: [hostKey.path "${hostKey.path}.pub"]) config.programs.openssh.hostKeys
+          builtins.map (hostKey: [".ssh/${hostKey.path}" ".ssh/${hostKey.path}.pub"]) config.programs.openssh.hostKeys
         );
       };
     })

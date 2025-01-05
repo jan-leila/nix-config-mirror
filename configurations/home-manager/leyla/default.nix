@@ -1,6 +1,7 @@
 {
   pkgs,
   osConfig,
+  config,
   ...
 }: {
   imports = [
@@ -106,9 +107,18 @@
       };
       bash.enable = true;
 
-      openssh.authorizedKeys = [
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJHeItmt8TRW43uNcOC+eIurYC7Eunc0V3LGocQqLaYj leyla@horizon"
-      ];
+      openssh = {
+        authorizedKeys = [
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJHeItmt8TRW43uNcOC+eIurYC7Eunc0V3LGocQqLaYj leyla@horizon"
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIILimFIW2exEH/Xo7LtXkqgE04qusvnPNpPWSCeNrFkP leyla@defiant"
+        ];
+        hostKeys = [
+          {
+            type = "ed25519";
+            path = "${config.home.username}_${osConfig.networking.hostName}_ed25519";
+          }
+        ];
+      };
     };
 
     dconf = {
