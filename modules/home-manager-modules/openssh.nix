@@ -43,7 +43,8 @@
         services.ssh-agent.enable = true;
         programs.ssh = {
           enable = true;
-          addKeysToAgent = "yes";
+          compression = true;
+          addKeysToAgent = "prompt";
         };
 
         systemd.user.services = builtins.listToAttrs (
