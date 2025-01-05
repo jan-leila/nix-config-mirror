@@ -56,6 +56,9 @@ in {
           ceder = {
             id = "MGXUJBS-7AENXHB-7YQRNWG-QILKEJD-5462U2E-WAQW4R4-I2TVK5H-SMK6LAA";
           };
+          coven = {
+            id = "OGPAEU6-5UR56VL-SP7YC4Y-IMVCRTO-XFD4CYN-Z6T5TZO-PFZNAT6-4MKWPQS";
+          };
         };
         folders = lib.mkMerge [
           config.host.sync.folders.extraFolders
@@ -63,21 +66,21 @@ in {
             "documents" = {
               id = "hvrj0-9bm1p";
               path = "/mnt/sync/leyla/documents";
-              devices = ["ceder"];
+              devices = ["ceder" "coven"];
             };
           })
           (lib.mkIf config.host.sync.folders.leyla.calendar.enable {
             "calendar" = {
               id = "8oatl-1rv6w";
               path = "/mnt/sync/leyla/calendar";
-              devices = ["ceder"];
+              devices = ["ceder" "coven"];
             };
           })
           (lib.mkIf config.host.sync.folders.leyla.notes.enable {
             "notes" = {
               id = "dwbuv-zffnf";
               path = "/mnt/sync/leyla/notes";
-              devices = ["ceder"];
+              devices = ["ceder" "coven"];
             };
           })
         ];
