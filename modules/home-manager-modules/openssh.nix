@@ -44,7 +44,10 @@
         programs.ssh = {
           enable = true;
           compression = true;
-          addKeysToAgent = "prompt";
+          addKeysToAgent = "confirm";
+          extraConfig = lib.strings.concatLines (
+            builtins.map (hostKey: "IdentityFile ~/.ssh/${hostKey.path}") config.programs.openssh.hostKeys
+          );
         };
 
         systemd.user.services = builtins.listToAttrs (
