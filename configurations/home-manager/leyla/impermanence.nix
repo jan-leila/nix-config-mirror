@@ -15,7 +15,7 @@
         }
       ];
       files = [
-        ".config/gnome-initial-setup-done" # gnome welcome message
+        ".bash_history" # keep shell history around
         ".local/share/recently-used.xbel" # gnome recently viewed files
       ];
     };

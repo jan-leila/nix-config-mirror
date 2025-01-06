@@ -53,6 +53,8 @@
 
       # enable RealtimeKit for pulse audio
       security.rtkit.enable = true;
+      # disable welcome tour
+      environment.gnome.excludePackages = [pkgs.gnome-tour];
     })
   ];
 }

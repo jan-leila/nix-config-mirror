@@ -62,6 +62,7 @@
     };
     reverse_proxy = {
       enable = true;
+      enableACME = false;
       hostname = "jan-leila.com";
     };
     postgres = {
