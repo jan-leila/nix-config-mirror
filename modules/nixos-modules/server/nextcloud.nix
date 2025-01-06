@@ -32,6 +32,7 @@ in {
           enable = true;
           package = pkgs.nextcloud30;
           hostName = "${config.host.nextcloud.subdomain}.${config.host.reverse_proxy.hostname}";
+          settings.log_type = "file";
           config = {
             adminpassFile = config.sops.secrets."services/nextcloud_adminpass".path;
           };
@@ -39,6 +40,13 @@ in {
       };
     }
     (lib.mkIf config.host.impermanence.enable {
+      assertions = [
+        {
+          assertion = config.services.nextcloud.datadir == dataDir;
+          message = "nextcloud data directory does not match persistence";
+        }
+      ];
+
       environment.persistence."/persist/system/root" = {
         enable = true;
         hideMounts = true;

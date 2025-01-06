@@ -28,6 +28,9 @@
         ];
       };
     };
+    fail2ban = {
+      enable = true;
+    };
     network_storage = {
       enable = true;
       directories = [

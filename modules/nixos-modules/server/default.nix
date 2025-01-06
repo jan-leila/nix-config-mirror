@@ -1,5 +1,6 @@
 {...}: {
   imports = [
+    ./fail2ban.nix
     ./network_storage
     ./reverse_proxy.nix
     ./postgres.nix
