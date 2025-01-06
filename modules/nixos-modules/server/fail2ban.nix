@@ -2,7 +2,9 @@
   lib,
   config,
   ...
-}: {
+}: let
+  dataFile = "/var/lib/fail2ban/fail2ban.sqlite3";
+in {
   options.host.fail2ban = {
     enable = lib.mkEnableOption "should fail 2 ban be enabled on this server";
   };
@@ -85,6 +87,20 @@
       };
     }
     (lib.mkIf config.host.impermanence.enable {
-      })
+      assertions = [
+        {
+          assertion = config.services.fail2ban.daemonSettings.Definition.dbfile == dataFile;
+          message = "fail2ban data file does not match persistence";
+        }
+      ];
+
+      environment.persistence."/persist/system/root" = {
+        enable = true;
+        hideMounts = true;
+        files = [
+          dataFile
+        ];
+      };
+    })
   ]);
 }
