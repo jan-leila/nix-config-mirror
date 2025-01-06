@@ -57,7 +57,7 @@ in {
             id = "MGXUJBS-7AENXHB-7YQRNWG-QILKEJD-5462U2E-WAQW4R4-I2TVK5H-SMK6LAA";
           };
           coven = {
-            id = "OGPAEU6-5UR56VL-SP7YC4Y-IMVCRTO-XFD4CYN-Z6T5TZO-PFZNAT6-4MKWPQS";
+            id = "QGU7NN6-OMXTWVA-YCZ73S5-2O7ECTS-MUCTN4M-YH6WLEL-U4U577I-7PBNCA5";
           };
         };
         folders = lib.mkMerge [
