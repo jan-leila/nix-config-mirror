@@ -63,3 +63,5 @@ nix multi user, multi system, configuration with `sops` secret management, `home
 - ISO target that contains authorized keys for nixos-anywhere https://github.com/diegofariasm/yggdrasil/blob/4acc43ebc7bcbf2e41376d14268e382007e94d78/hosts/bootstrap/default.nix
 - Immich
 - zfs encryption FIDO2 2fa
+- ISO installer - https://github.com/nix-community/nixos-generators
+- Secure Boot - https://github.com/nix-community/lanzaboote
