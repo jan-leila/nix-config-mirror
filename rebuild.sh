@@ -15,7 +15,7 @@ while [ $# -gt 0 ]; do
       if [[ "$1" != *=* ]]; then shift; fi # Value is next arg if no `=`
       target="${1#*=}"
       ;;
-    --flake*|-h*)
+    --flake*|-f*)
       if [[ "$1" != *=* ]]; then shift; fi
       flake="${1#*=}"
       ;;
@@ -26,6 +26,10 @@ while [ $# -gt 0 ]; do
     --user*|-u*)
       if [[ "$1" != *=* ]]; then shift; fi
       user="${1#*=}"
+      ;;
+    --host*)
+      if [[ "$1" != *=* ]]; then shift; fi
+      host="${1#*=}"
       ;;
     --preserve-result)
       preserve_result=true
@@ -42,6 +46,7 @@ while [ $# -gt 0 ]; do
       echo "--flake -f: set the flake to rebuild on the target system"
       echo "--mode -m: set the mode to rebuild flake as on the target system"
       echo "--user -u: set the user to rebuild flake as on the target system"
+      echo "--host: set the host that the flake will be rebuilt on (unset for current machine)"
       echo "--preserve-result: do not remove the generated result folder after building"
       echo "--no-preserve-result: remove any result folder after building"
       echo "--show-trace: show trace on builds"
@@ -62,6 +67,11 @@ user=${user:-$USER}
 
 command="nixos-rebuild $mode --use-remote-sudo --flake .#$flake"
 
+if [[ $host ]];
+then
+  command="$command --build-host $host"
+fi
+
 if [[ "$target" != "$(hostname)" ]];
 then
 	command="$command --target-host $user@$target"
@@ -72,6 +82,7 @@ then
 	command="$command --show-trace"
 fi
 
+echo $command
 $command
 
 if [ -d "result" ];
