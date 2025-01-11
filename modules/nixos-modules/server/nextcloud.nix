@@ -25,7 +25,11 @@ in {
         };
       };
 
-      host.reverse_proxy.subdomains.${config.host.jellyfin.subdomain} = {};
+      host = {
+        reverse_proxy.subdomains.${config.host.nextcloud.subdomain} = {
+          target = "http://localhost:${toString 8009}";
+        };
+      };
 
       services = {
         nextcloud = {
@@ -35,6 +39,7 @@ in {
           settings.log_type = "file";
           config = {
             adminpassFile = config.sops.secrets."services/nextcloud_adminpass".path;
+            adminuser = "admin";
           };
         };
       };
