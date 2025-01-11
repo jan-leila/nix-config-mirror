@@ -7,6 +7,7 @@
   jellyfinPort = 8096;
   jellyfin_data_directory = "/var/lib/jellyfin";
   jellyfin_cache_directory = "/var/cache/jellyfin";
+  jellyfin_media_directory = "/srv/jellyfin/media";
 in {
   options.host.jellyfin = {
     enable = lib.mkEnableOption "should jellyfin be enabled on this computer";
@@ -31,34 +32,6 @@ in {
         ];
       }
       (lib.mkIf config.host.impermanence.enable {
-        assertions = [
-          {
-            assertion = config.services.jellyfin.dataDir == jellyfin_data_directory;
-            message = "jellyfin data directory does not match persistence";
-          }
-          {
-            assertion = config.services.jellyfin.cacheDir == jellyfin_cache_directory;
-            message = "jellyfin cache directory does not match persistence";
-          }
-        ];
-
-        environment.persistence."/persist/system/jellyfin" = {
-          enable = true;
-          hideMounts = true;
-          directories = [
-            {
-              directory = jellyfin_data_directory;
-              user = "jellyfin";
-              group = "jellyfin";
-            }
-            {
-              directory = jellyfin_cache_directory;
-              user = "jellyfin";
-              group = "jellyfin";
-            }
-          ];
-        };
-
         fileSystems."/persist/system/jellyfin".neededForBoot = true;
 
         host.storage.pool.extraDatasets = {
@@ -71,6 +44,49 @@ in {
               relatime = "off";
               canmount = "on";
             };
+          };
+        };
+
+        assertions = [
+          {
+            assertion = config.services.jellyfin.dataDir == jellyfin_data_directory;
+            message = "jellyfin data directory does not match persistence";
+          }
+          {
+            assertion = config.services.jellyfin.cacheDir == jellyfin_cache_directory;
+            message = "jellyfin cache directory does not match persistence";
+          }
+        ];
+
+        environment.persistence = {
+          "/persist/system/root" = {
+            enable = true;
+            hideMounts = true;
+            directories = [
+              {
+                directory = jellyfin_data_directory;
+                user = "jellyfin";
+                group = "jellyfin";
+              }
+              {
+                directory = jellyfin_cache_directory;
+                user = "jellyfin";
+                group = "jellyfin";
+              }
+            ];
+          };
+
+          "/persist/system/jellyfin" = {
+            enable = true;
+            hideMounts = true;
+            directories = [
+              {
+                directory = jellyfin_media_directory;
+                user = "jellyfin";
+                group = "jellyfin_media";
+                mode = "1770";
+              }
+            ];
           };
         };
       })
