@@ -63,7 +63,7 @@ in {
 
             # development tools
             # androidStudioPackages.canary
-            # jetbrains.idea-community
+            jetbrains.idea-community
             dbeaver-bin
             bruno
             qFlipper
