@@ -18,6 +18,7 @@
         ".bash_history" # keep shell history around
         ".local/share/recently-used.xbel" # gnome recently viewed files
       ];
+      allowOther = true;
     };
   };
 }

@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: let
-  dataDir = "/var/lib/postgresql/15";
+  dataDir = "/var/lib/postgresql/16";
   adminUsers = lib.lists.filter (user: user.isAdmin) (lib.attrsets.mapAttrsToList (_: user: user) config.host.postgres.extraUsers);
   clientUsers = lib.lists.filter (user: user.isClient) (lib.attrsets.mapAttrsToList (_: user: user) config.host.postgres.extraUsers);
   createUsers = lib.lists.filter (user: user.createUser) (lib.attrsets.mapAttrsToList (_: user: user) config.host.postgres.extraUsers);
@@ -55,7 +55,7 @@ in {
       services = {
         postgresql = {
           enable = true;
-          package = pkgs.postgresql_15;
+          package = pkgs.postgresql_16;
           ensureUsers =
             [
               {
