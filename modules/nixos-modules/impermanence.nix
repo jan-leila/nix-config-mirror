@@ -25,6 +25,8 @@
           }
         ];
 
+        programs.fuse.userAllowOther = true;
+
         boot.initrd.postResumeCommands = lib.mkAfter ''
           zfs rollback -r rpool/local/system/root@blank
         '';
