@@ -6,10 +6,6 @@
         isTerminalUser = true;
         isPrincipleUser = true;
       };
-      ester = {
-        isPrincipleUser = true;
-        isNormalUser = true;
-      };
       eve.isNormalUser = false;
     };
   };

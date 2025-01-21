@@ -84,11 +84,6 @@ in {
         isDesktopUser = lib.mkDefault false;
         isTerminalUser = lib.mkDefault false;
       };
-      ester = {
-        isPrincipleUser = lib.mkDefault false;
-        isDesktopUser = lib.mkDefault false;
-        isTerminalUser = lib.mkDefault false;
-      };
       eve = {
         isPrincipleUser = lib.mkDefault false;
         isDesktopUser = lib.mkDefault false;

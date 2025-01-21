@@ -45,11 +45,6 @@
           group = "eve";
         }
         {
-          folder = "ester";
-          user = "ester";
-          group = "ester";
-        }
-        {
           folder = "users";
           user = "root";
           group = "users";
@@ -57,7 +52,7 @@
       ];
       nfs = {
         enable = true;
-        directories = ["leyla" "eve" "ester"];
+        directories = ["leyla" "eve"];
       };
     };
     reverse_proxy = {

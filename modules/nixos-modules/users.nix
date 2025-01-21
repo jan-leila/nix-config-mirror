@@ -14,7 +14,6 @@
 
   uids = {
     leyla = 1000;
-    ester = 1001;
     eve = 1002;
     jellyfin = 2000;
     forgejo = 2002;
@@ -27,7 +26,6 @@
 
   gids = {
     leyla = 1000;
-    ester = 1001;
     eve = 1002;
     users = 100;
     jellyfin_media = 2001;
@@ -42,7 +40,6 @@
 
   users = config.users.users;
   leyla = users.leyla.name;
-  ester = users.ester.name;
   eve = users.eve.name;
 in {
   config = lib.mkMerge [
@@ -77,10 +74,6 @@ in {
             neededForUsers = true;
             sopsFile = "${inputs.secrets}/user-passwords.yaml";
           };
-          "passwords/ester" = {
-            neededForUsers = true;
-            sopsFile = "${inputs.secrets}/user-passwords.yaml";
-          };
           "passwords/eve" = {
             neededForUsers = true;
             sopsFile = "${inputs.secrets}/user-passwords.yaml";
@@ -103,17 +96,6 @@ in {
             isNormalUser = host.users.leyla.isNormalUser;
             isSystemUser = !host.users.leyla.isNormalUser;
             group = config.users.users.leyla.name;
-          };
-
-          ester = {
-            uid = lib.mkForce uids.ester;
-            name = lib.mkForce host.users.ester.name;
-            description = "Ester";
-            extraGroups = lib.optionals host.users.ester.isNormalUser ["networkmanager"];
-            hashedPasswordFile = config.sops.secrets."passwords/ester".path;
-            isNormalUser = host.users.ester.isNormalUser;
-            isSystemUser = !host.users.ester.isNormalUser;
-            group = config.users.users.ester.name;
           };
 
           eve = {
@@ -178,13 +160,6 @@ in {
             ];
           };
 
-          ester = {
-            gid = lib.mkForce gids.ester;
-            members = [
-              ester
-            ];
-          };
-
           eve = {
             gid = lib.mkForce gids.eve;
             members = [
@@ -196,7 +171,6 @@ in {
             gid = lib.mkForce gids.users;
             members = [
               leyla
-              ester
               eve
             ];
           };
@@ -206,7 +180,6 @@ in {
             members = [
               users.jellyfin.name
               leyla
-              ester
               eve
             ];
           };
@@ -264,7 +237,6 @@ in {
             members = [
               users.syncthing.name
               leyla
-              ester
               eve
             ];
           };

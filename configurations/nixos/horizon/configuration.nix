@@ -16,7 +16,6 @@
         isTerminalUser = true;
         isPrincipleUser = true;
       };
-      ester.isDesktopUser = true;
       eve.isDesktopUser = true;
     };
     sync = {

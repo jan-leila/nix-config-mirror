@@ -50,12 +50,6 @@
       options = ["x-systemd.automount" "user" "nofail" "soft" "x-systemd.idle-timeout=600" "fsc"];
     };
 
-    "/mnt/ester_home" = {
-      device = "defiant:/exports/ester";
-      fsType = "nfs";
-      options = ["x-systemd.automount" "user" "nofail" "soft" "x-systemd.idle-timeout=600" "fsc"];
-    };
-
     "/mnt/users_home" = {
       device = "defiant:/exports/users";
       fsType = "nfs";
