@@ -28,7 +28,7 @@
     loadModels = [
       "deepseek-coder:6.7b"
       "deepseek-r1:8b"
-      "deepseek-r1:70b"
+      "deepseek-r1:32b"
     ];
   };
 

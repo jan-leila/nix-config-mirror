@@ -127,6 +127,17 @@
       # Get rid of xTerm
       excludePackages = [pkgs.xterm];
     };
+
+    ollama = {
+      enable = true;
+
+      loadModels = [
+        "deepseek-coder:6.7b"
+        "deepseek-r1:8b"
+        "deepseek-r1:32b"
+        "deepseek-r1:70b"
+      ];
+    };
   };
 
   # disable computer sleeping
