@@ -52,6 +52,13 @@ in {
             "expr" = "import <nixpkgs> {}";
           };
         })
+        (lib.mkIf osConfig.services.ollama.enable {
+          "twinny.fileContextEnabled" = true;
+          "twinny.enableLogging" = false;
+          "twinny.completionCacheEnabled" = true;
+
+          # builtins.elemAt osConfig.services.ollama.loadModels 0;
+        })
       ];
 
       extensions = (
@@ -84,6 +91,11 @@ in {
             # misc extensions
             bungcip.better-toml
           ]
+          ++ (
+            lib.lists.optionals osConfig.services.ollama.enable [
+              rjmacarthy.twinny
+            ]
+          )
           ++ (lib.lists.optionals nix-development-enabled [
             # nix extensions
             pinage404.nix-extension-pack

@@ -22,6 +22,16 @@
     };
   };
 
+  services.ollama = {
+    enable = true;
+
+    loadModels = [
+      "deepseek-coder:6.7b"
+      "deepseek-r1:8b"
+      "deepseek-r1:70b"
+    ];
+  };
+
   # enabled virtualisation for docker
   # virtualisation.docker.enable = true;
 
