@@ -11,6 +11,7 @@
     ./sync.nix
     ./impermanence.nix
     ./disko.nix
+    ./ollama.nix
     ./server
   ];
 

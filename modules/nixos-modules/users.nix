@@ -22,6 +22,7 @@
     headscale = 2005;
     nextcloud = 2006;
     syncthing = 2007;
+    ollama = 2008;
   };
 
   gids = {
@@ -36,6 +37,7 @@
     headscale = 2005;
     nextcloud = 2006;
     syncthing = 2007;
+    ollama = 2008;
   };
 
   users = config.users.users;
@@ -150,6 +152,12 @@ in {
             isSystemUser = true;
             group = config.users.users.syncthing.name;
           };
+
+          ollama = {
+            uid = lib.mkForce uids.ollama;
+            isSystemUser = true;
+            group = config.users.users.ollama.name;
+          };
         };
 
         groups = {
@@ -238,6 +246,13 @@ in {
               users.syncthing.name
               leyla
               eve
+            ];
+          };
+
+          ollama = {
+            gid = lib.mkForce gids.ollama;
+            members = [
+              users.ollama.name
             ];
           };
         };
