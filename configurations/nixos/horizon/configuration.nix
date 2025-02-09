@@ -38,13 +38,19 @@
 
   programs.adb.enable = true;
 
-  services.ollama = {
-    enable = true;
+  services = {
+    # sudo fprintd-enroll
+    fprintd = {
+      enable = true;
+    };
+    ollama = {
+      enable = true;
 
-    loadModels = [
-      "deepseek-coder:1.3b"
-      "deepseek-r1:1.5b"
-    ];
+      loadModels = [
+        "deepseek-coder:1.3b"
+        "deepseek-r1:1.5b"
+      ];
+    };
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
