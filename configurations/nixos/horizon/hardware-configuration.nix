@@ -38,37 +38,37 @@
       fsType = "vfat";
     };
 
-    "/mnt/leyla_home" = {
+    "/mnt/new_leyla_home" = {
       device = "defiant:/exports/leyla";
       fsType = "nfs";
       options = ["x-systemd.automount" "user" "noatime" "nofail" "soft" "x-systemd.idle-timeout=600" "fsc"];
     };
 
-    "/mnt/eve_home" = {
+    "/mnt/new_eve_home" = {
       device = "defiant:/exports/eve";
       fsType = "nfs";
       options = ["x-systemd.automount" "user" "nofail" "soft" "x-systemd.idle-timeout=600" "fsc"];
     };
 
-    "/mnt/users_home" = {
+    "/mnt/new_users_home" = {
       device = "defiant:/exports/users";
       fsType = "nfs";
       options = ["x-systemd.automount" "user" "nofail" "soft" "x-systemd.idle-timeout=600" "fsc"];
     };
 
-    "/mnt/legacy_leyla_home" = {
+    "/mnt/leyla_home" = {
       device = "server.arpa:/home/leyla";
       fsType = "nfs";
       options = ["x-systemd.automount" "user" "nofail" "soft" "x-systemd.idle-timeout=600" "fsc"];
     };
 
-    "/mnt/legacy_share_home" = {
+    "/mnt/share_home" = {
       device = "server.arpa:/home/share";
       fsType = "nfs";
       options = ["x-systemd.automount" "user" "nofail" "soft" "x-systemd.idle-timeout=600" "fsc"];
     };
 
-    "/mnt/legacy_docker_home" = {
+    "/mnt/docker_home" = {
       device = "server.arpa:/home/docker";
       fsType = "nfs";
       options = ["x-systemd.automount" "noauto" "x-systemd.idle-timeout=600"];
