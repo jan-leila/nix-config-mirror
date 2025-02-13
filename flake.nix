@@ -5,6 +5,11 @@
     # base packages
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    lix-module = {
+      url = "https://git.lix.systems/lix-project/nixos-module/archive/stable.tar.gz";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # secret encryption
     sops-nix = {
       url = "github:Mic92/sops-nix";
