@@ -63,6 +63,7 @@ in {
           discord
           makemkv
           signal-desktop
+          ungoogled-chromium
         ]
       );
     };
