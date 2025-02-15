@@ -1,5 +1,4 @@
 {
-  pkgs,
   osConfig,
   config,
   ...
@@ -8,6 +7,7 @@
     ./i18n.nix
     ./packages.nix
     ./impermanence.nix
+    ./dconf.nix
   ];
 
   config = {
@@ -119,46 +119,6 @@
             path = "${config.home.username}_${osConfig.networking.hostName}_ed25519";
           }
         ];
-      };
-    };
-
-    dconf = {
-      enable = true;
-      settings = {
-        "org/gnome/desktop/interface".color-scheme = "prefer-dark";
-
-        "org/gnome/shell" = {
-          disable-user-extensions = false; # enables user extensions
-          enabled-extensions = [
-            # Put UUIDs of extensions that you want to enable here.
-            # If the extension you want to enable is packaged in nixpkgs,
-            # you can easily get its UUID by accessing its extensionUuid
-            # field (look at the following example).
-            pkgs.gnomeExtensions.dash-to-dock.extensionUuid
-
-            # Alternatively, you can manually pass UUID as a string.
-            # "dash-to-dock@micxgx.gmail.com"
-          ];
-        };
-
-        "org/gnome/shell/extensions/dash-to-dock" = {
-          "dock-position" = "LEFT";
-          "intellihide-mode" = "ALL_WINDOWS";
-          "show-trash" = false;
-          "require-pressure-to-show" = false;
-          "show-mounts" = false;
-        };
-
-        "org/gnome/settings-daemon/plugins/media-keys" = {
-          custom-keybindings = [
-            "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
-          ];
-        };
-        "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
-          binding = "<Super>t";
-          command = "kgx";
-          name = "Open Terminal";
-        };
       };
     };
   };
