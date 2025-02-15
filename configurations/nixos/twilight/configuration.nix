@@ -30,8 +30,6 @@
       "deepseek-r1:8b"
       "deepseek-r1:32b"
     ];
-
-    acceleration = "cuda";
   };
 
   # enabled virtualisation for docker
