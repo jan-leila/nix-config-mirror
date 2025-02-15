@@ -125,10 +125,15 @@
     devShells = forEachPkgs (pkgs: {
       default = pkgs.mkShell {
         packages = with pkgs; [
+          # for version controlling this repo
           git
-          sops
+          # for formatting code in this repo
           alejandra
+          # for editing secrets in the secrets repo
+          sops
+          # for viewing configuration options defined in this repo
           nix-inspect
+          # for installing flakes from this repo onto other systems
           nixos-anywhere
         ];
 
