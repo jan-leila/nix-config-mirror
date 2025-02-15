@@ -111,6 +111,7 @@
         authorizedKeys = [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJHeItmt8TRW43uNcOC+eIurYC7Eunc0V3LGocQqLaYj leyla@horizon"
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIILimFIW2exEH/Xo7LtXkqgE04qusvnPNpPWSCeNrFkP leyla@defiant"
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKBiZkg1c2aaNHiieBX4cEziqvJVj9pcDfzUrKU/mO0I leyla@twilight"
         ];
         hostKeys = [
           {
