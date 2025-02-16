@@ -56,7 +56,7 @@ in {
             # proprietary platforms
             discord
             obsidian
-            steam
+            # steam
             (lib.mkIf hardware.graphicsAcceleration.enable davinci-resolve)
 
             anki
