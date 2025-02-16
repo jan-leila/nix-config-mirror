@@ -77,6 +77,8 @@
                           ${lib.optionalString (hostKey ? openSSHFormat && hostKey.openSSHFormat) "-o"} \
                           -f "${path}" \
                           -N ""
+                        chown ${config.home.username} ${path}*
+                        chgrp ${config.home.username} ${path}*
                     fi
                   ''
                 }";
