@@ -43,6 +43,9 @@ in {
             DOMAIN = "${config.host.forgejo.subdomain}.${config.host.reverse_proxy.hostname}";
             HTTP_PORT = forgejoPort;
           };
+          service = {
+            DISABLE_REGISTRATION = true;
+          };
         };
       };
     }
