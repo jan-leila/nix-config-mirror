@@ -5,6 +5,8 @@
 }: let
   forgejoPort = 8081;
   stateDir = "/var/lib/forgejo";
+  db_user = "forgejo";
+  sshPort = 2222;
 in {
   options.host.forgejo = {
     enable = lib.mkEnableOption "should forgejo be enabled on this computer";
@@ -24,7 +26,7 @@ in {
         postgres = {
           enable = true;
           extraUsers = {
-            forgejo = {
+            ${db_user} = {
               isClient = true;
             };
           };
@@ -42,12 +44,26 @@ in {
           server = {
             DOMAIN = "${config.host.forgejo.subdomain}.${config.host.reverse_proxy.hostname}";
             HTTP_PORT = forgejoPort;
+            START_SSH_SERVER = true;
+            SSH_LISTEN_PORT = sshPort;
+            SSH_PORT = 22;
+            # TODO: we need to create this user, and then store their authorized keys somewhere and have both ssh server allow login in as that user based on those authorized keys
+            BUILTIN_SSH_SERVER_USER = "git";
           };
           service = {
             DISABLE_REGISTRATION = true;
           };
+          database = {
+            DB_TYPE = "postgres";
+            NAME = db_user;
+            USER = db_user;
+          };
         };
       };
+
+      networking.firewall.allowedTCPPorts = [
+        config.services.forgejo.settings.server.SSH_LISTEN_PORT
+      ];
     }
     (lib.mkIf config.host.impermanence.enable {
       assertions = [

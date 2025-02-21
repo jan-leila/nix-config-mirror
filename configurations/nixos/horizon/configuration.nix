@@ -53,6 +53,14 @@
     };
   };
 
+  # networking.extraHosts = ''
+  #   # 192.168.1.204 jan-leila.com
+  #   192.168.1.204 media.jan-leila.com
+  #   # 192.168.1.204 drive.jan-leila.com
+  #   192.168.1.204 git.jan-leila.com
+  #   # 192.168.1.204 search.jan-leila.com
+  # '';
+
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
