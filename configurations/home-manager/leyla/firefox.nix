@@ -50,7 +50,7 @@
         };
       };
 
-      extensions = with inputs.firefox-addons.packages.${pkgs.system}; [
+      extensions.packages = with inputs.firefox-addons.packages.${pkgs.system}; [
         bitwarden
         terms-of-service-didnt-read
         multi-account-containers
