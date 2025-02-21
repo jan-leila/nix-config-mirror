@@ -1,7 +1,5 @@
 # server nas
 {pkgs, ...}: {
-  nixpkgs.config.allowUnfree = true;
-
   host = {
     users = {
       leyla = {

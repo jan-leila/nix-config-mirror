@@ -12,6 +12,10 @@ in {
     ./firefox.nix
   ];
 
+  nixpkgs.config = {
+    allowUnfree = true;
+  };
+
   home = {
     packages =
       lib.lists.optionals userConfig.isTerminalUser (

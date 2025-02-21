@@ -7,8 +7,6 @@
     inputs.nixos-hardware.nixosModules.framework-11th-gen-intel
   ];
 
-  nixpkgs.config.allowUnfree = true;
-
   host = {
     users = {
       leyla = {
