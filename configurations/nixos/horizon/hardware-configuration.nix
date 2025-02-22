@@ -89,6 +89,11 @@
     networkmanager.enable = true;
     useDHCP = lib.mkDefault true;
     hostName = "horizon"; # Define your hostname.
+
+    wireguard.interfaces = {
+      proton = {
+      };
+    };
   };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";

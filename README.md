@@ -32,7 +32,7 @@ nix multi user, multi system, configuration with `sops` secret management, `home
 `./install.sh --target 192.168.1.130 --flake hostname`
 
 ## Updating Secrets
-`sops -c sops secrets/secrets_file_here.yaml`
+`sops secrets/secrets_file_here.yaml`
 
 ## Inspecting a configuration
 `nix-inspect -p .`

@@ -9,3 +9,7 @@ creation_rules:
     key_groups:
       - age:
         - *leyla
+  - path_regex: secrets/wireguard-keys.yaml$
+    key_groups:
+      - age:
+        - *leyla
