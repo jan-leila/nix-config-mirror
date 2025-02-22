@@ -6,11 +6,18 @@
   lib,
   pkgs,
   modulesPath,
+  inputs,
   ...
 }: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
+
+  sops.secrets = {
+    "wireguard-keys/proton/horizon" = {
+      sopsFile = "${inputs.secrets}/wireguard-keys.yaml";
+    };
+  };
 
   boot = {
     initrd = {
@@ -90,8 +97,23 @@
     useDHCP = lib.mkDefault true;
     hostName = "horizon"; # Define your hostname.
 
-    wireguard.interfaces = {
+    wg-quick.interfaces = {
       proton = {
+        # IP address of this machine in the *tunnel network*
+        address = ["10.2.0.1/32"];
+
+        listenPort = 51820;
+
+        privateKeyFile = config.sops.secrets."wireguard-keys/proton/horizon".path;
+
+        peers = [
+          {
+            publicKey = "Yu2fgynXUAASCkkrXWj76LRriFxKMTQq+zjTzyOKG1Q=";
+            allowedIPs = ["0.0.0.0/0"];
+            endpoint = "84.17.63.8:51820";
+            persistentKeepalive = 25;
+          }
+        ];
       };
     };
   };

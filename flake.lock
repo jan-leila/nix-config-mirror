@@ -114,11 +114,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1740254115,
-        "narHash": "sha256-MwxDtYB/MSGZlr/xS+ExGYH2QgHk73ShD40shxjad/Y=",
+        "lastModified": 1740265252,
+        "narHash": "sha256-+LFsCsIUF/pJWL9S21m5NLcK5bgwRB4MwfV0Iu7tggY=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "cb3f6e9b59d3a5e51ef9f7da2b8418d5c72aaef8",
+        "rev": "fb568d75cf6c81f30d49eeb73787e9b56454ba16",
         "type": "github"
       },
       "original": {
@@ -234,11 +234,11 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1740265180,
-        "narHash": "sha256-VcS1aWKZQG1Com/OgL8RbTSG7IJphNLkFXAcFer0cMQ=",
+        "lastModified": 1740267388,
+        "narHash": "sha256-JCgjNQMrlzf8a0YAqRNGliGmgv6afnc0OTOD6Eg0RZ0=",
         "ref": "refs/heads/main",
-        "rev": "5ec7b1181a3ce76c8238819195f7e55f51407463",
-        "revCount": 7,
+        "rev": "f5af565aee98df0a78056c49c85cda640ce290fd",
+        "revCount": 10,
         "type": "git",
         "url": "ssh://git@git.jan-leila.com/jan-leila/nix-config-secrets.git"
       },
