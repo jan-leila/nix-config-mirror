@@ -28,87 +28,90 @@ in {
       package = pkgs.vscodium;
 
       mutableExtensionsDir = false;
-      enableUpdateCheck = false;
-      enableExtensionUpdateCheck = false;
 
-      userSettings = lib.mkMerge [
-        {
-          "workbench.colorTheme" = "Atom One Dark";
-          "cSpell.userWords" = [
-            "webdav"
-          ];
-        }
-        (lib.mkIf nix-development-enabled {
-          "nix.enableLanguageServer" = true;
-          "nix.serverPath" = "nil";
-          "[nix]" = {
-            "editor.defaultFormatter" = "kamadorueda.alejandra";
-            "editor.formatOnPaste" = true;
-            "editor.formatOnSave" = true;
-            "editor.formatOnType" = true;
-          };
-          "alejandra.program" = "alejandra";
-          "nixpkgs" = {
-            "expr" = "import <nixpkgs> {}";
-          };
-        })
-        (lib.mkIf osConfig.services.ollama.enable {
-          "twinny.fileContextEnabled" = true;
-          "twinny.enableLogging" = false;
-          "twinny.completionCacheEnabled" = true;
+      profiles.default = {
+        enableUpdateCheck = false;
+        enableExtensionUpdateCheck = false;
 
-          # builtins.elemAt osConfig.services.ollama.loadModels 0;
-        })
-      ];
+        userSettings = lib.mkMerge [
+          {
+            "workbench.colorTheme" = "Atom One Dark";
+            "cSpell.userWords" = [
+              "webdav"
+            ];
+          }
+          (lib.mkIf nix-development-enabled {
+            "nix.enableLanguageServer" = true;
+            "nix.serverPath" = "nil";
+            "[nix]" = {
+              "editor.defaultFormatter" = "kamadorueda.alejandra";
+              "editor.formatOnPaste" = true;
+              "editor.formatOnSave" = true;
+              "editor.formatOnType" = true;
+            };
+            "alejandra.program" = "alejandra";
+            "nixpkgs" = {
+              "expr" = "import <nixpkgs> {}";
+            };
+          })
+          (lib.mkIf osConfig.services.ollama.enable {
+            "twinny.fileContextEnabled" = true;
+            "twinny.enableLogging" = false;
+            "twinny.completionCacheEnabled" = true;
 
-      extensions = (
-        with open-vsx;
-          [
-            # vs code feel extensions
-            ms-vscode.atom-keybindings
-            akamud.vscode-theme-onedark
-            streetsidesoftware.code-spell-checker
-            streetsidesoftware.code-spell-checker-german
-            streetsidesoftware.code-spell-checker-italian
-            jeanp413.open-remote-ssh
+            # builtins.elemAt osConfig.services.ollama.loadModels 0;
+          })
+        ];
 
-            # html extensions
-            formulahendry.auto-rename-tag
-            ms-vscode.live-server
+        extensions = (
+          with open-vsx;
+            [
+              # vs code feel extensions
+              ms-vscode.atom-keybindings
+              akamud.vscode-theme-onedark
+              streetsidesoftware.code-spell-checker
+              streetsidesoftware.code-spell-checker-german
+              streetsidesoftware.code-spell-checker-italian
+              jeanp413.open-remote-ssh
 
-            # js extensions
-            dsznajder.es7-react-js-snippets
-            dbaeumer.vscode-eslint
-            standard.vscode-standard
-            firsttris.vscode-jest-runner
-            stylelint.vscode-stylelint
-            tauri-apps.tauri-vscode
+              # html extensions
+              formulahendry.auto-rename-tag
+              ms-vscode.live-server
 
-            # astro blog extensions
-            astro-build.astro-vscode
-            unifiedjs.vscode-mdx
-
-            # misc extensions
-            bungcip.better-toml
-          ]
-          ++ (
-            lib.lists.optionals osConfig.services.ollama.enable [
-              rjmacarthy.twinny
-            ]
-          )
-          ++ (lib.lists.optionals nix-development-enabled [
-            # nix extensions
-            pinage404.nix-extension-pack
-            jnoortheen.nix-ide
-            kamadorueda.alejandra
-          ])
-          ++ (
-            with vscode-marketplace; [
               # js extensions
-              karyfoundation.nearley
+              dsznajder.es7-react-js-snippets
+              dbaeumer.vscode-eslint
+              standard.vscode-standard
+              firsttris.vscode-jest-runner
+              stylelint.vscode-stylelint
+              tauri-apps.tauri-vscode
+
+              # astro blog extensions
+              astro-build.astro-vscode
+              unifiedjs.vscode-mdx
+
+              # misc extensions
+              bungcip.better-toml
             ]
-          )
-      );
+            ++ (
+              lib.lists.optionals osConfig.services.ollama.enable [
+                rjmacarthy.twinny
+              ]
+            )
+            ++ (lib.lists.optionals nix-development-enabled [
+              # nix extensions
+              pinage404.nix-extension-pack
+              jnoortheen.nix-ide
+              kamadorueda.alejandra
+            ])
+            ++ (
+              with vscode-marketplace; [
+                # js extensions
+                karyfoundation.nearley
+              ]
+            )
+        );
+      };
     };
   };
 }
