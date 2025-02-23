@@ -9,6 +9,9 @@
     "wireguard-keys/tailscale-authkey/defiant" = {
       sopsFile = "${inputs.secrets}/wireguard-keys.yaml";
     };
+    "services/zfs_smtp_token" = {
+      sopsFile = "${inputs.secrets}/defiant-services.yaml";
+    };
   };
 
   host = {
@@ -23,6 +26,14 @@
     storage = {
       enable = true;
       encryption = true;
+      notifications = {
+        enable = true;
+        host = "smtp.protonmail.ch";
+        port = 587;
+        to = "leyla@jan-leila.com";
+        user = "leyla@jan-leila.com";
+        tokenFile = config.sops.secrets."services/zfs_smtp_token".path;
+      };
       pool = {
         drives = [
           "ata-ST18000NE000-3G6101_ZVTCXVEB"

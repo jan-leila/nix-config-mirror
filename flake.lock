@@ -234,11 +234,11 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1740328351,
-        "narHash": "sha256-oX+XYRclxVYgLy5NX9UR7XKixaH5jJQuQhR7Of/ZtTk=",
+        "lastModified": 1740340309,
+        "narHash": "sha256-NoCpH7t1hTPi6+j7tB/IBirae4Bk6iZXpTiUmFzdKAY=",
         "ref": "refs/heads/main",
-        "rev": "52bb4eadd620757e6a943d335e31458ffa2ada2b",
-        "revCount": 11,
+        "rev": "0237156ee8bc0157e8c3a701fcf7e2dd27d76fc6",
+        "revCount": 12,
         "type": "git",
         "url": "ssh://git@git.jan-leila.com/jan-leila/nix-config-secrets.git"
       },

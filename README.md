@@ -57,7 +57,7 @@ nix multi user, multi system, configuration with `sops` secret management, `home
 - figure out steam vr things?
 - Open GL?
 - rotate sops encryption keys periodically (and somehow sync between devices?)
-- zfs email after scrubbing
+- zfs email after scrubbing # TODO: test this
 - wake on LAN for updates
 - ISO target that contains authorized keys for nixos-anywhere https://github.com/diegofariasm/yggdrasil/blob/4acc43ebc7bcbf2e41376d14268e382007e94d78/hosts/bootstrap/default.nix
 - Immich

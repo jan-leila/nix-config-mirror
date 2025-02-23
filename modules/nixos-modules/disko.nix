@@ -1,5 +1,6 @@
 {
   lib,
+  pkgs,
   config,
   inputs,
   ...
@@ -23,6 +24,26 @@ in {
   options.host.storage = {
     enable = lib.mkEnableOption "are we going create zfs disks with disko on this device";
     encryption = lib.mkEnableOption "is the vdev going to be encrypted";
+    notifications = {
+      enable = lib.mkEnableOption "are notifications enabled";
+      host = lib.mkOption {
+        type = lib.types.str;
+        description = "what is the host that we are going to send the email to";
+      };
+      port = lib.mkOption {
+        type = lib.types.port;
+        description = "what port is the host using to receive mail on";
+      };
+      to = lib.mkOption {
+        type = lib.types.str;
+        description = "what account is the email going to be sent to";
+      };
+      user = lib.mkOption {
+        type = lib.types.str;
+        description = "what user is the email going to be set from";
+      };
+      tokenFile = lib.mkOption {}; # TODO: make this a secrets file
+    };
     pool = {
       vdevs = lib.mkOption {
         type = lib.types.listOf (lib.types.listOf lib.types.str);
@@ -50,9 +71,48 @@ in {
   };
 
   config = lib.mkIf config.host.storage.enable {
+    programs.msmtp = lib.mkIf config.host.storage.notifications.enable {
+      enable = true;
+      setSendmail = true;
+      defaults = {
+        aliases = "/etc/aliases";
+        port = config.host.storage.notifications.port;
+        tls_trust_file = "/etc/ssl/certs/ca-certificates.crt";
+        tls = "on";
+        auth = "login";
+        tls_starttls = "off";
+      };
+      accounts = {
+        zfs_notifications = {
+          host = config.host.storage.notifications.host;
+          passwordeval = "cat ${config.host.storage.notifications.tokenFile}";
+          user = config.host.storage.notifications.user;
+          from = config.host.storage.notifications.user;
+        };
+      };
+    };
+
     services.zfs = {
       autoScrub.enable = true;
       autoSnapshot.enable = true;
+
+      zed = lib.mkIf config.host.storage.notifications.enable {
+        # this option is broken we are just going to disable it
+        enableMail = false;
+
+        settings = {
+          ZED_DEBUG_LOG = "/tmp/zed.debug.log";
+          ZED_EMAIL_ADDR = [config.host.storage.notifications.to];
+          ZED_EMAIL_PROG = "${pkgs.msmtp}/bin/msmtp";
+          ZED_EMAIL_OPTS = "@ADDRESS@";
+
+          ZED_NOTIFY_INTERVAL_SECS = 3600;
+          ZED_NOTIFY_VERBOSE = true;
+
+          ZED_USE_ENCLOSURE_LEDS = true;
+          ZED_SCRUB_AFTER_RESILVER = true;
+        };
+      };
     };
 
     disko.devices = {
