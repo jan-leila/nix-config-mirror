@@ -22,8 +22,8 @@ in {
             directories = [
               {
                 directory = tailscale_data_directory;
-                user = "jellyfin";
-                group = "jellyfin";
+                user = "root";
+                group = "root";
               }
             ];
           };
