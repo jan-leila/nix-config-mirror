@@ -12,6 +12,7 @@
     ./impermanence.nix
     ./disko.nix
     ./ollama.nix
+    ./tailscale.nix
     ./server
   ];
 
