@@ -1,10 +1,19 @@
-{...}: {
+{
+  inputs,
+  config,
+  ...
+}: {
   imports = [
     ./monitors.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
 
+  sops.secrets = {
+    "wireguard-keys/tailscale-authkey/twilight" = {
+      sopsFile = "${inputs.secrets}/wireguard-keys.yaml";
+    };
+  };
   host = {
     users = {
       leyla = {
@@ -22,16 +31,22 @@
     };
   };
 
-  services.ollama = {
-    enable = true;
+  services = {
+    ollama = {
+      enable = true;
 
-    loadModels = [
-      "deepseek-coder:6.7b"
-      "deepseek-r1:8b"
-      "deepseek-r1:32b"
-    ];
+      loadModels = [
+        "deepseek-coder:6.7b"
+        "deepseek-r1:8b"
+        "deepseek-r1:32b"
+      ];
+    };
+
+    tailscale = {
+      enable = true;
+      authKeyFile = config.sops.secrets."wireguard-keys/tailscale-authkey/twilight".path;
+    };
   };
-
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play

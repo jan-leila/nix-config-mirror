@@ -1,5 +1,16 @@
 # server nas
-{pkgs, ...}: {
+{
+  inputs,
+  config,
+  pkgs,
+  ...
+}: {
+  sops.secrets = {
+    "wireguard-keys/tailscale-authkey/defiant" = {
+      sopsFile = "${inputs.secrets}/wireguard-keys.yaml";
+    };
+  };
+
   host = {
     users = {
       leyla = {
@@ -135,6 +146,10 @@
         "deepseek-r1:32b"
         "deepseek-r1:70b"
       ];
+    };
+    tailscale = {
+      enable = true;
+      authKeyFile = config.sops.secrets."wireguard-keys/tailscale-authkey/defiant".path;
     };
   };
 

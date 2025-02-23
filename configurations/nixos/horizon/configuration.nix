@@ -1,4 +1,5 @@
 {
+  config,
   inputs,
   pkgs,
   ...
@@ -36,6 +37,15 @@
 
   programs.adb.enable = true;
 
+  sops.secrets = {
+    "wireguard-keys/tailscale-authkey/horizon" = {
+      sopsFile = "${inputs.secrets}/wireguard-keys.yaml";
+    };
+    # "wireguard-keys/proton/horizon" = {
+    #   sopsFile = "${inputs.secrets}/wireguard-keys.yaml";
+    # };
+  };
+
   services = {
     # sudo fprintd-enroll
     fprintd = {
@@ -49,6 +59,42 @@
         "deepseek-r1:1.5b"
       ];
     };
+    tailscale = {
+      enable = true;
+      authKeyFile = config.sops.secrets."wireguard-keys/tailscale-authkey/horizon".path;
+    };
+  };
+
+  networking = {
+    # wg-quick.interfaces = {
+    #   proton = {
+    #     # IP address of this machine in the *tunnel network*
+    #     address = ["10.2.0.1/32"];
+
+    #     listenPort = 51820;
+
+    #     privateKeyFile = config.sops.secrets."wireguard-keys/proton/horizon".path;
+
+    #     peers = [
+    #       {
+    #         publicKey = "Yu2fgynXUAASCkkrXWj76LRriFxKMTQq+zjTzyOKG1Q=";
+    #         allowedIPs = ["0.0.0.0/0"];
+    #         endpoint = "84.17.63.8:51820";
+    #         persistentKeepalive = 25;
+    #       }
+    #       {
+    #         publicKey = "OIPOmEDCJfuvTJ0dugMtY5L14gVpfpDdY3suniY5h3Y=";
+    #         allowedIPs = ["0.0.0.0/0"];
+    #         endpoint = "68.169.42.242:51820";
+    #         persistentKeepalive = 25;
+    #       }
+    #       {
+    #         publicKey = "uvEa3sdmi5d/OxozjecVIGQHgw4H42mNIX/QOulwDhs=";
+    #         allowedIPs = ["0.0.0.0/0"];
+    #       }
+    #     ];
+    #   };
+    # };
   };
 
   # networking.extraHosts = ''

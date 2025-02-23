@@ -114,11 +114,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1740265252,
-        "narHash": "sha256-+LFsCsIUF/pJWL9S21m5NLcK5bgwRB4MwfV0Iu7tggY=",
+        "lastModified": 1740318342,
+        "narHash": "sha256-fjr9+3Iru6O5qE+2oERQkabqAUXx4awm0+i2MBcta1U=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "fb568d75cf6c81f30d49eeb73787e9b56454ba16",
+        "rev": "b5ab2c7fdaa807cf425066ab7cd34b073946b1ca",
         "type": "github"
       },
       "original": {
@@ -171,11 +171,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1740188781,
-        "narHash": "sha256-3FDg6k9kQXq5M6ZHc2f9KsPydvWBtqacU9lWA7nIFYI=",
+        "lastModified": 1740275623,
+        "narHash": "sha256-LQ9hq3hKwWqm+dzBhgsIkr2KO6Bb0aU+yO/TtI7hXXo=",
         "owner": "nix-community",
         "repo": "nix-vscode-extensions",
-        "rev": "ba52a14c907e0cece9734e0ff59c3c742b6b1075",
+        "rev": "35ff5dce04469e7b4e56a9d997e5201bfce52ae3",
         "type": "github"
       },
       "original": {
@@ -202,11 +202,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1739866667,
-        "narHash": "sha256-EO1ygNKZlsAC9avfcwHkKGMsmipUk1Uc0TbrEZpkn64=",
+        "lastModified": 1740126099,
+        "narHash": "sha256-ozoOtE2hGsqh4XkTJFsrTkNxkRgShxpQxDynaPZUGxk=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "73cf49b8ad837ade2de76f87eb53fc85ed5d4680",
+        "rev": "32fb99ba93fea2798be0e997ea331dd78167f814",
         "type": "github"
       },
       "original": {
@@ -234,11 +234,11 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1740267388,
-        "narHash": "sha256-JCgjNQMrlzf8a0YAqRNGliGmgv6afnc0OTOD6Eg0RZ0=",
+        "lastModified": 1740328351,
+        "narHash": "sha256-oX+XYRclxVYgLy5NX9UR7XKixaH5jJQuQhR7Of/ZtTk=",
         "ref": "refs/heads/main",
-        "rev": "f5af565aee98df0a78056c49c85cda640ce290fd",
-        "revCount": 10,
+        "rev": "52bb4eadd620757e6a943d335e31458ffa2ada2b",
+        "revCount": 11,
         "type": "git",
         "url": "ssh://git@git.jan-leila.com/jan-leila/nix-config-secrets.git"
       },
