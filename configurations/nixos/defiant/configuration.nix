@@ -118,6 +118,16 @@
       enable = true;
       subdomain = "drive";
     };
+    sync = {
+      enable = true;
+      folders = {
+        leyla = {
+          documents.enable = true;
+          calendar.enable = true;
+          notes.enable = true;
+        };
+      };
+    };
   };
   networking = {
     hostId = "c51763d6";
@@ -149,7 +159,7 @@
     };
 
     ollama = {
-      enable = true;
+      enable = false;
 
       loadModels = [
         "deepseek-coder:6.7b"
@@ -161,6 +171,15 @@
     tailscale = {
       enable = true;
       authKeyFile = config.sops.secrets."wireguard-keys/tailscale-authkey/defiant".path;
+      useRoutingFeatures = "server";
+      extraUpFlags = [
+        "--advertise-exit-node"
+        "--advertise-routes=192.168.1.0/24"
+      ];
+      extraSetFlags = [
+        "--advertise-exit-node"
+        "--advertise-routes=192.168.1.0/24"
+      ];
     };
   };
 

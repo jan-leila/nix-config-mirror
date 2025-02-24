@@ -29,6 +29,16 @@
       openRGB.enable = true;
       graphicsAcceleration.enable = true;
     };
+    sync = {
+      enable = true;
+      folders = {
+        leyla = {
+          documents.enable = true;
+          calendar.enable = true;
+          notes.enable = true;
+        };
+      };
+    };
   };
 
   services = {
@@ -45,6 +55,11 @@
     tailscale = {
       enable = true;
       authKeyFile = config.sops.secrets."wireguard-keys/tailscale-authkey/twilight".path;
+      useRoutingFeatures = "both";
+      extraUpFlags = ["--advertise-exit-node"];
+      extraSetFlags = [
+        "--advertise-exit-node"
+      ];
     };
   };
   programs.steam = {

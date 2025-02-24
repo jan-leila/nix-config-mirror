@@ -35,56 +35,87 @@ in {
     };
   };
 
-  config = {
-    systemd = lib.mkIf config.services.syncthing.enable {
-      tmpfiles.rules = [
-        "d ${mountDir} 755 syncthing syncthing -"
-        "d ${config.services.syncthing.dataDir} 755 syncthing syncthing -"
-        "d ${config.services.syncthing.configDir} 755 syncthing syncthing -"
-      ];
-    };
-    services.syncthing = {
-      enable = config.host.sync.enable;
-      user = "syncthing";
-      group = "syncthing";
-      dataDir = "${mountDir}/default";
-      configDir = "/etc/syncthing";
-      overrideDevices = true;
-      overrideFolders = true;
-      settings = {
-        devices = {
-          ceder = {
-            id = "MGXUJBS-7AENXHB-7YQRNWG-QILKEJD-5462U2E-WAQW4R4-I2TVK5H-SMK6LAA";
-          };
-          coven = {
-            id = "QGU7NN6-OMXTWVA-YCZ73S5-2O7ECTS-MUCTN4M-YH6WLEL-U4U577I-7PBNCA5";
-          };
-        };
-        folders = lib.mkMerge [
-          config.host.sync.folders.extraFolders
-          (lib.mkIf config.host.sync.folders.leyla.documents.enable {
-            "documents" = {
-              id = "hvrj0-9bm1p";
-              path = "/mnt/sync/leyla/documents";
-              devices = ["ceder" "coven"];
-            };
-          })
-          (lib.mkIf config.host.sync.folders.leyla.calendar.enable {
-            "calendar" = {
-              id = "8oatl-1rv6w";
-              path = "/mnt/sync/leyla/calendar";
-              devices = ["ceder" "coven"];
-            };
-          })
-          (lib.mkIf config.host.sync.folders.leyla.notes.enable {
-            "notes" = {
-              id = "dwbuv-zffnf";
-              path = "/mnt/sync/leyla/notes";
-              devices = ["ceder" "coven"];
-            };
-          })
+  config = lib.mkMerge [
+    {
+      systemd = lib.mkIf config.services.syncthing.enable {
+        tmpfiles.rules = [
+          "d ${mountDir} 755 syncthing syncthing -"
+          "d ${config.services.syncthing.dataDir} 755 syncthing syncthing -"
+          "d ${config.services.syncthing.configDir} 755 syncthing syncthing -"
         ];
       };
-    };
-  };
+    }
+    (lib.mkIf config.host.sync.enable (lib.mkMerge [
+      {
+        services.syncthing = {
+          enable = true;
+          user = "syncthing";
+          group = "syncthing";
+          dataDir = "${mountDir}/default";
+          configDir = "/etc/syncthing";
+          overrideDevices = true;
+          overrideFolders = true;
+          settings = {
+            devices = {
+              ceder = {
+                id = "MGXUJBS-7AENXHB-7YQRNWG-QILKEJD-5462U2E-WAQW4R4-I2TVK5H-SMK6LAA";
+              };
+              coven = {
+                id = "QGU7NN6-OMXTWVA-YCZ73S5-2O7ECTS-MUCTN4M-YH6WLEL-U4U577I-7PBNCA5";
+              };
+              defiant = lib.mkIf (config.networking.hostName != "defiant") {
+                id = "TQGGO5F-PUXQYVV-LVVM7PR-Q4TKI6T-NR576PH-CFTVB4O-RP5LL6C-WKQMXQR";
+              };
+              twilight = lib.mkIf (config.networking.hostName != "twilight") {
+                id = "UDIYL7V-OAZ2BI3-EJRAWFB-GZYVDWR-JNUYW3F-FFQ35MU-XBTGWEF-QD6K6QN";
+              };
+              horizon = lib.mkIf (config.networking.hostName != "horizon") {
+                id = "OGPAEU6-5UR56VL-SP7YC4Y-IMVCRTO-XFD4CYN-Z6T5TZO-PFZNAT6-4MKWPQS";
+              };
+            };
+            folders = lib.mkMerge [
+              config.host.sync.folders.extraFolders
+              (lib.mkIf config.host.sync.folders.leyla.documents.enable {
+                "documents" = {
+                  id = "hvrj0-9bm1p";
+                  path = "${mountDir}/leyla/documents";
+                  devices = ["ceder" "coven"];
+                };
+              })
+              (lib.mkIf config.host.sync.folders.leyla.calendar.enable {
+                "calendar" = {
+                  id = "8oatl-1rv6w";
+                  path = "${mountDir}/leyla/calendar";
+                  devices = ["ceder" "coven"];
+                };
+              })
+              (lib.mkIf config.host.sync.folders.leyla.notes.enable {
+                "notes" = {
+                  id = "dwbuv-zffnf";
+                  path = "${mountDir}/leyla/notes";
+                  devices = ["ceder" "coven"];
+                };
+              })
+            ];
+          };
+        };
+      }
+
+      (lib.mkIf config.host.impermanence.enable {
+        environment.persistence = {
+          "/persist/system/root" = {
+            enable = true;
+            hideMounts = true;
+            directories = [
+              {
+                directory = mountDir;
+                user = "syncthing";
+                group = "syncthing";
+              }
+            ];
+          };
+        };
+      })
+    ]))
+  ];
 }

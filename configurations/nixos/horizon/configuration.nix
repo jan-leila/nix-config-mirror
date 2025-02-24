@@ -62,6 +62,7 @@
     tailscale = {
       enable = true;
       authKeyFile = config.sops.secrets."wireguard-keys/tailscale-authkey/horizon".path;
+      useRoutingFeatures = "client";
     };
   };
 
