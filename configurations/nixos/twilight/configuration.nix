@@ -45,6 +45,7 @@
     tailscale = {
       enable = true;
       authKeyFile = config.sops.secrets."wireguard-keys/tailscale-authkey/twilight".path;
+      useRoutingFeatures = "both";
     };
   };
   programs.steam = {
