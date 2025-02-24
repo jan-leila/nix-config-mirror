@@ -118,6 +118,16 @@
       enable = true;
       subdomain = "drive";
     };
+    sync = {
+      enable = true;
+      folders = {
+        leyla = {
+          documents.enable = true;
+          calendar.enable = true;
+          notes.enable = true;
+        };
+      };
+    };
   };
   networking = {
     hostId = "c51763d6";

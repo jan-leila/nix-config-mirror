@@ -29,6 +29,16 @@
       openRGB.enable = true;
       graphicsAcceleration.enable = true;
     };
+    sync = {
+      enable = true;
+      folders = {
+        leyla = {
+          documents.enable = true;
+          calendar.enable = true;
+          notes.enable = true;
+        };
+      };
+    };
   };
 
   services = {
