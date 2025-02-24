@@ -162,6 +162,7 @@
       enable = true;
       authKeyFile = config.sops.secrets."wireguard-keys/tailscale-authkey/defiant".path;
       useRoutingFeatures = "server";
+      extraUpFlags = ["--advertise-exit-node"];
     };
   };
 
