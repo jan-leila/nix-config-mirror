@@ -42,7 +42,6 @@ nix multi user, multi system, configuration with `sops` secret management, `home
 ## Research topics
 - Look into this for auto rotating sops keys `https://technotim.live/posts/rotate-sops-encryption-keys/`
 - Look into this for flake templates https://nix.dev/manual/nix/2.22/command-ref/new-cli/nix3-flake-init
-- Look into this for headscale https://carlosvaz.com/posts/setting-up-headscale-on-nixos/
 - https://nixos-and-flakes.thiscute.world/
 
 # Tasks:
@@ -61,7 +60,7 @@ nix multi user, multi system, configuration with `sops` secret management, `home
 - wake on LAN for updates
 - ISO target that contains authorized keys for nixos-anywhere https://github.com/diegofariasm/yggdrasil/blob/4acc43ebc7bcbf2e41376d14268e382007e94d78/hosts/bootstrap/default.nix
 - Immich
-- zfs encryption FIDO2 2fa
+- zfs encryption FIDO2 2fa (look into shavee)
 - ISO installer - https://github.com/nix-community/nixos-generators
 - Secure Boot - https://github.com/nix-community/lanzaboote
 - SMART test with email results
