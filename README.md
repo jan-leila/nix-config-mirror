@@ -64,3 +64,4 @@ nix multi user, multi system, configuration with `sops` secret management, `home
 - zfs encryption FIDO2 2fa
 - ISO installer - https://github.com/nix-community/nixos-generators
 - Secure Boot - https://github.com/nix-community/lanzaboote
+- SMART test with email results
