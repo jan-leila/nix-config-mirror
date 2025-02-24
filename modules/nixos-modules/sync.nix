@@ -73,30 +73,39 @@ in {
                 id = "OGPAEU6-5UR56VL-SP7YC4Y-IMVCRTO-XFD4CYN-Z6T5TZO-PFZNAT6-4MKWPQS";
               };
             };
-            folders = lib.mkMerge [
-              config.host.sync.folders.extraFolders
-              (lib.mkIf config.host.sync.folders.leyla.documents.enable {
-                "documents" = {
-                  id = "hvrj0-9bm1p";
-                  path = "${mountDir}/leyla/documents";
-                  devices = ["ceder" "coven"];
-                };
-              })
-              (lib.mkIf config.host.sync.folders.leyla.calendar.enable {
-                "calendar" = {
-                  id = "8oatl-1rv6w";
-                  path = "${mountDir}/leyla/calendar";
-                  devices = ["ceder" "coven"];
-                };
-              })
-              (lib.mkIf config.host.sync.folders.leyla.notes.enable {
-                "notes" = {
-                  id = "dwbuv-zffnf";
-                  path = "${mountDir}/leyla/notes";
-                  devices = ["ceder" "coven"];
-                };
-              })
-            ];
+            folders = let
+              allDevices = [
+                "ceder"
+                "coven"
+                (lib.mkIf (config.networking.hostName != "defiant") "defiant")
+                (lib.mkIf (config.networking.hostName != "twilight") "twilight")
+                (lib.mkIf (config.networking.hostName != "horizon") "horizon")
+              ];
+            in
+              lib.mkMerge [
+                config.host.sync.folders.extraFolders
+                (lib.mkIf config.host.sync.folders.leyla.documents.enable {
+                  "documents" = {
+                    id = "hvrj0-9bm1p";
+                    path = "${mountDir}/leyla/documents";
+                    devices = allDevices;
+                  };
+                })
+                (lib.mkIf config.host.sync.folders.leyla.calendar.enable {
+                  "calendar" = {
+                    id = "8oatl-1rv6w";
+                    path = "${mountDir}/leyla/calendar";
+                    devices = allDevices;
+                  };
+                })
+                (lib.mkIf config.host.sync.folders.leyla.notes.enable {
+                  "notes" = {
+                    id = "dwbuv-zffnf";
+                    path = "${mountDir}/leyla/notes";
+                    devices = allDevices;
+                  };
+                })
+              ];
           };
         };
       }
