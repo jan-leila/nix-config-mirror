@@ -56,6 +56,13 @@ in {
         };
       };
 
+      # TODO: we need to have a tailscale container here and use that to define the network_mode of pihole container
+      # TS_ACCEPT_DNS = "false";
+      # TS_AUTHKEY = ${something from a secrets file???}
+      # TS_HOSTNAME = "pihole";
+      # TS_USERSPACE = "false";
+      # TODO: volumes for tailnet container with impermanence config
+      # https://tailscale.com/kb/1282/docker
       virtualisation = {
         oci-containers = {
           containers = {
