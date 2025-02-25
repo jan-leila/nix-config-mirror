@@ -10,13 +10,13 @@ in {
     folders = {
       share = {
         enable = lib.mkEnableOption "should the share folder by synced";
+        calendar = {
+          enable = lib.mkEnableOption "should the calendar folder be synced";
+        };
       };
       leyla = {
         documents = {
           enable = lib.mkEnableOption "should the documents folder be synced";
-        };
-        calendar = {
-          enable = lib.mkEnableOption "should the calendar folder be synced";
         };
         notes = {
           enable = lib.mkEnableOption "should the notes folder by synced";
@@ -86,26 +86,6 @@ in {
               defiant = lib.mkIf (config.networking.hostName != "defiant") "defiant";
               twilight = lib.mkIf (config.networking.hostName != "twilight") "twilight";
               horizon = lib.mkIf (config.networking.hostName != "horizon") "horizon";
-              allDevices = [
-                defiant
-                ceder
-                coven
-                twilight
-                horizon
-                shale
-              ];
-              leylaDevices = [
-                defiant
-                ceder
-                coven
-                twilight
-                horizon
-              ];
-              superNoteTablets = [
-                defiant
-                ceder
-                shale
-              ];
             in
               lib.mkMerge [
                 config.host.sync.folders.extraFolders
@@ -113,28 +93,48 @@ in {
                   "documents" = {
                     id = "hvrj0-9bm1p";
                     path = "${mountDir}/leyla/documents";
-                    devices = leylaDevices;
+                    devices = [
+                      defiant
+                      ceder
+                      coven
+                      twilight
+                      horizon
+                    ];
                   };
                 })
-                (lib.mkIf config.host.sync.folders.leyla.calendar.enable {
+                (lib.mkIf config.host.sync.folders.share.calendar.enable {
                   "calendar" = {
                     id = "8oatl-1rv6w";
-                    path = "${mountDir}/leyla/calendar";
-                    devices = superNoteTablets;
+                    path = "${mountDir}/share/calendar";
+                    devices = [
+                      defiant
+                      ceder
+                      shale
+                    ];
                   };
                 })
                 (lib.mkIf config.host.sync.folders.leyla.notes.enable {
                   "notes" = {
                     id = "dwbuv-zffnf";
                     path = "${mountDir}/leyla/notes";
-                    devices = superNoteTablets;
+                    devices = [
+                      defiant
+                      ceder
+                    ];
                   };
                 })
                 (lib.mkIf config.host.sync.folders.share.enable {
                   "share" = {
                     id = "73ot0-cxmkx";
                     path = "${mountDir}/default/share";
-                    devices = allDevices;
+                    devices = [
+                      defiant
+                      ceder
+                      coven
+                      twilight
+                      horizon
+                      shale
+                    ];
                   };
                 })
               ];

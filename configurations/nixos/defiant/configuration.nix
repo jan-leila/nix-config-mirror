@@ -121,10 +121,12 @@
     sync = {
       enable = true;
       folders = {
-        share.enable = true;
+        share = {
+          enable = true;
+          calendar.enable = true;
+        };
         leyla = {
           documents.enable = true;
-          calendar.enable = true;
           notes.enable = true;
         };
       };

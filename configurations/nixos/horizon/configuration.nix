@@ -22,8 +22,6 @@
       folders = {
         leyla = {
           documents.enable = true;
-          calendar.enable = true;
-          notes.enable = true;
         };
       };
     };
