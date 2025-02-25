@@ -1,6 +1,5 @@
 {
   lib,
-  pkgs,
   config,
   ...
 }: {
@@ -26,19 +25,19 @@
   config = lib.mkIf config.host.podman.enable {
     systemd = {
       services = {
-        "podman-network-macvlan" = {
-          path = [pkgs.podman];
-          serviceConfig = {
-            Type = "oneshot";
-            RemainAfterExit = true;
-            ExecStop = "podman network rm -f macvlan";
-          };
-          script = ''
-            podman network inspect macvlan || podman network create --driver macvlan --subnet ${config.host.podman.macvlan.subnet} --gateway ${config.host.podman.macvlan.gateway} --opt parent=${config.host.podman.macvlan.networkInterface} macvlan
-          '';
-          partOf = ["podman-compose-root.target"];
-          wantedBy = ["podman-compose-root.target"];
-        };
+        # "podman-network-macvlan" = {
+        #   path = [pkgs.podman];
+        #   serviceConfig = {
+        #     Type = "oneshot";
+        #     RemainAfterExit = true;
+        #     ExecStop = "podman network rm -f macvlan";
+        #   };
+        #   script = ''
+        #     podman network inspect macvlan || podman network create --driver macvlan --subnet ${config.host.podman.macvlan.subnet} --gateway ${config.host.podman.macvlan.gateway} --opt parent=${config.host.podman.macvlan.networkInterface} macvlan
+        #   '';
+        #   partOf = ["podman-compose-root.target"];
+        #   wantedBy = ["podman-compose-root.target"];
+        # };
       };
       # disable computer sleeping
       targets = {

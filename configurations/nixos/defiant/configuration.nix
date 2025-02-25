@@ -87,13 +87,13 @@
         };
       };
     };
-    podman = {
-      macvlan = {
-        subnet = "192.168.1.0/24";
-        gateway = "192.168.1.1";
-        networkInterface = "bond0";
-      };
-    };
+    # podman = {
+    #   macvlan = {
+    #     subnet = "192.168.1.0/24";
+    #     gateway = "192.168.1.1";
+    #     networkInterface = "bond0";
+    #   };
+    # };
     jellyfin = {
       enable = true;
       subdomain = "media";
@@ -112,7 +112,7 @@
     };
     pihole = {
       enable = true;
-      ip = "192.168.1.201";
+      # ip = "192.168.1.201";
     };
     nextcloud = {
       enable = true;
@@ -178,10 +178,12 @@
       extraUpFlags = [
         "--advertise-exit-node"
         "--advertise-routes=192.168.1.0/24"
+        "--accept-dns=false"
       ];
       extraSetFlags = [
         "--advertise-exit-node"
         "--advertise-routes=192.168.1.0/24"
+        "--accept-dns=false"
       ];
     };
   };
