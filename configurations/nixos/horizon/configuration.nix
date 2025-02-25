@@ -20,6 +20,7 @@
     sync = {
       enable = true;
       folders = {
+        share.enable = true;
         leyla = {
           documents.enable = true;
         };

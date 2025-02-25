@@ -105,7 +105,7 @@ in {
                 (lib.mkIf config.host.sync.folders.share.calendar.enable {
                   "calendar" = {
                     id = "8oatl-1rv6w";
-                    path = "${mountDir}/share/calendar";
+                    path = "${mountDir}/default/calendar";
                     devices = [
                       defiant
                       ceder
