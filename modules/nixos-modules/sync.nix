@@ -87,12 +87,16 @@ in {
               twilight = lib.mkIf (config.networking.hostName != "twilight") "twilight";
               horizon = lib.mkIf (config.networking.hostName != "horizon") "horizon";
               leylaDevices = [
+                defiant
                 ceder
                 coven
-                shale
-                defiant
                 twilight
                 horizon
+              ];
+              superNoteTablets = [
+                defiant
+                ceder
+                shale
               ];
             in
               lib.mkMerge [
