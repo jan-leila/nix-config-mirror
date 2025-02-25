@@ -86,6 +86,14 @@ in {
               defiant = lib.mkIf (config.networking.hostName != "defiant") "defiant";
               twilight = lib.mkIf (config.networking.hostName != "twilight") "twilight";
               horizon = lib.mkIf (config.networking.hostName != "horizon") "horizon";
+              allDevices = [
+                defiant
+                ceder
+                coven
+                twilight
+                horizon
+                shale
+              ];
               leylaDevices = [
                 defiant
                 ceder
@@ -112,25 +120,21 @@ in {
                   "calendar" = {
                     id = "8oatl-1rv6w";
                     path = "${mountDir}/leyla/calendar";
-                    devices = leylaDevices;
+                    devices = superNoteTablets;
                   };
                 })
                 (lib.mkIf config.host.sync.folders.leyla.notes.enable {
                   "notes" = {
                     id = "dwbuv-zffnf";
                     path = "${mountDir}/leyla/notes";
-                    devices = leylaDevices;
+                    devices = superNoteTablets;
                   };
                 })
                 (lib.mkIf config.host.sync.folders.share.enable {
                   "share" = {
                     id = "73ot0-cxmkx";
                     path = "${mountDir}/default/share";
-                    devices = [
-                      ceder
-                      shale
-                      defiant
-                    ];
+                    devices = allDevices;
                   };
                 })
               ];
