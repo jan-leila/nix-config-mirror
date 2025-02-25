@@ -39,8 +39,8 @@ in {
     {
       systemd = lib.mkIf config.services.syncthing.enable {
         tmpfiles.rules = [
-          "d ${mountDir} 755 syncthing syncthing -"
-          "d ${config.services.syncthing.dataDir} 755 syncthing syncthing -"
+          "d ${mountDir} 2755 syncthing syncthing -"
+          "d ${config.services.syncthing.dataDir} 775 syncthing syncthing -"
           "d ${config.services.syncthing.configDir} 755 syncthing syncthing -"
         ];
       };
