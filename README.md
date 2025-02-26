@@ -65,3 +65,4 @@ nix multi user, multi system, configuration with `sops` secret management, `home
 - ISO installer - https://github.com/nix-community/nixos-generators
 - Secure Boot - https://github.com/nix-community/lanzaboote
 - SMART test with email results
+- Create Tor guard/relay server
