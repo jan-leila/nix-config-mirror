@@ -7,6 +7,23 @@
 in {
   options.host.sync = {
     enable = lib.mkEnableOption "should sync thing be enabled on this device";
+    devices = {
+      ceder = {
+        autoAcceptFolders = lib.mkEnableOption "should sync thing auto accept folders from ceder";
+      };
+      coven = {
+        autoAcceptFolders = lib.mkEnableOption "should sync thing auto accept folders from coven";
+      };
+      twilight = {
+        autoAcceptFolders = lib.mkEnableOption "should sync thing auto accept folders from twilight";
+      };
+      horizon = {
+        autoAcceptFolders = lib.mkEnableOption "should sync thing auto accept folders from horizon";
+      };
+      shale = {
+        autoAcceptFolders = lib.mkEnableOption "should sync thing auto accept folders from shale";
+      };
+    };
     folders = {
       share = {
         enable = lib.mkEnableOption "should the share folder by synced";
@@ -62,21 +79,26 @@ in {
             devices = {
               ceder = {
                 id = "MGXUJBS-7AENXHB-7YQRNWG-QILKEJD-5462U2E-WAQW4R4-I2TVK5H-SMK6LAA";
+                autoAcceptFolders = config.host.sync.devices.ceder.autoAcceptFolders;
               };
               coven = {
                 id = "QGU7NN6-OMXTWVA-YCZ73S5-2O7ECTS-MUCTN4M-YH6WLEL-U4U577I-7PBNCA5";
+                autoAcceptFolders = config.host.sync.devices.coven.autoAcceptFolders;
               };
               defiant = lib.mkIf (config.networking.hostName != "defiant") {
                 id = "TQGGO5F-PUXQYVV-LVVM7PR-Q4TKI6T-NR576PH-CFTVB4O-RP5LL6C-WKQMXQR";
               };
               twilight = lib.mkIf (config.networking.hostName != "twilight") {
                 id = "UDIYL7V-OAZ2BI3-EJRAWFB-GZYVDWR-JNUYW3F-FFQ35MU-XBTGWEF-QD6K6QN";
+                autoAcceptFolders = config.host.sync.devices.twilight.autoAcceptFolders;
               };
               horizon = lib.mkIf (config.networking.hostName != "horizon") {
                 id = "OGPAEU6-5UR56VL-SP7YC4Y-IMVCRTO-XFD4CYN-Z6T5TZO-PFZNAT6-4MKWPQS";
+                autoAcceptFolders = config.host.sync.devices.horizon.autoAcceptFolders;
               };
               shale = {
                 id = "AOAXEVD-QJ2IVRA-6G44Q7Q-TGUPXU2-FWWKOBH-DPKWC5N-LBAEHWJ-7EQF4AM";
+                autoAcceptFolders = config.host.sync.devices.shale.autoAcceptFolders;
               };
             };
             folders = let
