@@ -67,3 +67,4 @@ nix multi user, multi system, configuration with `sops` secret management, `home
 - Secure Boot - https://github.com/nix-community/lanzaboote
 - SMART test with email results
 - Create Tor guard/relay server
+- remote distributed builds - https://nix.dev/tutorials/nixos/distributed-builds-setup.html
