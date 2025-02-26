@@ -42,7 +42,10 @@ in {
         type = lib.types.str;
         description = "what user is the email going to be set from";
       };
-      tokenFile = lib.mkOption {}; # TODO: make this a secrets file
+      tokenFile = lib.mkOption {
+        type = lib.types.str;
+        description = "file containing the password to be used by msmtp for notifications";
+      };
     };
     pool = {
       vdevs = lib.mkOption {
