@@ -50,6 +50,7 @@ nix multi user, multi system, configuration with `sops` secret management, `home
 - monitor configuration in `~/.config/monitors.xml` should be sym linked to `/run/gdm/.config/monitors.xml` (https://www.reddit.com/r/NixOS/comments/u09cz9/home_manager_create_my_own_symlinks_automatically/)
 - syncthing folders should just be enabled per devices and then combined with "extraDevices" to give final folder configurations
 - syncthing folder passwords
+- move fail2ban configs out of fail2ban.nix and into configs for their respective services
 ## New Features
 - offline access for nfs mounts (overlay with rsync might be a good option here? https://www.spinics.net/lists/linux-unionfs/msg07105.html note about nfs4 and overlay fs)
 - Flake templates - we need to add these to some kind of local registry??? `nix flake show templates` - https://nix.dev/manual/nix/2.18/command-ref/new-cli/nix3-flake-init
