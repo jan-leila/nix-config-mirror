@@ -49,7 +49,7 @@
             )
           );
         };
-        networking.firewall.allowedTCPPorts = [
+        networking.firewall.interfaces.${config.services.tailscale.interfaceName}.allowedTCPPorts = [
           config.host.network_storage.nfs.port
         ];
       }
