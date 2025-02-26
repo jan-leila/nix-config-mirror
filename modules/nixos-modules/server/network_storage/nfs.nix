@@ -39,7 +39,7 @@
           enable = true;
           exports = lib.strings.concatLines (
             builtins.map (
-              directory: "${directory._directory} 192.168.1.0/22(rw,sync,no_subtree_check,crossmnt)"
+              directory: "${directory._directory} 100.64.0.0/10(rw,sync,no_subtree_check,crossmnt)"
             )
             (
               builtins.filter (
