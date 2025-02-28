@@ -86,6 +86,9 @@ in {
               stylelint.vscode-stylelint
               tauri-apps.tauri-vscode
 
+              # go extensions
+              golang.go
+
               # astro blog extensions
               astro-build.astro-vscode
               unifiedjs.vscode-mdx
