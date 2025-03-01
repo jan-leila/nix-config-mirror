@@ -5,7 +5,7 @@
       settings = {
         "org/gnome/desktop/interface".color-scheme = "prefer-dark";
 
-        "org/gnome/desktop/wm/preferences".button-layout = ":close,minimize,maximize";
+        "org/gnome/desktop/wm/preferences".button-layout = ":minimize,maximize,close";
 
         "org/gnome/shell" = {
           disable-user-extensions = false; # enables user extensions
