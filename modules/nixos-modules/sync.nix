@@ -4,6 +4,7 @@
   ...
 }: let
   mountDir = "/mnt/sync";
+  configDir = "/etc/syncthing";
 in {
   options.host.sync = {
     enable = lib.mkEnableOption "should sync thing be enabled on this device";
@@ -72,7 +73,7 @@ in {
           user = "syncthing";
           group = "syncthing";
           dataDir = "${mountDir}/default";
-          configDir = "/etc/syncthing";
+          configDir = configDir;
           overrideDevices = true;
           overrideFolders = true;
           settings = {
@@ -165,6 +166,12 @@ in {
       }
 
       (lib.mkIf config.host.impermanence.enable {
+        assertions = [
+          {
+            assertion = config.services.syncthing.configDir == configDir;
+            message = "syncthing config dir does not match persistence";
+          }
+        ];
         environment.persistence = {
           "/persist/system/root" = {
             enable = true;
@@ -172,6 +179,11 @@ in {
             directories = [
               {
                 directory = mountDir;
+                user = "syncthing";
+                group = "syncthing";
+              }
+              {
+                directory = configDir;
                 user = "syncthing";
                 group = "syncthing";
               }
