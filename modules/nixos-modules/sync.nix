@@ -87,7 +87,7 @@ in {
                 autoAcceptFolders = config.host.sync.devices.coven.autoAcceptFolders;
               };
               defiant = lib.mkIf (config.networking.hostName != "defiant") {
-                id = "TQGGO5F-PUXQYVV-LVVM7PR-Q4TKI6T-NR576PH-CFTVB4O-RP5LL6C-WKQMXQR";
+                id = "3R6E6Y4-2F7MF2I-IGB4WE6-A3SQSMV-LIBYSAM-2OXHHU2-KJ6CGIV-QNMCPAR";
               };
               twilight = lib.mkIf (config.networking.hostName != "twilight") {
                 id = "UDIYL7V-OAZ2BI3-EJRAWFB-GZYVDWR-JNUYW3F-FFQ35MU-XBTGWEF-QD6K6QN";
