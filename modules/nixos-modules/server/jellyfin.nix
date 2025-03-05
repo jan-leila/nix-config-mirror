@@ -16,15 +16,30 @@ in {
       description = "subdomain of base domain that jellyfin will be hosted at";
       default = "jellyfin";
     };
+    extraSubdomains = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      description = "ex subdomain of base domain that jellyfin will be hosted at";
+      default = [];
+    };
   };
 
   config = lib.mkIf config.host.jellyfin.enable (
     lib.mkMerge [
       {
         services.jellyfin.enable = true;
-        host.reverse_proxy.subdomains.${config.host.jellyfin.subdomain} = {
-          target = "http://localhost:${toString jellyfinPort}";
-        };
+        host.reverse_proxy.subdomains = lib.mkMerge ([
+            {
+              ${config.host.jellyfin.subdomain} = {
+                target = "http://localhost:${toString jellyfinPort}";
+              };
+            }
+          ]
+          ++ (builtins.map (subdomain: {
+              ${subdomain} = {
+                target = "http://localhost:${toString jellyfinPort}";
+              };
+            })
+            config.host.jellyfin.extraSubdomains));
         environment.systemPackages = [
           pkgs.jellyfin
           pkgs.jellyfin-web

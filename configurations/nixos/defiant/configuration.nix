@@ -97,6 +97,7 @@
     jellyfin = {
       enable = true;
       subdomain = "media";
+      extraSubdomains = ["jellyfin"];
     };
     forgejo = {
       enable = true;
