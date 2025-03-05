@@ -20,6 +20,10 @@ in {
           "10.0.0.0/8"
           "172.16.0.0/12"
           "192.168.0.0/16"
+
+          # tail scale tailnet
+          "100.64.0.0/10"
+          "fd7a:115c:a1e0::/48"
         ];
         bantime = "24h"; # Ban IPs for one day on the first ban
         bantime-increment = {
