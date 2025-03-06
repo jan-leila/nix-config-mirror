@@ -121,13 +121,6 @@
     };
     sync = {
       enable = true;
-      devices = {
-        ceder.autoAcceptFolders = true;
-        coven.autoAcceptFolders = true;
-        twilight.autoAcceptFolders = true;
-        horizon.autoAcceptFolders = true;
-        shale.autoAcceptFolders = true;
-      };
       folders = {
         share = {
           enable = true;

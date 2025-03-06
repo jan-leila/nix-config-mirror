@@ -19,11 +19,6 @@
     };
     sync = {
       enable = true;
-      devices = {
-        ceder.autoAcceptFolders = true;
-        coven.autoAcceptFolders = true;
-        twilight.autoAcceptFolders = true;
-      };
       folders = {
         share.enable = true;
         leyla = {
