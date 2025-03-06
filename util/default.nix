@@ -9,7 +9,7 @@
   sops-nix = inputs.sops-nix;
   disko = inputs.disko;
   impermanence = inputs.impermanence;
-  # lix-module = inputs.lix-module;
+  lix-module = inputs.lix-module;
 
   systems = [
     "aarch64-darwin"
@@ -76,7 +76,7 @@ in {
           impermanence.nixosModules.impermanence
           home-manager.nixosModules.home-manager
           disko.nixosModules.disko
-          # lix-module.nixosModules.default
+          lix-module.nixosModules.default
           ../modules/nixos-modules
           ../configurations/nixos/${host}
         ];

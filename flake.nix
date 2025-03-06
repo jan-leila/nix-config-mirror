@@ -5,11 +5,10 @@
     # base packages
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    # TODO: figure out why things fail to build with lix
-    # lix-module = {
-    #   url = "https://git.lix.systems/lix-project/nixos-module/archive/stable.tar.gz";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
+    lix-module = {
+      url = "https://git.lix.systems/lix-project/nixos-module/archive/stable.tar.gz";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # secret encryption
     sops-nix = {
