@@ -51,7 +51,7 @@
       enable = true;
     };
     ollama = {
-      enable = true;
+      enable = false;
 
       loadModels = [
         "deepseek-coder:1.3b"
