@@ -104,8 +104,8 @@
       enable = true;
       subdomain = "home";
     };
-    pihole = {
-      enable = true;
+    adguardhome = {
+      enable = false;
     };
     nextcloud = {
       enable = true;

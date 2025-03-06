@@ -102,19 +102,6 @@
           directories = [
             "/var/lib/nixos"
             "/var/lib/systemd/coredump"
-
-            # config.apps.pihole.directory.root
-
-            # config.apps.jellyfin.mediaDirectory
-            # config.services.jellyfin.configDir
-            # config.services.jellyfin.cacheDir
-            # config.services.jellyfin.dataDir
-
-            # "/var/hass" # config.users.users.hass.home
-            # "/var/postgresql" # config.users.users.postgresql.home
-            # "/var/forgejo" # config.users.users.forgejo.home
-            # "/var/nextcloud" # config.users.users.nextcloud.home
-            # "/var/headscale" # config.users.users.headscale.home
           ];
           files = [
             "/etc/machine-id"

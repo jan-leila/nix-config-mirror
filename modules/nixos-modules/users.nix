@@ -17,7 +17,7 @@
     eve = 1002;
     jellyfin = 2000;
     forgejo = 2002;
-    pihole = 2003;
+    adguardhome = 2003;
     hass = 2004;
     headscale = 2005;
     nextcloud = 2006;
@@ -32,7 +32,7 @@
     jellyfin_media = 2001;
     jellyfin = 2000;
     forgejo = 2002;
-    pihole = 2003;
+    adguardhome = 2003;
     hass = 2004;
     headscale = 2005;
     nextcloud = 2006;
@@ -123,10 +123,10 @@ in {
             group = config.users.users.forgejo.name;
           };
 
-          pihole = {
-            uid = lib.mkForce uids.pihole;
+          adguardhome = {
+            uid = lib.mkForce uids.adguardhome;
             isSystemUser = true;
-            group = config.users.users.pihole.name;
+            group = config.users.users.adguardhome.name;
           };
 
           hass = {
@@ -208,10 +208,10 @@ in {
             ];
           };
 
-          pihole = {
-            gid = lib.mkForce gids.pihole;
+          adguardhome = {
+            gid = lib.mkForce gids.adguardhome;
             members = [
-              users.pihole.name
+              users.adguardhome.name
               # leyla
             ];
           };

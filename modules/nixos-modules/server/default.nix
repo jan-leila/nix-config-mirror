@@ -9,7 +9,7 @@
     ./forgejo.nix
     ./searx.nix
     ./home-assistant.nix
-    ./pihole.nix
+    ./adguardhome.nix
     ./nextcloud.nix
   ];
 }
