@@ -35,12 +35,6 @@
   networking = {
     hostName = "defiant"; # Define your hostname.
     useNetworkd = true;
-    interfaces = {
-      bond0.useDHCP = lib.mkDefault true;
-      bonding_masters.useDHCP = lib.mkDefault true;
-      enol.useDHCP = lib.mkDefault true;
-      eno2.useDHCP = lib.mkDefault true;
-    };
   };
 
   systemd.network = {
@@ -60,33 +54,24 @@
     };
 
     networks = {
-      "30-enp4s0" = {
-        matchConfig.Name = "enp4s0";
+      "30-eno1" = {
+        matchConfig.Name = "eno1";
         networkConfig.Bond = "bond0";
-
-        address = [
-          # configure addresses including subnet mask
-          "192.168.2.1/24"
-        ];
       };
-      "30-enp5s0" = {
-        matchConfig.Name = "enp5s0";
+      "30-eno2" = {
+        matchConfig.Name = "eno2";
         networkConfig.Bond = "bond0";
-
-        address = [
-          # configure addresses including subnet mask
-          "192.168.2.2/24"
-        ];
       };
 
       "40-bond0" = {
         matchConfig.Name = "bond0";
-        linkConfig.RequiredForOnline = "carrier";
-        networkConfig.LinkLocalAddressing = "no";
-        DHCP = "ipv4";
+        linkConfig = {
+          RequiredForOnline = "degraded-carrier";
+          RequiredFamilyForOnline = "any";
+        };
+        networkConfig.DHCP = "yes";
 
         address = [
-          # configure addresses including subnet mask
           "192.168.1.10/24"
         ];
       };
